@@ -1,0 +1,12 @@
+tmp
+*.class
+*.pyc
+*.pyo
+tiapp.xml
+README
+manifest
+LICENSE.txt
+CHANGELOG.txt
+build.log
+CHANGELOG.txt
+Resources/mobileweb
