@@ -1,98 +1,83 @@
 
 var loginWin = Titanium.UI.createWindow({
 	backgroundColor:'#FFFFFF'
-}); 
+});
 
-var loginLabel = Titanium.UI.createLabel({
-	text:'UserID* :',
+
+// BUTTON FOR IVLE LOGIN
+var ivleLoginButton = Titanium.UI.createButton({
+	title: 'Login with IVLE',
 	font:{fontSize:20},
-	color: 'black',
-	left: 20,
-	top: 20,
-	textAlign:'left'
-});
-
-var loginField = Titanium.UI.createTextField({
-	hintText: 'U1234567',
-	font: {
-                fontSize: 15,
-           },
-   verticalAlign: 'centre',
-	width: 150,
-	height: 40,
-	left: 140,
-	top: 20
-});
-
-var passwordLabel = Titanium.UI.createLabel({
-	text:'Password* :',
-	font:{fontSize:20},
-	color: 'black',
-	left: 20,
-	top: 70,
-	textAlign:'left'
-});
-
-var passwordField = Titanium.UI.createTextField({
-	passwordMask: 'true',
-	font: {
-                fontSize: 15,
-           },
-	width: 150,
-	height: 40,
-	left:140,
-	top: 68
-});
-
-var domainLabel = Titanium.UI.createLabel({
-	text:'Domian* :',
-	font:{fontSize:20},
-	color: 'black',
-	left: 20,
-	top: 120,
-	textAlign:'left'
-});
-
-var domainPicker = Ti.UI.createPicker({
-	width: 150,
-	height: 40,
-	left: 140,
-	top:118
-});
-
-var domainChoices = [];
-domainChoices[0]=Ti.UI.createPickerRow({title:'NUSSTU'});
-domainChoices[1]=Ti.UI.createPickerRow({title:'NUSSTF'});
-domainChoices[2]=Ti.UI.createPickerRow({title:'NUSEXT'});
-domainChoices[3]=Ti.UI.createPickerRow({title:'GUEST'});
-
-domainPicker.add(domainChoices);
-domainPicker.selectionIndicator = true;
-
-var loginButton = Titanium.UI.createButton({
-	title: 'LOGIN',
-	font:{fontSize:20},
-	backgroundColor: '#29A3A3',
-	left: 20,
 	top: 170,
-	width: 150,
-	height: 38,
-	borderColor: null,
-	borderRadius:0,
-	style:Titanium.UI.iPhone.SystemButtonStyle.PLAIN,
+	height: 50,
+	width: 262
 });
+ivleLoginButton.addEventListener('click', function(e){
+	ivleLoginWindow.open({modal:true});
+})
 
-loginButton.addEventListener('click',function(e)
-{
-   Titanium.API.info("You clicked on the Login Button! HEHE :P");
+//BUTTON FOR FACEBOOK LOGIN
+Ti.Facebook.appid = '138860876249474';
+Ti.Facebook.permissions = ['publish_stream'];
+
+Ti.Facebook.addEventListener('login', function(e) {
+    if (e.success) {
+        alert('Logged in');
+    }
 });
+Ti.Facebook.addEventListener('logout', function(e) {
+    alert('Logged out');
+});
+ 
+	// Use wide button style -- constant not supported on Android yet.
+var buttonStyle;
+if(Ti.Platform.name === 'android') {
+    buttonStyle = 'wide';
+} else {
+    buttonStyle = Ti.Facebook.BUTTON_STYLE_WIDE;
+}
+var facebookLoginButton = Ti.Facebook.createLoginButton({
+    top: 250,
+	width: 300,
+	height: 50,
+    style : buttonStyle,
+})
+	// Add the button.  Note that it doesn't need a click event listener.
+//loginWin.add(ShootNSellLabel);
+loginWin.add(facebookLoginButton);
 
-loginWin.add(loginLabel);
-loginWin.add(loginField);
-loginWin.add(passwordLabel);
-loginWin.add(passwordField);
-loginWin.add(domainLabel);
-loginWin.add(domainPicker);
-loginWin.add(loginButton);
-
+loginWin.add(ivleLoginButton);
+//loginWin.add(facebookLoginButton);
 loginWin.open();
+
+// WEBVIEW FOR IVLE LOGIN
+var ivleloginWeb = Titanium.UI.createWebView({url:'https://ivle.nus.edu.sg/api/login/?apikey=APILoadTest'});
+
+var overlay = Ti.UI.createView({
+	backgroundColor:'#0000CC',
+	top: 3,
+    left: 0,
+	height: 62,
+	borderWidth: 5,
+	borderColor: '#FFFFFF',
+	width:'auto',
+	opacity:0.92
+});
+overlay.add(Ti.UI.createLabel({
+	text: 'ShootNSell IVLE Login',
+	textAlign: 'center',
+	verticalAlign: 'center',// this not working... need to do some research
+	top: 0,
+    left: 0,
+	height: 60,
+	width:'100%',
+	font: {
+		fontSize:26,
+		fontWeight:'bold'
+	}
+}));
+
+var ivleLoginWindow = Titanium.UI.createWindow(); 
+ivleLoginWindow.add(ivleloginWeb);
+ivleLoginWindow.add(overlay);
+ 
