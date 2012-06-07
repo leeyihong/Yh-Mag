@@ -17,7 +17,6 @@ var ivleLoginButton = Titanium.UI.createButton({
 	height: 50,
 	width: 262
 });
-
 ivleLoginButton.addEventListener('click', function(e){
 	ivleLoginWindow.open({modal:true});
 })
