@@ -17,10 +17,10 @@
     <id>com.Appnovate.ShootNSell</id>
     <name>ShootNSell</name>
     <version>1.0</version>
-    <publisher>Yi Hong</publisher>
+    <publisher>Magdelyn</publisher>
     <url>http://</url>
     <description>not specified</description>
-    <copyright>2012 by Yi Hong</copyright>
+    <copyright>2012 by Magdelyn</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
@@ -46,7 +46,7 @@
         <manifest>
             <supports-screens android:anyDensity="false"/>
         </manifest>
-	</android>
+    </android>
     <mobileweb>
         <precache/>
         <splash>

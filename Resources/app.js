@@ -1,8 +1,11 @@
-
 var loginWin = Titanium.UI.createWindow({
-	backgroundColor:'#FFFFFF'
+backgroundColor:'#FFFFFF'
 });
 
+var homeWin = Titanium.UI.createWindow({
+backgroundColor:'#FFFFFF',
+url: 'home.js'
+});
 
 // BUTTON FOR IVLE LOGIN
 var ivleLoginButton = Titanium.UI.createButton({
@@ -22,14 +25,15 @@ Ti.Facebook.permissions = ['publish_stream'];
 
 Ti.Facebook.addEventListener('login', function(e) {
     if (e.success) {
-        alert('Logged in');
+        alert('Logged in'),
+    	homeWin.open()
     }
 });
 Ti.Facebook.addEventListener('logout', function(e) {
     alert('Logged out');
 });
  
-	// Use wide button style -- constant not supported on Android yet.
+// Use wide button style -- constant not supported on Android yet.
 var buttonStyle;
 if(Ti.Platform.name === 'android') {
     buttonStyle = 'wide';
@@ -42,16 +46,27 @@ var facebookLoginButton = Ti.Facebook.createLoginButton({
 	height: 50,
     style : buttonStyle,
 })
-	// Add the button.  Note that it doesn't need a click event listener.
+
+// Add the button.  Note that it doesn't need a click event listener.
 //loginWin.add(ShootNSellLabel);
 loginWin.add(facebookLoginButton);
 
 loginWin.add(ivleLoginButton);
-//loginWin.add(facebookLoginButton);
+
 loginWin.open();
 
 // WEBVIEW FOR IVLE LOGIN
 var ivleloginWeb = Titanium.UI.createWebView({url:'https://ivle.nus.edu.sg/api/login/?apikey=APILoadTest'});
+
+ivleloginWeb.addEventListener('load', function(e){
+	Ti.API.info('listening');
+	if(ivleloginWeb.url.indexOf('/api/login/login_result.ashx') > 0){
+			if (ivleloginWeb.url.indexOf('&r=0') > 0){
+				alert('logged in')
+				homeWin.open()
+			}
+	}
+})
 
 var overlay = Ti.UI.createView({
 	backgroundColor:'#0000CC',
@@ -78,6 +93,6 @@ overlay.add(Ti.UI.createLabel({
 }));
 
 var ivleLoginWindow = Titanium.UI.createWindow(); 
+
 ivleLoginWindow.add(ivleloginWeb);
 ivleLoginWindow.add(overlay);
- 
