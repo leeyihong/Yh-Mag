@@ -1,5 +1,5 @@
 // after login successful, go to home page
-//var win = Titanium.UI.currentwindow;
+var win = Titanium.UI.currentwindow;
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
 Titanium.UI.setBackgroundColor('#000');
 
@@ -7,11 +7,11 @@ Titanium.UI.setBackgroundColor('#000');
 var tabGroup = Titanium.UI.createTabGroup();
 
 // create 'home' tab and window
-var winHome = Titanium.UI.createWindow({  
+/*var winHome = Titanium.UI.createWindow({  
     title:'Home',
     backgroundColor:'#fff',
-   // url:"home.js"
-});
+    url:"home.js"
+});*/
 
 var tabHome = Titanium.UI.createTab({  
     icon:'KS_nav_views.png',

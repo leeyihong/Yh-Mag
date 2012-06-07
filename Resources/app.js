@@ -1,3 +1,5 @@
+//Ti.include("home.js");
+
 var loginWin = Titanium.UI.createWindow({
 backgroundColor:'#FFFFFF'
 });
@@ -57,7 +59,7 @@ loginWin.add(ivleLoginButton);
 loginWin.open();
 
 // WEBVIEW FOR IVLE LOGIN
-var ivleloginWeb = Titanium.UI.createWebView({url:'https://ivle.nus.edu.sg/api/login/?apikey=APILoadTest'});
+var ivleloginWeb = Titanium.UI.createWebView({url:'https://ivle.nus.edu.sg/api/login/?apikey=OcV2lfcOa6uMsjtuI1Z4Q'});
 
 ivleloginWeb.addEventListener('load', function(e){
 	if(ivleloginWeb.url.indexOf('/api/login/login_result.ashx') > 0){
