@@ -11,7 +11,7 @@ var tabGroup = Titanium.UI.createTabGroup();
 var winHome = Titanium.UI.createWindow({  
     title:'Home',
     backgroundColor:'#fff',
-    url:"home.js"
+    //url:"home.js"
 });
 var tabHome = Titanium.UI.createTab({  
     icon:'KS_nav_views.png',
@@ -31,3 +31,11 @@ var tabSearch = Titanium.UI.createTab({
     title:'Search',
     window:winSearch
 });
+
+//
+//  add tabs
+//
+tabGroup.addTab(tabHome);  
+tabGroup.addTab(tabSearch);  
+
+tabGroup.open();

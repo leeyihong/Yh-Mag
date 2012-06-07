@@ -1,3 +1,5 @@
+//Ti.include("home.js");
+
 var loginWin = Titanium.UI.createWindow({
 backgroundColor:'#FFFFFF'
 });
