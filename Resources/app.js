@@ -15,6 +15,7 @@ var ivleLoginButton = Titanium.UI.createButton({
 	height: 50,
 	width: 262
 });
+
 ivleLoginButton.addEventListener('click', function(e){
 	ivleLoginWindow.open({modal:true});
 })
@@ -59,10 +60,8 @@ loginWin.open();
 var ivleloginWeb = Titanium.UI.createWebView({url:'https://ivle.nus.edu.sg/api/login/?apikey=APILoadTest'});
 
 ivleloginWeb.addEventListener('load', function(e){
-	Ti.API.info('listening');
 	if(ivleloginWeb.url.indexOf('/api/login/login_result.ashx') > 0){
 			if (ivleloginWeb.url.indexOf('&r=0') > 0){
-				alert('logged in')
 				homeWin.open()
 			}
 	}
