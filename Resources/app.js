@@ -63,10 +63,14 @@ var ivleloginWeb = Titanium.UI.createWebView({url:'https://ivle.nus.edu.sg/api/l
 ivleloginWeb.addEventListener('load', function(e){
 	if(ivleloginWeb.url.indexOf('/api/login/login_result.ashx') > 0){
 			if (ivleloginWeb.url.indexOf('&r=0') > 0){
+				string = JSON.stringify(e),
+				//Ti.API.info('string =' + string),
+				token = string.substring(string.indexOf('<body>') + 6, string.indexOf('</body>')),
+				//Ti.API.info("token=" + token ),
 				homeWin.open()
 			}
 	}
-})
+});
 
 var overlay = Ti.UI.createView({
 	backgroundColor:'#0000CC',
