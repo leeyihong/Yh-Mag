@@ -3,14 +3,29 @@
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
 Titanium.UI.setBackgroundColor('#000');
 
+
 // create tab group
 var tabGroup = Titanium.UI.createTabGroup();
+
+//create the view to hold all of our UI controls
+var view = Titanium.UI.createView({
+	width: 300,
+	height: 350,
+	left: 10,
+	top: 10,
+	backgroundColor: '#fff',
+	borderRadius: 5
+});
 
 
 // create 'home' tab and window
 var winHome = Titanium.UI.createWindow({  
     title:'Home',
     backgroundColor:'#fff',
+    width: 320,
+	height: 480,
+	top: 0,
+	left: 0
     //url:"home.js"
 });
 var tabHome = Titanium.UI.createTab({  
@@ -23,7 +38,11 @@ var tabHome = Titanium.UI.createTab({
 var winSearch= Titanium.UI.createWindow({  
     title:'Search',
     backgroundColor:'#fff',
-    url: "search.js"
+    url: 'search.js',
+    width: 320,
+	height: 480,
+	top: 0,
+	left: 0
 });
 
 var tabSearch = Titanium.UI.createTab({  
@@ -36,8 +55,13 @@ var tabSearch = Titanium.UI.createTab({
 var winTransact = Titanium.UI.createWindow({  
     title:'Transaction',
     backgroundColor:'#fff',
-    url:"transact.js"
+    url:'transact.js',
+    width: 320,
+	height: 480,
+	top: 0,
+	left: 0
 });
+
 var tabTransact = Titanium.UI.createTab({  
     icon:'KS_nav_views.png',
     title:'Transact',
@@ -48,14 +72,22 @@ var tabTransact = Titanium.UI.createTab({
 var winProfile= Titanium.UI.createWindow({  
     title:'Profile',
     backgroundColor:'#fff',
-    url: "profile.js"
+    url: 'profile.js',
+    width: 320,
+	height: 480,
+	top: 0,
+	left: 0
 });
 
 var tabProfile = Titanium.UI.createTab({  
     icon:'KS_nav_ui.png',
     title:'Profile',
-    window:winProfile
+    window: winProfile
 });
+
+//add the view to our window
+winHome.add(view);
+
 //
 //  add tabs
 //
@@ -65,3 +97,4 @@ tabGroup.addTab(tabTransact);
 tabGroup.addTab(tabProfile);  
 
 tabGroup.open();
+
