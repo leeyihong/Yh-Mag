@@ -39,7 +39,7 @@ var nameDisplay = Titanium.UI.createLabel({
 	height: '30dp',
 	top: '100dp',
 	left: '20dp',
-	font: {fontSize: 14, fontFamily: 'Helvetica',
+	font: {fontSize: '14dp', fontFamily: 'Helvetica',
 	fontWeight:'bold'},
 	text: nameText
 });
@@ -52,7 +52,7 @@ var emailDisplay = Titanium.UI.createLabel({
 	height: '30dp',
 	top: '140dp',
 	left: '20dp',
-	font: {fontSize: 14, fontFamily: 'Helvetica',
+	font: {fontSize: '14dp', fontFamily: 'Helvetica',
 	fontWeight:'bold'},
 	text: emailText
 });
