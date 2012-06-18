@@ -36,9 +36,9 @@ emailText = emailText + Ti.App.Properties.getString('email');
 // create a label to display name
 var nameDisplay = Titanium.UI.createLabel({
 	width: 'auto',
-	height: 30,
-	top: 100,
-	left: 20,
+	height: '30dp',
+	top: '100dp',
+	left: '20dp',
 	font: {fontSize: 14, fontFamily: 'Helvetica',
 	fontWeight:'bold'},
 	text: nameText
@@ -49,9 +49,9 @@ winProfile.add(nameDisplay);
 // create a label to display email
 var emailDisplay = Titanium.UI.createLabel({
 	width: 'auto',
-	height: 30,
-	top: 140,
-	left: 20,
+	height: '30dp',
+	top: '140dp',
+	left: '20dp',
 	font: {fontSize: 14, fontFamily: 'Helvetica',
 	fontWeight:'bold'},
 	text: emailText

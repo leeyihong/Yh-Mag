@@ -44,7 +44,12 @@
     </iphone>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
         <manifest>
-            <supports-screens android:anyDensity="false"/>
+            <supports-screens 
+            	android:smallScreens="true"
+    			android:normalScreens="true"
+    			android:largeScreens="true"
+            	android:anyDensity="true">
+            </supports-screens>
         </manifest>
     </android>
     <mobileweb>
@@ -57,5 +62,6 @@
     </mobileweb>
     <modules>
         <module platform="commonjs" version="2.0.1">ti.cloud</module>
+        <module platform="android" version="0.3">com.mwaysolutions.barcode</module>
     </modules>
 </ti:app>

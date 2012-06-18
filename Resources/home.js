@@ -7,6 +7,11 @@ Titanium.UI.setBackgroundColor('#000');
 // create tab group
 var tabGroup = Titanium.UI.createTabGroup();
 
+var windowHeight = Ti.Platform.displayCaps.platformHeight;
+var windowWidth = Ti.Platform.displayCaps.platformWidth;
+Ti.API.info(windowHeight);
+Ti.API.info(windowWidth);
+
 //create the view to hold all of our UI controls
 var view = Titanium.UI.createView({
 	width: 300,
