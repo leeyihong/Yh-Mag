@@ -30,10 +30,10 @@ var submitISBNButton = Ti.UI.createButton({
 	width: '69dp',
 	height: '40dp'	
 });
+
 var isbnNo;
 submitISBNButton.addEventListener('click', function(e){
 	sellingDetailsWin.isbnNo = typeBarcodeTextField.value;
-	Titanium.API.info("The isbn No:  " +  sellingDetailsWin.isbnNo);
 	sellingDetailsWin.open();
 });
 win.add(submitISBNButton);
