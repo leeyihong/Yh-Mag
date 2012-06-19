@@ -55,7 +55,7 @@ var scannerWinButton = Ti.UI.createButton({
 	width: GetWidth(200),
 	height: '40dp'	
 });
-/*scannerWinButton.addEventListener('click', function(){
+scannerWinButton.addEventListener('click', function(){
 	bacodeScanningWin.open();
 });
 
@@ -63,7 +63,7 @@ var bacodeScanningWin = Titanium.UI.createWindow({
 	backgroundColor : '#FFFFFF',
 	url : 'barcodeScanner.js',
 });
-*/
+
 win.add(scannerWinButton);
 
 
