@@ -5,7 +5,6 @@ var screenHeight = Ti.Platform.displayCaps.platformHeight;
 var screenWidth = Ti.Platform.displayCaps.platformWidth;
 
 function GetWidth(value) {
-    //var temp = (value * 100) / 320;
     return parseInt((screenWidth * value) / 320);
 }
 
@@ -14,7 +13,6 @@ var typeBarcodeTextField = Ti.UI.createTextField({
 	font:{
 		fontSize: '14dp',
 	},
-	verticalAlign:'center',
 	left: GetWidth(70),
 	top: '50dp',
 	width: GetWidth(130),
@@ -27,26 +25,37 @@ var submitISBNButton = Ti.UI.createButton({
 	font:{
 		fontSize: '14dp',
 	},
-	verticalAlign: 'center',
 	left: GetWidth(200),
 	top:'50dp',
 	width: '69dp',
 	height: '40dp'	
 });
+var isbnNo;
+submitISBNButton.addEventListener('click', function(e){
+	sellingDetailsWin.isbnNo = typeBarcodeTextField.value;
+	Titanium.API.info("The isbn No:  " +  sellingDetailsWin.isbnNo);
+	sellingDetailsWin.open();
+});
 win.add(submitISBNButton);
 
+var sellingDetailsWin = Ti.UI.createWindow({
+	backgroundColor : '#FFFFFF',
+	url: "sellingDetails.js",
+});
+
+
+//Scanner Window
 var scannerWinButton = Ti.UI.createButton({
 	title: 'Barcode Scanner',
 	font:{
 		fontSize: '14dp',
 	},
-	verticalAlign: 'center',
 	left: GetWidth(68),
 	top:'100dp',
 	width: GetWidth(200),
 	height: '40dp'	
 });
-scannerWinButton.addEventListener('click', function(){
+/*scannerWinButton.addEventListener('click', function(){
 	bacodeScanningWin.open();
 });
 
@@ -54,7 +63,7 @@ var bacodeScanningWin = Titanium.UI.createWindow({
 	backgroundColor : '#FFFFFF',
 	url : 'barcodeScanner.js',
 });
-
+*/
 win.add(scannerWinButton);
 
 

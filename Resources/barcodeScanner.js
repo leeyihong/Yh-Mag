@@ -2,34 +2,37 @@
  * @author Yi Hong
  */
 /*--- SCANNER WINDOW ---*/
-var bacodeScanningWin = Ti.UI.currentWindow;
+var barcodeScanningWin = Ti.UI.currentWindow;
 
 var label = Ti.UI.createLabel();
-bacodeScanningWin.add(label);
-//bacodeScanningWin.open();
+barcodeScanningWin.add(label);
+//barcodeScanningWin.open();
+
 
 var titaniumBarcode = require('com.mwaysolutions.barcode');
 
 titaniumBarcode.scan({
-  success:function(data) {
-    if(data && data.barcode) {
-      var label = Titanium.UI.createLabel({
-        text:'Barcode: ' + data.barcode,
-        textAlign:'center',
-        width:'auto'
-      });
+	success:function(data) {
+		if(data && data.barcode) {
+			label.text(data.barcode);
+			bookDetailsWin.open();
+		} else {
+			alert(JSON.stringify(data));
+		}
+	},
 
-      bacodeScanningWin.add(label);
-    } else {
-      alert(JSON.stringify(data));
-    }
-  },
+	error:function(err) { 
+		alert("Error!! " + err); 
+	},
 
-  error:function(err) { 
-    alert("Error!! " + err); 
-  },
-
-  cancel:function() { 
-    alert("cancel"); 
-  }
+	cancel:function() { 
+		alert("cancel"); 
+	}
 });
+
+
+var bookDetailsWin = Ti.UI.createWindow({
+	backgroundColor: '#FFFFFF',
+});
+
+
