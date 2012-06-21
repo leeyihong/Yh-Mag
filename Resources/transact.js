@@ -9,7 +9,7 @@ function GetWidth(value) {
 }
 
 var typeBarcodeTextField = Ti.UI.createTextField({
-	hintText: 'ISBN without \'-\'',
+	hintText: '13 ISBN w\/o \'-\'',
 	font:{
 		fontSize: '14dp',
 	},
@@ -33,8 +33,12 @@ var submitISBNButton = Ti.UI.createButton({
 
 var isbnNo;
 submitISBNButton.addEventListener('click', function(e){
-	sellingDetailsWin.isbnNo = typeBarcodeTextField.value;
-	sellingDetailsWin.open();
+	if(typeBarcodeTextField.value.length == 13){
+		sellingDetailsWin.isbnNo = typeBarcodeTextField.value;
+		sellingDetailsWin.open();
+	} else {
+		alert('Invalid isbn number. Check that the isbn number is 13 digit long. And remove all \'-\'')
+	}
 });
 win.add(submitISBNButton);
 

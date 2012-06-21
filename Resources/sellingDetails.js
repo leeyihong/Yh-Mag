@@ -77,45 +77,62 @@ xhr.open("GET", isbnAPIUrl + isbnNo + '&key='+ isbnApiKey);
 
 xhr.onload = function(){
 	output = JSON.parse(xhr.responseText);
-	details = output.items[0];
 	
-	title.text = details.volumeInfo.title;
-	sellingDetailsWin.add(title);
-	
-	if(details.volumeInfo.subtitle != null){
-		subtitle.text = details.volumeInfo.subtitle;
-	}
-	sellingDetailsWin.add(subtitle);
-	
-	var noOfAuthor = details.volumeInfo.authors.length
-	Ti.API.info(noOfAuthor);
-	if (noOfAuthor > 0){
-		var Aur = details.volumeInfo.authors[0];
-		for(i=1; i<noOfAuthor; i ++){
-			Aur = Aur + ', '+ details.volumeInfo.authors[i];
-		};
-		authors.text = "Authors : " + Aur;
-	};
-	sellingDetailsWin.add(authors);
-	
-	if (details.volumeInfo.publisher != null){
-		publisher.text = "Publisher : " + details.volumeInfo.publisher;
-	};
-	sellingDetailsWin.add(publisher);
-	
-	if (details.volumeInfo.publishedDate != null){
-		publisherDate.text = "Published Date : " + details.volumeInfo.publishedDate;
-	};
-	sellingDetailsWin.add(publisherDate);
-	
-	if(details.volumeInfo.hasOwnProperty('imageLinks')){
-		if(details.volumeInfo.imageLinks.hasOwnProperty('thumbnail')){
-			bookImage.url = details.volumeInfo.imageLinks.thumbnail;
-		} else if(details.volumeInfo.imageLinks.hasOwnProperty('smallThumbnail')){
-			bookImage.url = details.volumeInfo.imageLinks.smallThumbnail;
+	if(output.hasOwnProperty('totalItems')){
+		
+		if(output.totalItems >= 1){
+			
+			if(output.totalItems >= 1){  // normally will not happen... error checking in case it happen...
+				alert('There is more than 1 book found! Only 1st book appear.')
+			}
+			
+			details = output.items[0];
+			
+			title.text = details.volumeInfo.title;
+			sellingDetailsWin.add(title);
+			
+			if(details.volumeInfo.subtitle != null){
+				subtitle.text = details.volumeInfo.subtitle;
+			}
+			sellingDetailsWin.add(subtitle);
+			
+			var noOfAuthor = details.volumeInfo.authors.length
+			Ti.API.info(noOfAuthor);
+			if (noOfAuthor > 0){
+				var Aur = details.volumeInfo.authors[0];
+				for(i=1; i<noOfAuthor; i ++){
+					Aur = Aur + ', '+ details.volumeInfo.authors[i];
+				};
+				authors.text = "Authors : " + Aur;
+			};
+			sellingDetailsWin.add(authors);
+			
+			if (details.volumeInfo.publisher != null){
+				publisher.text = "Publisher : " + details.volumeInfo.publisher;
+			};
+			sellingDetailsWin.add(publisher);
+			
+			if (details.volumeInfo.publishedDate != null){
+				publisherDate.text = "Published Date : " + details.volumeInfo.publishedDate;
+			};
+			sellingDetailsWin.add(publisherDate);
+			
+			if(details.volumeInfo.hasOwnProperty('imageLinks')){
+				if(details.volumeInfo.imageLinks.hasOwnProperty('thumbnail')){
+					bookImage.url = details.volumeInfo.imageLinks.thumbnail;
+				} else if(details.volumeInfo.imageLinks.hasOwnProperty('smallThumbnail')){
+					bookImage.url = details.volumeInfo.imageLinks.smallThumbnail;
+				}
+			};
+			sellingDetailsWin.add(bookImage);
+		} else if (output.totalItems == 0){
+			alert('This Barcode is invalid! This might not be a book or the book is not in the database.')
+		} else {
+			aleat('Error in looking for a book in database')
 		}
-	};
-	sellingDetailsWin.add(bookImage);
+	} else {
+		alert('This Barcode is invalid! This might not be a book or book not found in database.');
+	}
 };
 
 xhr.send();
