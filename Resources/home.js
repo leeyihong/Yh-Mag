@@ -34,7 +34,7 @@ var winHome = Titanium.UI.createWindow({
     //url:"home.js"
 });
 var tabHome = Titanium.UI.createTab({  
-    icon:'KS_nav_views.png',
+    icon:'images/light_home.png',
     title:'Home',
     window:winHome
 });
