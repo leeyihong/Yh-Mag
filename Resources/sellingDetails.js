@@ -9,64 +9,120 @@ Ti.API.info(isbnNo);
 //Setting global varible for book details
 var output ;
 var details ;
-var title = Ti.UI.createLabel({
+var titleLabel = Ti.UI.createLabel({
+	text: 'Title: ',
 	font:{
-		fontSize: '16dp', 
+		fontSize: '14dp', 
 		fontFamily: 'Helvetica',
 		fontWeight:'bold'
 	},
 	color: '#000014',
 	left: '10dp',
-	top: '150dp'
+	top: '140dp'
 });
-var subtitle = Ti.UI.createLabel({
-	text: "",
+sellingDetailsWin.add(titleLabel);
+var titleField = Ti.UI.createTextField({
+	hintText: 'Book Title',
 	font:{
-		fontSize: '15dp', 
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+	},
+	verticalAlign: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_BOTTOM,
+	left: '110dp',
+	top: '130dp',
+	height: '35dp',
+	width: '200dp'
+});
+var subtitleField = Ti.UI.createTextField({
+	hintText: 'Subtitle',
+	font:{
+		fontSize: '14dp', 
 		fontFamily: 'Helvetica',
 	},
 	color: '#000014',
-	left: '10dp',
-	top: '175dp'
+	left: '110dp',
+	top: '165dp',
+	height: '35dp',
+	width: '200dp'
 });
-var authors = Ti.UI.createLabel({
-	text: "",
+var authorsLabel = Ti.UI.createLabel({
+	text: 'Author :',
 	font:{
-		fontSize: '15dp', 
+		fontSize: '14dp', 
 		fontFamily: 'Helvetica',
+		fontWeight:'bold'
 	},
 	color: '#000014',
 	left: '10dp',
-	top: '200dp'
+	top: '210dp'
 });
-
-var publisher = Ti.UI.createLabel({
-	text: "",
+sellingDetailsWin.add(authorsLabel);
+var authorsField = Ti.UI.createTextField({
+	hintText: 'Name of Author/(s/)',
 	font:{
-		fontSize: '15dp', 
+		fontSize: '14dp', 
 		fontFamily: 'Helvetica',
 	},
 	color: '#000014',
-	left: '10dp',
-	top: '225dp'
+	left: '110dp',
+	top: '200dp',
+	height: '35dp',
+	width: '200dp'
 });
-
-var publisherDate = Ti.UI.createLabel({
-	text: "",
+var publisherLabel = Ti.UI.createLabel({
+	text: 'Publisher :',
 	font:{
-		fontSize: '15dp', 
+		fontSize: '14dp', 
 		fontFamily: 'Helvetica',
+		fontWeight:'bold'
 	},
 	color: '#000014',
 	left: '10dp',
-	top: '250dp'
+	top: '245dp'
+});
+sellingDetailsWin.add(publisherLabel);
+var publisherField = Ti.UI.createTextField({
+	hintText: 'name of publisher',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+	},
+	color: '#000014',
+	left: '110dp',
+	top: '235dp',
+	height: '35dp',
+	width: '200dp'
+});
+var publisherDateLabel = Ti.UI.createLabel({
+	text: 'Published Date :',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+		fontWeight:'bold'
+	},
+	color: '#000014',
+	left: '10dp',
+	top: '280dp'
+});
+sellingDetailsWin.add(publisherDateLabel);
+var publisherDateField = Ti.UI.createTextField({
+	hintText: 'Date of Publish',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+	},
+	color: '#000014',
+	left: '110dp',
+	top: '270dp',
+	height: '35dp',
+	width: '200dp'
 });
 
 var bookImage = Ti.UI.createImageView({
 	url: "NoImage.png",
 	top: '10dp',
 	left: '10dp',
-	width: '75dp',
+	width: '85dp',
 	height: '120dp'
 });
 var isbnAPIUrl = 'https://www.googleapis.com/books/v1/volumes?q=isbn:';
@@ -82,19 +138,19 @@ xhr.onload = function(){
 		
 		if(output.totalItems >= 1){
 			
-			if(output.totalItems >= 1){  // normally will not happen... error checking in case it happen...
+			if(output.totalItems > 1){  // normally will not happen... error checking in case it happen...
 				alert('There is more than 1 book found! Only 1st book appear.')
-			}
+			};
 			
 			details = output.items[0];
 			
-			title.text = details.volumeInfo.title;
-			sellingDetailsWin.add(title);
+			titleField.value = details.volumeInfo.title;
+			sellingDetailsWin.add(titleField)
 			
 			if(details.volumeInfo.subtitle != null){
-				subtitle.text = details.volumeInfo.subtitle;
-			}
-			sellingDetailsWin.add(subtitle);
+				subtitleField.value = details.volumeInfo.subtitle;
+			};
+			sellingDetailsWin.add(subtitleField);
 			
 			var noOfAuthor = details.volumeInfo.authors.length
 			Ti.API.info(noOfAuthor);
@@ -103,19 +159,19 @@ xhr.onload = function(){
 				for(i=1; i<noOfAuthor; i ++){
 					Aur = Aur + ', '+ details.volumeInfo.authors[i];
 				};
-				authors.text = "Authors : " + Aur;
+				authorsField.value = Aur;
 			};
-			sellingDetailsWin.add(authors);
+			sellingDetailsWin.add(authorsField);
 			
 			if (details.volumeInfo.publisher != null){
-				publisher.text = "Publisher : " + details.volumeInfo.publisher;
+				publisherField.value = details.volumeInfo.publisher;
 			};
-			sellingDetailsWin.add(publisher);
+			sellingDetailsWin.add(publisherField);
 			
 			if (details.volumeInfo.publishedDate != null){
-				publisherDate.text = "Published Date : " + details.volumeInfo.publishedDate;
+				publisherDateField.value = details.volumeInfo.publishedDate;
 			};
-			sellingDetailsWin.add(publisherDate);
+			sellingDetailsWin.add(publisherDateField);
 			
 			if(details.volumeInfo.hasOwnProperty('imageLinks')){
 				if(details.volumeInfo.imageLinks.hasOwnProperty('thumbnail')){
