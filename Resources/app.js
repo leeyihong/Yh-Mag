@@ -15,16 +15,27 @@ var homeWin = Titanium.UI.createWindow({
 
 var windowWidth = Ti.Platform.displayCaps.platformWidth;
 
+// display app logo
+var logo = Titanium.UI.createImageView({
+	image: 'logo.png',
+	width: 200,
+	height: 200,
+	top: 20
+});
+
+loginWin.add(logo);
+
 // BUTTON FOR IVLE LOGIN
 var ivleLoginButton = Titanium.UI.createButton({
 	title : 'Login with IVLE',
 	font : {
 		fontSize : '15dp'
 	},
-	top : '100dp',
+	top : '250dp',
 	height : '35dp',
 	width : '180dp'
 });
+
 ivleLoginButton.addEventListener('click', function(e) {
 	ivleLoginWindow.open({
 		modal : true
@@ -51,7 +62,7 @@ if(Ti.Platform.name === 'android') {
 	buttonStyle = Ti.Facebook.BUTTON_STYLE_WIDE;
 }
 var facebookLoginButton = Ti.Facebook.createLoginButton({
-	top : '150dp',
+	top : '310dp',
 	width : 300,
 	height : 50,
 	style : buttonStyle,
