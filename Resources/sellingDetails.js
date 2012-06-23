@@ -9,6 +9,13 @@ Ti.API.info(isbnNo);
 //Setting global varible for book details
 var output ;
 var details ;
+var bookImage = Ti.UI.createImageView({
+	url: "NoImage.png",
+	top: '10dp',
+	left: '10dp',
+	width: '85dp',
+	height: '120dp'
+});
 var titleLabel = Ti.UI.createLabel({
 	text: 'Title: ',
 	font:{
@@ -112,19 +119,110 @@ var publisherDateField = Ti.UI.createTextField({
 		fontFamily: 'Helvetica',
 	},
 	color: '#000014',
-	left: '110dp',
+	left: '130dp',
 	top: '270dp',
 	height: '35dp',
-	width: '200dp'
+	width: '180dp'
+});
+var editionLabel = Ti.UI.createLabel({
+	text: 'Edition :',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+		fontWeight:'bold'
+	},
+	color: '#000014',
+	left: '10dp',
+	top: '315dp'
+});
+sellingDetailsWin.add(editionLabel);
+var editionField = Ti.UI.createTextField({
+	hintText: 'edition',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+	},
+	color: '#000014',
+	left: '110dp',
+	top: '305dp',
+	height: '35dp',
+	width: '180dp'
+});
+sellingDetailsWin.add(editionField);
+var conditionLabel = Ti.UI.createLabel({
+	text: 'Condition :',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+		fontWeight:'bold'
+	},
+	color: '#000014',
+	left: '10dp',
+	top: '350dp'
+});
+sellingDetailsWin.add(conditionLabel);
+var conditionField = Ti.UI.createTextField({
+	hintText: '5.5',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+	},
+	color: '#000014',
+	left: '110dp',
+	top: '340dp',
+	height: '35dp',
+	width: '60dp'
+});
+sellingDetailsWin.add(conditionField);
+var condition10Label = Ti.UI.createLabel({
+	text: '/10',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+		fontWeight:'bold'
+	},
+	color: '#000014',
+	left: '170dp',
+	top: '350dp'
+});
+sellingDetailsWin.add(condition10Label);
+
+var submitSellingButton =  Ti.UI.createButton({
+	title: 'Submit',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+		fontWeight:'bold'
+	},
+	color: '#000014',
+	left: '10dp',
+	top: '400dp',
+	width: '80dp'
+});
+sellingDetailsWin.add(submitSellingButton);
+var cancelButton =  Ti.UI.createButton({
+	title: 'Cancel',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+		fontWeight:'bold'
+	},
+	color: '#000014',
+	left: '100dp',
+	top: '400dp',
+	width: '80dp'
+});
+sellingDetailsWin.add(cancelButton);
+var cancelDialog = Ti.UI.createAlertDialog({
+	title: 'Cancel Dialog',
+	message: 'Are you sure you would like to cancel this?',
+	cancel: 1,
+    buttonNames: ['Confirm', 'Cancel'],
+});
+cancelButton.addEventListener('click', function(){
+	cancelDialog.show();
 });
 
-var bookImage = Ti.UI.createImageView({
-	url: "NoImage.png",
-	top: '10dp',
-	left: '10dp',
-	width: '85dp',
-	height: '120dp'
-});
 var isbnAPIUrl = 'https://www.googleapis.com/books/v1/volumes?q=isbn:';
 var isbnApiKey = 'AIzaSyBgUbjxOGiJNbKS39ZHF2NH2hLVHdo6FEs';
 
