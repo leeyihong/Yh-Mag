@@ -25,9 +25,9 @@ var titleLabel = Ti.UI.createLabel({
 	},
 	color: '#000014',
 	left: '10dp',
-	top: '140dp'
+	//top: '140dp'
 });
-sellingDetailsWin.add(titleLabel);
+//sellingDetailsWin.add(titleLabel);
 var titleField = Ti.UI.createTextField({
 	hintText: 'Book Title',
 	font:{
@@ -36,7 +36,7 @@ var titleField = Ti.UI.createTextField({
 	},
 	verticalAlign: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_BOTTOM,
 	left: '110dp',
-	top: '130dp',
+	//top: '130dp',
 	height: '35dp',
 	width: '200dp'
 });
@@ -48,7 +48,7 @@ var subtitleField = Ti.UI.createTextField({
 	},
 	color: '#000014',
 	left: '110dp',
-	top: '165dp',
+	//top: '165dp',
 	height: '35dp',
 	width: '200dp'
 });
@@ -61,9 +61,9 @@ var authorsLabel = Ti.UI.createLabel({
 	},
 	color: '#000014',
 	left: '10dp',
-	top: '210dp'
+	//top: '210dp'
 });
-sellingDetailsWin.add(authorsLabel);
+//sellingDetailsWin.add(authorsLabel);
 var authorsField = Ti.UI.createTextField({
 	hintText: 'Name of Author/(s/)',
 	font:{
@@ -72,7 +72,7 @@ var authorsField = Ti.UI.createTextField({
 	},
 	color: '#000014',
 	left: '110dp',
-	top: '200dp',
+	//top: '200dp',
 	height: '35dp',
 	width: '200dp'
 });
@@ -85,9 +85,9 @@ var publisherLabel = Ti.UI.createLabel({
 	},
 	color: '#000014',
 	left: '10dp',
-	top: '245dp'
+	//top: '245dp'
 });
-sellingDetailsWin.add(publisherLabel);
+//sellingDetailsWin.add(publisherLabel);
 var publisherField = Ti.UI.createTextField({
 	hintText: 'name of publisher',
 	font:{
@@ -96,11 +96,11 @@ var publisherField = Ti.UI.createTextField({
 	},
 	color: '#000014',
 	left: '110dp',
-	top: '235dp',
+	//top: '235dp',
 	height: '35dp',
 	width: '200dp'
 });
-var publisherDateLabel = Ti.UI.createLabel({
+var publishedDateLabel = Ti.UI.createLabel({
 	text: 'Published Date :',
 	font:{
 		fontSize: '14dp', 
@@ -109,10 +109,10 @@ var publisherDateLabel = Ti.UI.createLabel({
 	},
 	color: '#000014',
 	left: '10dp',
-	top: '280dp'
+	//top: '280dp'
 });
-sellingDetailsWin.add(publisherDateLabel);
-var publisherDateField = Ti.UI.createTextField({
+//sellingDetailsWin.add(publisherDateLabel);
+var publishedDateField = Ti.UI.createTextField({
 	hintText: 'Date of Publish',
 	font:{
 		fontSize: '14dp', 
@@ -120,7 +120,7 @@ var publisherDateField = Ti.UI.createTextField({
 	},
 	color: '#000014',
 	left: '130dp',
-	top: '270dp',
+	//top: '270dp',
 	height: '35dp',
 	width: '180dp'
 });
@@ -133,9 +133,9 @@ var editionLabel = Ti.UI.createLabel({
 	},
 	color: '#000014',
 	left: '10dp',
-	top: '315dp'
+	//top: '315dp'
 });
-sellingDetailsWin.add(editionLabel);
+//sellingDetailsWin.add(editionLabel);
 var editionField = Ti.UI.createTextField({
 	hintText: 'edition',
 	font:{
@@ -144,11 +144,11 @@ var editionField = Ti.UI.createTextField({
 	},
 	color: '#000014',
 	left: '110dp',
-	top: '305dp',
+	//top: '305dp',
 	height: '35dp',
-	width: '180dp'
+	width: '200dp'
 });
-sellingDetailsWin.add(editionField);
+//sellingDetailsWin.add(editionField);
 var conditionLabel = Ti.UI.createLabel({
 	text: 'Condition :',
 	font:{
@@ -158,9 +158,9 @@ var conditionLabel = Ti.UI.createLabel({
 	},
 	color: '#000014',
 	left: '10dp',
-	top: '350dp'
+	//top: '350dp'
 });
-sellingDetailsWin.add(conditionLabel);
+//sellingDetailsWin.add(conditionLabel);
 var conditionField = Ti.UI.createTextField({
 	hintText: '5.5',
 	font:{
@@ -169,11 +169,11 @@ var conditionField = Ti.UI.createTextField({
 	},
 	color: '#000014',
 	left: '110dp',
-	top: '340dp',
+	//top: '340dp',
 	height: '35dp',
 	width: '60dp'
 });
-sellingDetailsWin.add(conditionField);
+//sellingDetailsWin.add(conditionField);
 var condition10Label = Ti.UI.createLabel({
 	text: '/10',
 	font:{
@@ -183,9 +183,9 @@ var condition10Label = Ti.UI.createLabel({
 	},
 	color: '#000014',
 	left: '170dp',
-	top: '350dp'
+	//top: '350dp'
 });
-sellingDetailsWin.add(condition10Label);
+//sellingDetailsWin.add(condition10Label);
 
 var submitSellingButton =  Ti.UI.createButton({
 	title: 'Submit',
@@ -196,10 +196,10 @@ var submitSellingButton =  Ti.UI.createButton({
 	},
 	color: '#000014',
 	left: '10dp',
-	top: '400dp',
+	//top: '400dp',
 	width: '80dp'
 });
-sellingDetailsWin.add(submitSellingButton);
+//sellingDetailsWin.add(submitSellingButton);
 var cancelButton =  Ti.UI.createButton({
 	title: 'Cancel',
 	font:{
@@ -209,10 +209,10 @@ var cancelButton =  Ti.UI.createButton({
 	},
 	color: '#000014',
 	left: '100dp',
-	top: '400dp',
+	//top: '400dp',
 	width: '80dp'
 });
-sellingDetailsWin.add(cancelButton);
+//sellingDetailsWin.add(cancelButton);
 var cancelDialog = Ti.UI.createAlertDialog({
 	title: 'Cancel Dialog',
 	message: 'Are you sure you would like to cancel this?',
@@ -243,12 +243,12 @@ xhr.onload = function(){
 			details = output.items[0];
 			
 			titleField.value = details.volumeInfo.title;
-			sellingDetailsWin.add(titleField)
+			//sellingDetailsWin.add(titleField)
 			
 			if(details.volumeInfo.subtitle != null){
 				subtitleField.value = details.volumeInfo.subtitle;
 			};
-			sellingDetailsWin.add(subtitleField);
+			//sellingDetailsWin.add(subtitleField);
 			
 			var noOfAuthor = details.volumeInfo.authors.length
 			Ti.API.info(noOfAuthor);
@@ -259,17 +259,17 @@ xhr.onload = function(){
 				};
 				authorsField.value = Aur;
 			};
-			sellingDetailsWin.add(authorsField);
+			//sellingDetailsWin.add(authorsField);
 			
 			if (details.volumeInfo.publisher != null){
 				publisherField.value = details.volumeInfo.publisher;
 			};
-			sellingDetailsWin.add(publisherField);
+			//sellingDetailsWin.add(publisherField);
 			
 			if (details.volumeInfo.publishedDate != null){
-				publisherDateField.value = details.volumeInfo.publishedDate;
+				publishedDateField.value = details.volumeInfo.publishedDate;
 			};
-			sellingDetailsWin.add(publisherDateField);
+			//sellingDetailsWin.add(publisherDateField);
 			
 			if(details.volumeInfo.hasOwnProperty('imageLinks')){
 				if(details.volumeInfo.imageLinks.hasOwnProperty('thumbnail')){
@@ -278,7 +278,7 @@ xhr.onload = function(){
 					bookImage.url = details.volumeInfo.imageLinks.smallThumbnail;
 				}
 			};
-			sellingDetailsWin.add(bookImage);
+			//sellingDetailsWin.add(bookImage);
 		} else if (output.totalItems == 0){
 			alert('This Barcode is invalid! This might not be a book or the book is not in the database.')
 		} else {
@@ -290,3 +290,96 @@ xhr.onload = function(){
 };
 
 xhr.send();
+
+var tableData = [
+{title: bookImage}, 
+{title: titleLabel}, 
+{title: ""}]
+
+var tableSetting = {
+	leftOne: '10dp',
+	leftTwo: '110dp'
+	
+};
+var displayTable = Ti.UI.createTableView({
+	//data: tableData,
+	height: 'auto',
+	separatorColor: 'transparent'
+});
+var BookImageRow = Ti.UI.createTableViewRow({
+	height: 'auto',
+}); 
+BookImageRow.add(bookImage);
+displayTable.appendRow(BookImageRow);
+
+//Title Row
+var titleRow = Ti.UI.createTableViewRow({
+	height: 'auto',
+});
+titleLabel.left = tableSetting.leftOne;
+titleRow.add(titleLabel);
+titleField.left = tableSetting.leftTwo;
+titleRow.add(titleField);
+displayTable.appendRow(titleRow);
+
+//Subtitle Row
+var subtitleRow = Ti.UI.createTableViewRow({
+	height: 'auto',
+});
+subtitleField.left = tableSetting.leftTwo;
+subtitleRow.add(subtitleField);
+displayTable.appendRow(subtitleRow);
+
+//Author Row
+var authorRow = Ti.UI.createTableViewRow({
+	height: 'auto',
+});
+authorsLabel.left = tableSetting.leftOne;
+authorRow.add(authorsLabel);
+authorsField.left = tableSetting.leftTwo;
+authorRow.add(authorsField);
+displayTable.appendRow(authorRow);
+
+//Publisher Row
+var publisherRow = Ti.UI.createTableViewRow({
+	height: 'auto',
+});
+publisherLabel.left = tableSetting.leftOne;
+publisherRow.add(publisherLabel);
+publisherField.left = tableSetting.leftTwo;
+publisherRow.add(publisherField);
+displayTable.appendRow(publisherRow);
+
+// Published Date Row
+var publishedDateRow = Ti.UI.createTableViewRow({
+	height: 'auto',
+});
+publishedDateLabel.left = tableSetting.leftOne;
+publishedDateRow.add(publishedDateLabel);
+publishedDateField.left = '130dp';
+publishedDateRow.add(publishedDateField);
+displayTable.appendRow(publishedDateRow);
+
+// Edition Row
+var editionRow = Ti.UI.createTableViewRow({
+	height: 'auto',
+});
+editionLabel.left = tableSetting.leftOne;
+editionRow.add(editionLabel);
+editionField.left = tableSetting.leftTwo;
+editionRow.add(editionField);
+displayTable.appendRow(editionRow);
+
+// Condition Row
+var conditionRow = Ti.UI.createTableViewRow({
+	height: 'auto',
+});
+conditionLabel.left = tableSetting.leftOne;
+conditionRow.add(conditionLabel);
+conditionField.left = tableSetting.leftTwo;
+conditionRow.add(conditionField);
+condition10Label.left = '170dp';
+conditionRow.add(condition10Label);
+displayTable.appendRow(conditionRow);
+
+sellingDetailsWin.add(displayTable);
