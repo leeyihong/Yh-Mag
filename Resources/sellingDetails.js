@@ -5,6 +5,13 @@
 var sellingDetailsWin = Ti.UI.currentWindow;
 var isbnNo = sellingDetailsWin.isbnNo;
 Ti.API.info(isbnNo);
+var screenHeight = Ti.Platform.displayCaps.platformHeight;
+var screenWidth = Ti.Platform.displayCaps.platformWidth;
+
+function GetWidth(value) {
+    return parseInt((screenWidth * value) / 320);
+}
+
 
 //Setting global varible for book details
 var output ;
@@ -12,7 +19,7 @@ var details ;
 var bookImage = Ti.UI.createImageView({
 	url: "NoImage.png",
 	top: '10dp',
-	left: '10dp',
+	left: 'center',
 	width: '85dp',
 	height: '120dp'
 });
@@ -195,9 +202,10 @@ var submitSellingButton =  Ti.UI.createButton({
 		fontWeight:'bold'
 	},
 	color: '#000014',
-	left: '10dp',
+	left: '80dp',
 	//top: '400dp',
-	width: '80dp'
+	width: '80dp',
+	height: '35dp'
 });
 //sellingDetailsWin.add(submitSellingButton);
 var cancelButton =  Ti.UI.createButton({
@@ -208,11 +216,16 @@ var cancelButton =  Ti.UI.createButton({
 		fontWeight:'bold'
 	},
 	color: '#000014',
-	left: '100dp',
+	left: '180dp',
 	//top: '400dp',
-	width: '80dp'
+	width: '80dp',
+	height: '35dp'
 });
 //sellingDetailsWin.add(cancelButton);
+var transacWindow = Ti.UI.createWindow({
+	backgroundColor: 'white',
+	url : 'transact.js'
+});
 var cancelDialog = Ti.UI.createAlertDialog({
 	title: 'Cancel Dialog',
 	message: 'Are you sure you would like to cancel this?',
@@ -222,6 +235,14 @@ var cancelDialog = Ti.UI.createAlertDialog({
 cancelButton.addEventListener('click', function(){
 	cancelDialog.show();
 });
+cancelDialog.addEventListener('click', function(ev) {
+    if (ev.index == 0) { // clicked "Confirm"
+      transacWindow.open();
+    } else if (ev.index == 1) { // clicked "Cancel"
+      // do nothing
+    }
+  });
+
 
 var isbnAPIUrl = 'https://www.googleapis.com/books/v1/volumes?q=isbn:';
 var isbnApiKey = 'AIzaSyBgUbjxOGiJNbKS39ZHF2NH2hLVHdo6FEs';
@@ -291,11 +312,6 @@ xhr.onload = function(){
 
 xhr.send();
 
-var tableData = [
-{title: bookImage}, 
-{title: titleLabel}, 
-{title: ""}]
-
 var tableSetting = {
 	leftOne: '10dp',
 	leftTwo: '110dp'
@@ -309,6 +325,7 @@ var displayTable = Ti.UI.createTableView({
 var BookImageRow = Ti.UI.createTableViewRow({
 	height: 'auto',
 }); 
+bookImage.left = '120dp';
 BookImageRow.add(bookImage);
 displayTable.appendRow(BookImageRow);
 
@@ -381,5 +398,15 @@ conditionRow.add(conditionField);
 condition10Label.left = '170dp';
 conditionRow.add(condition10Label);
 displayTable.appendRow(conditionRow);
+
+// Button Row
+var buttonRow = Ti.UI.createTableViewRow({
+	height: 'auto',
+});
+submitSellingButton.left = '80dp';
+buttonRow.add(submitSellingButton);
+cancelButton.left = '180dp';
+buttonRow.add(cancelButton);
+displayTable.appendRow(buttonRow);
 
 sellingDetailsWin.add(displayTable);
