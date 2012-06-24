@@ -16,7 +16,8 @@ var typeBarcodeTextField = Ti.UI.createTextField({
 	left: GetWidth(70),
 	top: '50dp',
 	width: GetWidth(130),
-	height: '40dp'
+	height: '40dp',
+	keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD
 });
 win.add(typeBarcodeTextField);
 
@@ -28,7 +29,7 @@ var submitISBNButton = Ti.UI.createButton({
 	left: GetWidth(200),
 	top:'50dp',
 	width: '69dp',
-	height: '40dp'	
+	height: '40dp'
 });
 
 var isbnNo;
