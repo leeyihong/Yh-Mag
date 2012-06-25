@@ -193,8 +193,93 @@ var condition10Label = Ti.UI.createLabel({
 	//top: '350dp'
 });
 //sellingDetailsWin.add(condition10Label);
+var FacultyLabel = Ti.UI.createLabel({
+	text: 'Faculty :',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+		fontWeight:'bold'
+	},
+	color: '#000014',
+	left: '10dp',
+	//top: '315dp'
+});
+//sellingDetailsWin.add(editionLabel);
+var facultyField = Ti.UI.createTextField({
+	hintText: 'edition',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+	},
+	color: '#000014',
+	left: '110dp',
+	//top: '305dp',
+	height: '35dp',
+	width: '200dp'
+});
+var facultyPicker = Titanium.UI.createPicker({
+	height: '35dp',
+	width: '200dp',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+	},
+});
+var facultiesList = [];
+facultiesList[0]=Titanium.UI.createPickerRow({title:'Arts & Social Sciences'});
+facultiesList[1]=Titanium.UI.createPickerRow({title:'Business'});
+facultiesList[2]=Titanium.UI.createPickerRow({title:'Computing'});
+facultiesList[3]=Titanium.UI.createPickerRow({title:'Dentistry'});
+facultiesList[4]=Titanium.UI.createPickerRow({title:'Design & Environment'});
+facultiesList[5]=Titanium.UI.createPickerRow({title:'Engineering'});
+facultiesList[6]=Titanium.UI.createPickerRow({title:'Law'});
+facultiesList[7]=Titanium.UI.createPickerRow({title:'Medicine'});
+facultiesList[8]=Titanium.UI.createPickerRow({title:'Science'});
+facultyPicker.add(facultiesList);
 
-var submitSellingButton =  Ti.UI.createButton({
+var moduleCodeLabel = Ti.UI.createLabel({
+	text: 'Module Code :',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+		fontWeight:'bold'
+	},
+	color: '#000014',
+	left: '10dp',
+});
+var moduleCodeField = Ti.UI.createTextField({
+	hintText: 'module code',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+	},
+	color: '#000014',
+	left: '110dp',
+	height: '35dp',
+	width: '200dp'
+});
+var priceLabel = Ti.UI.createLabel({
+	text: 'Price:',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+		fontWeight:'bold'
+	},
+	color: '#000014',
+	left: '10dp',
+});
+var priceField = Ti.UI.createTextField({
+	hintText: '$30',
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+	},
+	color: '#000014',
+	left: '110dp',
+	height: '35dp',
+	width: '200dp'
+});
+var publishButton =  Ti.UI.createButton({
 	title: 'Submit',
 	font:{
 		fontSize: '14dp', 
@@ -207,7 +292,7 @@ var submitSellingButton =  Ti.UI.createButton({
 	width: '80dp',
 	height: '35dp'
 });
-//sellingDetailsWin.add(submitSellingButton);
+//sellingDetailsWin.add(publishButton);
 var cancelButton =  Ti.UI.createButton({
 	title: 'Cancel',
 	font:{
@@ -399,12 +484,42 @@ condition10Label.left = '170dp';
 conditionRow.add(condition10Label);
 displayTable.appendRow(conditionRow);
 
+// Faculty Row
+var facultyRow = Ti.UI.createTableViewRow({
+	height: 'auto',
+});
+FacultyLabel.left = tableSetting.leftOne;
+facultyRow.add(FacultyLabel);
+facultyPicker.left = tableSetting.leftTwo;
+facultyRow.add(facultyPicker);
+displayTable.appendRow(facultyRow);
+
+// Module Code Row
+var moduleCodeRow = Ti.UI.createTableViewRow({
+	height: 'auto',
+});
+moduleCodeLabel.left = tableSetting.leftOne;
+moduleCodeRow.add(moduleCodeLabel);
+moduleCodeField.left = tableSetting.leftTwo;
+moduleCodeRow.add(moduleCodeField);
+displayTable.appendRow(moduleCodeRow);
+
+// Price Row
+var priceRow = Ti.UI.createTableViewRow({
+	height: 'auto',
+});
+priceLabel.left = tableSetting.leftOne;
+priceRow.add(priceLabel);
+priceField.left = tableSetting.leftTwo;
+priceRow.add(priceField);
+displayTable.appendRow(priceRow);
+
 // Button Row
 var buttonRow = Ti.UI.createTableViewRow({
 	height: 'auto',
 });
-submitSellingButton.left = '80dp';
-buttonRow.add(submitSellingButton);
+publishButton.left = '80dp';
+buttonRow.add(publishButton);
 cancelButton.left = '180dp';
 buttonRow.add(cancelButton);
 displayTable.appendRow(buttonRow);

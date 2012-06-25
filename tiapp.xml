@@ -20,7 +20,7 @@
     <publisher>Magdelyn</publisher>
     <url>http://</url>
     <description>not specified</description>
-    <copyright>2012 by Magdelyn</copyright>
+    <copyright>2012 by Appnovate</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
@@ -45,12 +45,8 @@
     </iphone>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
         <manifest>
-            <supports-screens 
-            	android:smallScreens="true"
-    			android:normalScreens="true"
-    			android:largeScreens="true"
-            	android:anyDensity="true">
-            </supports-screens>
+            <supports-screens android:anyDensity="true"
+                android:largeScreens="true" android:normalScreens="true" android:smallScreens="true"/>
         </manifest>
     </android>
     <mobileweb>
