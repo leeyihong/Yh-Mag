@@ -191,16 +191,11 @@ var details = Titanium.UI.createTextArea({
 
 winProfile.add(details);
 
-// home window
-var homeWin = Titanium.UI.createWindow({
-	backgroundColor : '#FFFFFF',
-	url : 'home.js',
-});
-
 // login window
 var loginWin = Titanium.UI.createWindow({
 	backgroundColor : '#FFFFFF',
 	url : 'app.js',
+	navBarHidden: true
 });
 
 // logout button
@@ -218,14 +213,13 @@ logout.addEventListener('click', function(e){
 	// options when logout button is clicked
 	var resultOptionDialog = Titanium.UI.createOptionDialog({
 		title: 'Are you sure you want to logout?',
-		options: ['Yes', 'No'],
-		cancel: 1
+		options: ['Yes', 'No']
 	});
+	
 	resultOptionDialog.addEventListener('click', function(e){
 		// clicking on yes...
 		if (e.index == 0){
 			Ti.App.Properties.setString("token", ''),
-			homeWin.hide(); // trying to hide the tab group after logging out - but not successful yet
 			loginWin.open();
 		}
 		else{
