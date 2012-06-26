@@ -7,8 +7,9 @@ function GetWidth(value) {
     return parseInt((screenWidth * value) / 320);
 }
 
-var sellABookImage = Ti.UI.createImageView({
-	image: 'images/Salesbook.png',
+var sellABookImage = Ti.UI.createButton({
+	backgroundImage: 'images/Salesbook1.png',
+	backgroundSelectedImage: 'images/Salesbook1_click.png',
 	width: '300dp',
 	height:	'130dp',
 	left: '10dp',
@@ -20,8 +21,9 @@ sellABookImage.addEventListener('click', function(e){
 	bacodeInputTypeWin.open();
 });
 
-var sellingListImage = Ti.UI.createImageView({
-	image: 'images/sellingbooks1.png',
+var sellingListImage = Ti.UI.createButton({
+	backgroundImage: 'images/sellingbooks2.png',
+	
 	width: '300dp',
 	height:	'130dp',
 	left: '10dp',
@@ -31,7 +33,7 @@ var sellingListImage = Ti.UI.createImageView({
 transactWin.add(sellingListImage);
 
 var buyingListImage = Ti.UI.createImageView({
-	image: 'images/blank.png',
+	image: 'images/BuyingList.png',
 	width: '300dp',
 	height:	'130dp',
 	left: '10dp',
