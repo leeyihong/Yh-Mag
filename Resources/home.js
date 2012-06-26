@@ -34,7 +34,7 @@ var winHome = Titanium.UI.createWindow({
     //url:"home.js"
 });
 var tabHome = Titanium.UI.createTab({  
-    icon:'bookhouse.png',
+    icon:'images/light_home.png',
     title:'Home',
     window:winHome
 });
@@ -51,7 +51,7 @@ var winSearch= Titanium.UI.createWindow({
 });
 
 var tabSearch = Titanium.UI.createTab({  
-    icon:'search.png',
+    icon:'images/light_search.png',
     title:'Search',
     window:winSearch
 });
@@ -68,7 +68,7 @@ var winTransact = Titanium.UI.createWindow({
 });
 
 var tabTransact = Titanium.UI.createTab({  
-    icon:'transact.png',
+    icon:'images/light_coins.png',
     title:'Transact',
     window:winTransact
 });
@@ -85,7 +85,7 @@ var winProfile= Titanium.UI.createWindow({
 });
 
 var tabProfile = Titanium.UI.createTab({  
-    icon:'profile.png',
+    icon:'images/light_pictures.png',
     title:'Profile',
     window: winProfile
 });

@@ -4,7 +4,8 @@ Ti.App.Properties.setString('apikey', 'B35vgIdq2a3SpGSBD81Be');
 
 // login window
 var loginWin = Titanium.UI.createWindow({
-	backgroundColor : '#FFFFFF'
+	backgroundColor : '#FFFFFF',
+	navBarHidden: true
 });
 
 // home window upon successful login
