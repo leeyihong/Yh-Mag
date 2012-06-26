@@ -24,12 +24,12 @@ dialog.addEventListener('click',function(e) {
 
 // choose a photo logo
 var photoLogo = Titanium.UI.createImageView({
-	image: 'profilePic.png',
-	width: 76,
-	height:	100,
-	left: 122,
-	right: 122,
-	top: 20
+	image: 'profile.png',
+	width: '140dp',
+	height:	'133dp',
+	left: '85dp',
+	right: '85dp',
+	top: '20dp'
 });
 
 winProfile.add(photoLogo);
@@ -149,12 +149,41 @@ xhr.send();
 nameText = nameText + Ti.App.Properties.getString('name');
 emailText = emailText + Ti.App.Properties.getString('email');
 
+// prompt for app username
+var displayName;
+var usernameLabel = Titanium.UI.createLabel({
+	width: 'auto',
+	height: '30dp',
+	top: '158dp',
+	left: '20dp',
+	color: '#4169E1',
+	font: {fontSize: 14, fontFamily: 'Helvetica',
+	fontWeight:'bold'},
+	text: 'Display name:'
+});
+winProfile.add(usernameLabel);
+
+// text field to enter username
+var usernameText = Titanium.UI.createTextField({ 
+	value: Ti.App.Properties.getString('name'),
+	font:{
+		fontSize: '13dp',
+	},
+	width: '175dp',
+	height: '35dp',
+	top: '158dp',
+	left: '125dp'
+});
+winProfile.add(usernameText);
+// save username to database
+
+
 // create a label to display name
 var nameDisplay = Titanium.UI.createLabel({
 	width: 'auto',
-	height: 30,
-	top: 140,
-	left: 20,
+	height: '30dp',
+	top: '193dp',
+	left: '20dp',
 	color: '#4169E1',
 	font: {fontSize: 14, fontFamily: 'Helvetica',
 	fontWeight:'bold'},
@@ -166,9 +195,9 @@ winProfile.add(nameDisplay);
 // create a label to display email
 var emailDisplay = Titanium.UI.createLabel({
 	width: 'auto',
-	height: 30,
-	top: 170,
-	left: 20,
+	height: '30dp',
+	top: '228dp',
+	left: '20dp',
 	color: '#4169E1',
 	font: {fontSize: 14, fontFamily: 'Helvetica',
 	fontWeight:'bold'},
@@ -178,14 +207,27 @@ winProfile.add(emailDisplay);
 
 // other details textbox
 var addDetails;
-var details = Titanium.UI.createTextArea({ 
-	width: 280,
-	height: 100,
-	top: 210,
-	left: 20,
-	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
-	returnKeyType:Titanium.UI.RETURNKEY_DONE,
-	hintText: 'Other details...',
+var detailsLabel = Titanium.UI.createLabel({
+	width: 'auto',
+	height: '30dp',
+	top: '263dp',
+	left: '20dp',
+	color: '#4169E1',
+	font: {fontSize: 14, fontFamily: 'Helvetica',
+	fontWeight:'bold'},
+	text: 'Other details:'
+});
+winProfile.add(detailsLabel);
+
+var details = Titanium.UI.createTextField({ 
+	hintText: 'Handphone, etc...',
+	font:{
+		fontSize: '14dp',
+	},
+	width: '280dp',
+	height: '35dp',
+	top: '298dp',
+	left: '20dp',
 	value: addDetails
 });
 
@@ -202,18 +244,20 @@ var loginWin = Titanium.UI.createWindow({
 var logout = Titanium.UI.createButton({
 	title: 'Logout',
 	font: {fontsize: 20},
-	bottom: 20,
-	left: 100,
-	width: 120,
-	height: 50
+	bottom: '15dp',
+	left: '100dp',
+	width: '120dp',
+	height: '35dp'
 })
 winProfile.add(logout);
 
 logout.addEventListener('click', function(e){
 	// options when logout button is clicked
-	var resultOptionDialog = Titanium.UI.createOptionDialog({
-		title: 'Are you sure you want to logout?',
-		options: ['Yes', 'No']
+	var resultOptionDialog = Titanium.UI.createAlertDialog({
+		title: 'Logout Dialog',
+		message: 'Are you sure you want to logout?',
+		cancel: 1,
+		buttonNames: ['Confirm', 'Cancel']
 	});
 	
 	resultOptionDialog.addEventListener('click', function(e){
