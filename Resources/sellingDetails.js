@@ -388,10 +388,10 @@ xhr.onload = function(){
 		} else if (output.totalItems == 0){
 			alert('This Barcode is invalid! This might not be a book or the book is not in the database.')
 		} else {
-			aleat('Error in looking for a book in database')
+			alert('Error in looking for a book in database')
 		}
 	} else {
-		alert('This Barcode is invalid! This might not be a book or book not found in database.');
+		alert('This Barcode is invalid. This might not be a book or book not found in database.');
 	}
 };
 
