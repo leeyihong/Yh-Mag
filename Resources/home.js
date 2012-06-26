@@ -103,3 +103,17 @@ tabGroup.addTab(tabProfile);
 
 tabGroup.open();
 
+var facultiesList = [
+{title:"Arts & Social Sciences"},
+{title:"Business"},
+{title:"Computing"},
+{title:"Dentistry"},
+{title:"Design & Environment"},
+{title:"Engineering"},
+{title:"Law"},
+{title:"Medicine"},
+{title:"Science"}]; 
+var facultyTable = Titanium.UI.createTableView({
+	data:facultiesList
+	}); 
+winHome.add(facultyTable);
