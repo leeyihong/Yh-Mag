@@ -29,10 +29,20 @@ var photoLogo = Titanium.UI.createImageView({
 	height:	'133dp',
 	left: '85dp',
 	right: '85dp',
-	top: '20dp'
+	top: '12dp'
 });
-
 winProfile.add(photoLogo);
+
+var photoInstruct = Titanium.UI.createLabel({
+	width: 'auto',
+	height: '15dp',
+	top: '145dp',
+	left: '90dp',
+	color: '#D3D3D3',
+	font: {fontSize: 10, fontFamily: 'Helvetica'},
+	text: 'Click on photo to change it...'
+})
+winProfile.add(photoInstruct);
 
 photoLogo.addEventListener('click', function(e){
 	dialog.show();
@@ -154,9 +164,9 @@ var displayName;
 var usernameLabel = Titanium.UI.createLabel({
 	width: 'auto',
 	height: '30dp',
-	top: '158dp',
+	top: '160dp',
 	left: '20dp',
-	color: '#4169E1',
+	color: '#000014',
 	font: {fontSize: 14, fontFamily: 'Helvetica',
 	fontWeight:'bold'},
 	text: 'Display name:'
@@ -171,7 +181,7 @@ var usernameText = Titanium.UI.createTextField({
 	},
 	width: '175dp',
 	height: '35dp',
-	top: '158dp',
+	top: '160dp',
 	left: '125dp'
 });
 winProfile.add(usernameText);
@@ -182,9 +192,9 @@ winProfile.add(usernameText);
 var nameDisplay = Titanium.UI.createLabel({
 	width: 'auto',
 	height: '30dp',
-	top: '193dp',
+	top: '195dp',
 	left: '20dp',
-	color: '#4169E1',
+	color: '#000014',
 	font: {fontSize: 14, fontFamily: 'Helvetica',
 	fontWeight:'bold'},
 	text: nameText
@@ -196,9 +206,9 @@ winProfile.add(nameDisplay);
 var emailDisplay = Titanium.UI.createLabel({
 	width: 'auto',
 	height: '30dp',
-	top: '228dp',
+	top: '230dp',
 	left: '20dp',
-	color: '#4169E1',
+	color: '#000014',
 	font: {fontSize: 14, fontFamily: 'Helvetica',
 	fontWeight:'bold'},
 	text: emailText
@@ -210,9 +220,9 @@ var addDetails;
 var detailsLabel = Titanium.UI.createLabel({
 	width: 'auto',
 	height: '30dp',
-	top: '263dp',
+	top: '265dp',
 	left: '20dp',
-	color: '#4169E1',
+	color: '#000014',
 	font: {fontSize: 14, fontFamily: 'Helvetica',
 	fontWeight:'bold'},
 	text: 'Other details:'
@@ -226,7 +236,7 @@ var details = Titanium.UI.createTextField({
 	},
 	width: '280dp',
 	height: '35dp',
-	top: '298dp',
+	top: '295dp',
 	left: '20dp',
 	value: addDetails
 });
@@ -243,11 +253,11 @@ var loginWin = Titanium.UI.createWindow({
 // logout button
 var logout = Titanium.UI.createButton({
 	title: 'Logout',
-	font: {fontsize: 20},
-	bottom: '15dp',
+	font: {fontsize: 25},
+	bottom: '20dp',
 	left: '100dp',
 	width: '120dp',
-	height: '35dp'
+	height: '30dp'
 })
 winProfile.add(logout);
 
