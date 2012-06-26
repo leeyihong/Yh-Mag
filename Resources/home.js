@@ -104,16 +104,40 @@ tabGroup.addTab(tabProfile);
 tabGroup.open();
 
 var facultiesList = [
-{title:"Arts & Social Sciences"},
-{title:"Business"},
-{title:"Computing"},
-{title:"Dentistry"},
-{title:"Design & Environment"},
-{title:"Engineering"},
-{title:"Law"},
-{title:"Medicine"},
-{title:"Science"}]; 
+"Arts & Social Sciences",
+"Business",
+"Computing",
+"Dentistry",
+"Design & Environment",
+"Engineering",
+"Law",
+"Medicine",
+"Science"]; 
+for (var i=0; i<facultiesList.length; i++){
+	var row = Ti.UI.createTableViewRow({});
+	
+	var textlabel = Ti.UI.createLabel({
+		text: facultiesList[i],
+		color: '#000014',
+		font:{
+			fontSize: '14dp', 
+			fontFamily: 'Helvetica',
+			fontWeight:'bold'
+		},
+		textAlign:'left',
+		left:'10dp',
+		height: '50dp'
+	});
+	row.add(textlabel);
+	facultiesList[i] = row;
+};
 var facultyTable = Titanium.UI.createTableView({
-	data:facultiesList
-	}); 
+	data:facultiesList,
+	font:{
+		fontSize: '14dp', 
+		fontFamily: 'Helvetica',
+		fontWeight:'bold'
+	},
+	color: '#000014',
+}); 
 winHome.add(facultyTable);
