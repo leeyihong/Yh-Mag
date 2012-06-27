@@ -8,39 +8,69 @@ function GetWidth(value) {
 }
 
 var sellABookImage = Ti.UI.createButton({
-	backgroundImage: 'images/Salesbook1.png',
-	backgroundSelectedImage: 'images/Salesbook1_click.png',
+	backgroundImage: 'images/shootNSell.png',
+	backgroundSelectedImage: 'images/shootNSell_click.png',
 	width: '300dp',
 	height:	'130dp',
 	left: '10dp',
 	right: '10dp',
 	top: '10dp'
 });
-transactWin.add(sellABookImage);
 sellABookImage.addEventListener('click', function(e){
 	bacodeInputTypeWin.open();
 });
 
 var sellingListImage = Ti.UI.createButton({
-	backgroundImage: 'images/sellingbooks2.png',
-	
+	backgroundImage: 'images/sellingList.png',
+	backgroundSelectedImage: 'images/sellingList_click.png',
 	width: '300dp',
 	height:	'130dp',
 	left: '10dp',
 	right: '10dp',
-	top: '150dp'
+	top: '10dp'
 });
-transactWin.add(sellingListImage);
 
-var buyingListImage = Ti.UI.createImageView({
-	image: 'images/BuyingList.png',
+var buyingListImage = Ti.UI.createButton({
+	backgroundImage: 'images/buyingList.png',
+	backgroundSelectedImage: 'images/buyingList_click.png',
 	width: '300dp',
 	height:	'130dp',
 	left: '10dp',
 	right: '10dp',
-	top: '290dp'
+	top: '10dp'
 });
-transactWin.add(buyingListImage);
+
+/*CREATE TABLE*/
+var trasacOptionTable = Ti.UI.createTableView({
+	height: 'auto',
+	separatorColor: 'transparent',
+});
+
+//Shoot and Sell Button
+var shootNSellRow = Ti.UI.createTableViewRow({
+	height: 'auto',
+});
+shootNSellRow.center;
+shootNSellRow.add(sellABookImage);
+trasacOptionTable.appendRow(shootNSellRow);
+
+//Selling List Button
+var sellingListRow = Ti.UI.createTableViewRow({
+	height: 'auto',
+});
+sellingListRow.center;
+sellingListRow.add(sellingListImage);
+trasacOptionTable.appendRow(sellingListRow);
+
+//Selling List Button
+var buyingListRow = Ti.UI.createTableViewRow({
+	height: 'auto',
+});
+buyingListRow.center;
+buyingListRow.add(buyingListImage);
+trasacOptionTable.appendRow(buyingListRow);
+
+transactWin.add(trasacOptionTable);
 
 //Choosing Barcode
 var bacodeInputTypeWin = Ti.UI.createWindow({

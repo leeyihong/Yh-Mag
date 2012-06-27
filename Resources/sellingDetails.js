@@ -403,14 +403,15 @@ var tableSetting = {
 	
 };
 var displayTable = Ti.UI.createTableView({
-	//data: tableData,
 	height: 'auto',
 	separatorColor: 'transparent'
 });
+//Book Image Row
 var BookImageRow = Ti.UI.createTableViewRow({
 	height: 'auto',
 }); 
-bookImage.left = '120dp';
+//bookImage.left = '120dp';
+bookImage.center;
 BookImageRow.add(bookImage);
 displayTable.appendRow(BookImageRow);
 
