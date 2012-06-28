@@ -75,6 +75,7 @@ transactWin.add(trasacOptionTable);
 //Choosing Barcode
 var bacodeInputTypeWin = Ti.UI.createWindow({
 	backgroundColor: '#FFFFFF',
+	modal: true
 });
 var typeBarcodeTextField = Ti.UI.createTextField({
 	hintText: '13 ISBN w\/o \'-\'',
