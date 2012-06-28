@@ -167,7 +167,7 @@ var usernameLabel = Titanium.UI.createLabel({
 	top: '160dp',
 	left: '20dp',
 	color: '#000014',
-	font: {fontSize: 14, fontFamily: 'Helvetica',
+	font: {fontSize: '14dp', fontFamily: 'Helvetica',
 	fontWeight:'bold'},
 	text: 'Display name:'
 });
@@ -195,7 +195,7 @@ var nameDisplay = Titanium.UI.createLabel({
 	top: '195dp',
 	left: '20dp',
 	color: '#000014',
-	font: {fontSize: 14, fontFamily: 'Helvetica',
+	font: {fontSize: '14dp', fontFamily: 'Helvetica',
 	fontWeight:'bold'},
 	text: nameText
 });
@@ -209,7 +209,7 @@ var emailDisplay = Titanium.UI.createLabel({
 	top: '230dp',
 	left: '20dp',
 	color: '#000014',
-	font: {fontSize: 14, fontFamily: 'Helvetica',
+	font: {fontSize: '14dp', fontFamily: 'Helvetica',
 	fontWeight:'bold'},
 	text: emailText
 });
@@ -223,7 +223,7 @@ var detailsLabel = Titanium.UI.createLabel({
 	top: '265dp',
 	left: '20dp',
 	color: '#000014',
-	font: {fontSize: 14, fontFamily: 'Helvetica',
+	font: {fontSize: '14dp', fontFamily: 'Helvetica',
 	fontWeight:'bold'},
 	text: 'Other details:'
 });
