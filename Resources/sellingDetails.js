@@ -13,7 +13,11 @@ var screenWidth = Ti.Platform.displayCaps.platformWidth;
 
 function GetWidth(value) {
 	return parseInt((screenWidth * value) / 320);
-}
+};
+function GetHeight(value) {
+	return parseInt((screenWidth * value) / 480);
+};
+
 
 //Setting global varible for book details
 var output;
@@ -174,7 +178,7 @@ var condition10Label = Ti.UI.createLabel({
 	left : '170dp',
 });
 var FacultyLabel = Ti.UI.createLabel({
-	text : 'Faculty :',
+	text : 'Faculty :*',
 	font : {
 		fontSize : '14dp',
 		fontFamily : 'Helvetica',
@@ -233,7 +237,7 @@ facultiesList[8] = Titanium.UI.createPickerRow({
 facultyPicker.add(facultiesList);
 
 var moduleCodeLabel = Ti.UI.createLabel({
-	text : 'Module Code :',
+	text : 'Module Code :*',
 	font : {
 		fontSize : '14dp',
 		fontFamily : 'Helvetica',
@@ -254,7 +258,7 @@ var moduleCodeField = Ti.UI.createTextField({
 	width : '200dp'
 });
 var priceLabel = Ti.UI.createLabel({
-	text : 'Price:',
+	text : 'Price :*',
 	font : {
 		fontSize : '14dp',
 		fontFamily : 'Helvetica',
@@ -265,6 +269,7 @@ var priceLabel = Ti.UI.createLabel({
 });
 var priceField = Ti.UI.createTextField({
 	hintText : '$30',
+	value: '$',
 	font : {
 		fontSize : '14dp',
 		fontFamily : 'Helvetica',
@@ -535,15 +540,28 @@ publishButton.addEventListener('click', function() {
 	publishDialog.show();
 });
 
+var activityIndicator = Ti.UI.createActivityIndicator({
+	color: 'Red',
+	font: {fontFamily:'Helvetica Neue', fontSize:'26dp', fontWeight:'bold'},
+	message: 'Loading...',
+	style:Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
+	//top: GetHeight(227),
+	//left: GetWidth(100),
+	//height:'auto',
+	//width:'auto'
+});
+
 publishDialog.addEventListener('click', function(e) {
+	
 	if (e.index == 0) {// clicked "Confirm"
+		activityIndicator.show();
 		Cloud.Users.login({
 			login : 'jessicalee_88@hotmail.com',
 			password : 'test_password'
 		}, function(e) {
 			if (e.success) {
 				var user = e.users[0];
-				alert('Success Login:\\n' + 'id: ' + user.id + '\\n' + 'first name: ' + user.first_name + '\\n' + 'last name: ' + user.last_name);
+				//alert('Success Login:\\n' + 'id: ' + user.id + '\\n' + 'first name: ' + user.first_name + '\\n' + 'last name: ' + user.last_name);
 				/*
 				Cloud.Photos.create({
 					photo : sellingDetailsWin.originalImage
@@ -565,6 +583,7 @@ publishDialog.addEventListener('click', function(e) {
 				}, function(e) {
 					if (e.success) {
 						var post = e.posts[0];
+						activityIndicator.hide();
 						alert('Success create post:\\n' + 'id: ' + post.id + '\\n' + 'title: ' + post.title + '\\n' + 'content: ' + post.content + '\\n');
 					} else {
 						alert('Error in post creating:\\n' + ((e.error && e.message) || JSON.stringify(e)));
