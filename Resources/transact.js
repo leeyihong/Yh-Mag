@@ -87,12 +87,15 @@ var imgView = Titanium.UI.createImageView({
 	width: '200dp',
 	height: '200dp'	
 });
+var originalImage = Titanium.UI.createImageView({
+	width: screenHeight,
+	height: screenWidth
+});
 
 openCameraDialog.addEventListener('click',function(e) {
-	Ti.API.info('You selected ' + e.index);
-	if(e.index == 0){
+	
+	if(e.index == 0){ //from the camera
 		
-		//from the camera
 		Titanium.Media.showCamera({
 			
 			success:function(event){
@@ -100,18 +103,10 @@ openCameraDialog.addEventListener('click',function(e) {
 			if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
 				
 				//set image view
-				var originalImage = Titanium.UI.createImageView({
-					width: screenHeight,
-					height: screenWidth
-				});
+				
 				originalImage.image = image;
-				var cropView = Titanium.UI.createView({
-				    width:'320dp', 
-				    height:'320dp'
-				});
-				cropView.add(originalImage);
-				originalImage.left= '-90dp';
-				imgView.image = cropView.toImage();
+				imgView.image = cropImage(originalImage);
+				
 				currentTab.open(bacodeInputTypeWin);
 				currentTab.add(bacodeInputTypeWin);
 				bacodeInputTypeWin.open();
@@ -141,11 +136,50 @@ openCameraDialog.addEventListener('click',function(e) {
 		saveToPhotoGallery:false
 		});
 		
+	} else if(e.index == 1){ //obtain an image from the gallery
+		
+		Titanium.Media.openPhotoGallery({
+			
+			success:function(event){
+				var image = event.media;
+				// set image view
+				Ti.API.debug('Our type was: '+event.mediaType);
+				if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO){
+					
+					//imgView.image = image;
+					//win.add(imgView);
+					
+					originalImage.image = image;
+					imgView.image = cropImage(originalImage);
+					
+					currentTab.open(bacodeInputTypeWin);
+					currentTab.add(bacodeInputTypeWin);
+					bacodeInputTypeWin.open();
+				}
+			},
+			
+			cancel:function(){
+				//user cancelled the action from within
+				//the photo gallery
+			}
+		});
 	} else {
 		//cancel was tapped
 		//user opted not to choose a photo
 	}
 });
+
+function cropImage(originalImage){
+	//set image view
+	var cropView = Titanium.UI.createView({
+	    width:'320dp', 
+	    height:'320dp'
+	});
+	cropView.add(originalImage);
+	originalImage.left= '-90dp';
+	
+	return cropView.toImage();
+}
 
 //Choosing Barcode
 var bacodeInputTypeWin = Ti.UI.createWindow({
