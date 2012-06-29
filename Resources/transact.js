@@ -190,6 +190,7 @@ var isbnNo;
 submitISBNButton.addEventListener('click', function(e){
 	if(typeBarcodeTextField.value.length == 13){
 		sellingDetailsWin.isbnNo = typeBarcodeTextField.value;
+		sellingDetailsWin.image = imgView;
 		sellingDetailsWin.open();
 	} else {
 		alert('Invalid isbn number. Check that the isbn number is 13 digit long. And remove all \'-\'')
@@ -213,6 +214,7 @@ var scannerWinButton = Ti.UI.createButton({
 	height: '40dp'	
 });
 scannerWinButton.addEventListener('click', function(){
+	bacodeScanningWin.image = imgView.image;
 	bacodeScanningWin.open();
 });
 

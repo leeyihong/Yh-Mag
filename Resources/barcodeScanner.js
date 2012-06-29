@@ -3,6 +3,7 @@
  */
 /*--- SCANNER WINDOW ---*/
 var barcodeScanningWin = Ti.UI.currentWindow;
+var imageTaken = bacodeScanningWin.image;
 
 var label = Ti.UI.createLabel();
 barcodeScanningWin.add(label);
@@ -18,6 +19,7 @@ titaniumBarcode.scan({
 			});
 			
 			sellingDetailsWin.isbnNo = data.barcode;
+			sellingDetailsWin.image = imageTaken;
 			sellingDetailsWin.open();
 
 		} else {

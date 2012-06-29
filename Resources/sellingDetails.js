@@ -4,6 +4,7 @@
 
 var sellingDetailsWin = Ti.UI.currentWindow;
 var isbnNo = sellingDetailsWin.isbnNo;
+var imageTaken = sellingDetailsWin.image;
 Ti.API.info(isbnNo);
 var screenHeight = Ti.Platform.displayCaps.platformHeight;
 var screenWidth = Ti.Platform.displayCaps.platformWidth;
@@ -17,11 +18,11 @@ function GetWidth(value) {
 var output ;
 var details ;
 var bookImage = Ti.UI.createImageView({
-	url: "NoImage.png",
+	image: imageTaken.image,
 	top: '10dp',
-	left: 'center',
-	width: '85dp',
-	height: '120dp'
+	//left: 'center',
+	width: '100dp',
+	height: '100dp'
 });
 var titleLabel = Ti.UI.createLabel({
 	text: 'Title: ',
@@ -32,7 +33,6 @@ var titleLabel = Ti.UI.createLabel({
 	},
 	color: '#000014',
 	left: '10dp',
-	//top: '140dp'
 });
 //sellingDetailsWin.add(titleLabel);
 var titleField = Ti.UI.createTextField({
@@ -43,7 +43,6 @@ var titleField = Ti.UI.createTextField({
 	},
 	verticalAlign: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_BOTTOM,
 	left: '110dp',
-	//top: '130dp',
 	height: '35dp',
 	width: '200dp'
 });
@@ -55,7 +54,6 @@ var subtitleField = Ti.UI.createTextField({
 	},
 	color: '#000014',
 	left: '110dp',
-	//top: '165dp',
 	height: '35dp',
 	width: '200dp'
 });
@@ -68,9 +66,7 @@ var authorsLabel = Ti.UI.createLabel({
 	},
 	color: '#000014',
 	left: '10dp',
-	//top: '210dp'
 });
-//sellingDetailsWin.add(authorsLabel);
 var authorsField = Ti.UI.createTextField({
 	hintText: 'Name of Author/(s/)',
 	font:{
@@ -79,7 +75,6 @@ var authorsField = Ti.UI.createTextField({
 	},
 	color: '#000014',
 	left: '110dp',
-	//top: '200dp',
 	height: '35dp',
 	width: '200dp'
 });
@@ -92,9 +87,7 @@ var publisherLabel = Ti.UI.createLabel({
 	},
 	color: '#000014',
 	left: '10dp',
-	//top: '245dp'
 });
-//sellingDetailsWin.add(publisherLabel);
 var publisherField = Ti.UI.createTextField({
 	hintText: 'name of publisher',
 	font:{
@@ -103,7 +96,6 @@ var publisherField = Ti.UI.createTextField({
 	},
 	color: '#000014',
 	left: '110dp',
-	//top: '235dp',
 	height: '35dp',
 	width: '200dp'
 });
@@ -116,9 +108,7 @@ var publishedDateLabel = Ti.UI.createLabel({
 	},
 	color: '#000014',
 	left: '10dp',
-	//top: '280dp'
 });
-//sellingDetailsWin.add(publisherDateLabel);
 var publishedDateField = Ti.UI.createTextField({
 	hintText: 'Date of Publish',
 	font:{
@@ -127,7 +117,6 @@ var publishedDateField = Ti.UI.createTextField({
 	},
 	color: '#000014',
 	left: '130dp',
-	//top: '270dp',
 	height: '35dp',
 	width: '180dp'
 });
@@ -140,9 +129,7 @@ var editionLabel = Ti.UI.createLabel({
 	},
 	color: '#000014',
 	left: '10dp',
-	//top: '315dp'
 });
-//sellingDetailsWin.add(editionLabel);
 var editionField = Ti.UI.createTextField({
 	hintText: 'edition',
 	font:{
@@ -151,11 +138,9 @@ var editionField = Ti.UI.createTextField({
 	},
 	color: '#000014',
 	left: '110dp',
-	//top: '305dp',
 	height: '35dp',
 	width: '200dp'
 });
-//sellingDetailsWin.add(editionField);
 var conditionLabel = Ti.UI.createLabel({
 	text: 'Condition :',
 	font:{
@@ -165,9 +150,7 @@ var conditionLabel = Ti.UI.createLabel({
 	},
 	color: '#000014',
 	left: '10dp',
-	//top: '350dp'
 });
-//sellingDetailsWin.add(conditionLabel);
 var conditionField = Ti.UI.createTextField({
 	hintText: '5.5',
 	font:{
@@ -176,11 +159,9 @@ var conditionField = Ti.UI.createTextField({
 	},
 	color: '#000014',
 	left: '110dp',
-	//top: '340dp',
 	height: '35dp',
 	width: '60dp'
 });
-//sellingDetailsWin.add(conditionField);
 var condition10Label = Ti.UI.createLabel({
 	text: '/10',
 	font:{
@@ -190,9 +171,7 @@ var condition10Label = Ti.UI.createLabel({
 	},
 	color: '#000014',
 	left: '170dp',
-	//top: '350dp'
 });
-//sellingDetailsWin.add(condition10Label);
 var FacultyLabel = Ti.UI.createLabel({
 	text: 'Faculty :',
 	font:{
@@ -202,9 +181,7 @@ var FacultyLabel = Ti.UI.createLabel({
 	},
 	color: '#000014',
 	left: '10dp',
-	//top: '315dp'
 });
-//sellingDetailsWin.add(editionLabel);
 var facultyField = Ti.UI.createTextField({
 	hintText: 'edition',
 	font:{
@@ -213,7 +190,6 @@ var facultyField = Ti.UI.createTextField({
 	},
 	color: '#000014',
 	left: '110dp',
-	//top: '305dp',
 	height: '35dp',
 	width: '200dp'
 });
@@ -288,11 +264,9 @@ var publishButton =  Ti.UI.createButton({
 	},
 	color: '#000014',
 	left: '80dp',
-	//top: '400dp',
 	width: '80dp',
 	height: '35dp'
 });
-//sellingDetailsWin.add(publishButton);
 var cancelButton =  Ti.UI.createButton({
 	title: 'Cancel',
 	font:{
@@ -302,11 +276,9 @@ var cancelButton =  Ti.UI.createButton({
 	},
 	color: '#000014',
 	left: '180dp',
-	//top: '400dp',
 	width: '80dp',
 	height: '35dp'
 });
-//sellingDetailsWin.add(cancelButton);
 var transacWindow = Ti.UI.createWindow({
 	backgroundColor: 'white',
 	url : 'transact.js'
@@ -349,12 +321,10 @@ xhr.onload = function(){
 			details = output.items[0];
 			
 			titleField.value = details.volumeInfo.title;
-			//sellingDetailsWin.add(titleField)
 			
 			if(details.volumeInfo.subtitle != null){
 				subtitleField.value = details.volumeInfo.subtitle;
 			};
-			//sellingDetailsWin.add(subtitleField);
 			
 			var noOfAuthor = details.volumeInfo.authors.length
 			Ti.API.info(noOfAuthor);
@@ -365,26 +335,26 @@ xhr.onload = function(){
 				};
 				authorsField.value = Aur;
 			};
-			//sellingDetailsWin.add(authorsField);
 			
 			if (details.volumeInfo.publisher != null){
 				publisherField.value = details.volumeInfo.publisher;
 			};
-			//sellingDetailsWin.add(publisherField);
 			
 			if (details.volumeInfo.publishedDate != null){
 				publishedDateField.value = details.volumeInfo.publishedDate;
 			};
-			//sellingDetailsWin.add(publisherDateField);
 			
-			if(details.volumeInfo.hasOwnProperty('imageLinks')){
+			/*
+			
+			 if(details.volumeInfo.hasOwnProperty('imageLinks')){
 				if(details.volumeInfo.imageLinks.hasOwnProperty('thumbnail')){
 					bookImage.url = details.volumeInfo.imageLinks.thumbnail;
 				} else if(details.volumeInfo.imageLinks.hasOwnProperty('smallThumbnail')){
 					bookImage.url = details.volumeInfo.imageLinks.smallThumbnail;
 				}
+			
 			};
-			//sellingDetailsWin.add(bookImage);
+			*/
 		} else if (output.totalItems == 0){
 			alert('This Barcode is invalid! This might not be a book or the book is not in the database.')
 		} else {
@@ -410,7 +380,6 @@ var displayTable = Ti.UI.createTableView({
 var BookImageRow = Ti.UI.createTableViewRow({
 	height: 'auto',
 }); 
-//bookImage.left = '120dp';
 bookImage.center;
 BookImageRow.add(bookImage);
 displayTable.appendRow(BookImageRow);
