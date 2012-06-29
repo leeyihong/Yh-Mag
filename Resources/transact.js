@@ -7,6 +7,8 @@ function GetWidth(value) {
     return parseInt((screenWidth * value) / 320);
 }
 
+var currentTab = Ti.UI.currentTab;
+
 var sellABookImage = Ti.UI.createButton({
 	backgroundImage: 'images/shootNSell.png',
 	backgroundSelectedImage: 'images/shootNSell_click.png',
@@ -83,7 +85,7 @@ var imgView = Titanium.UI.createImageView({
 	top: '5dp',
 	left: GetWidth(60),
 	width: '200dp',
-	height: '200dp'
+	height: '200dp'	
 });
 
 openCameraDialog.addEventListener('click',function(e) {
@@ -96,9 +98,22 @@ openCameraDialog.addEventListener('click',function(e) {
 			success:function(event){
 			var image = event.media;
 			if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
-				//set image view
 				
-				imgView.image = image;
+				//set image view
+				var originalImage = Titanium.UI.createImageView({
+					width: screenHeight,
+					height: screenWidth
+				});
+				originalImage.image = image;
+				var cropView = Titanium.UI.createView({
+				    width:'320dp', 
+				    height:'320dp'
+				});
+				cropView.add(originalImage);
+				originalImage.left= '-90dp';
+				imgView.image = cropView.toImage();
+				currentTab.open(bacodeInputTypeWin);
+				currentTab.add(bacodeInputTypeWin);
 				bacodeInputTypeWin.open();
 				}
 			},
@@ -125,6 +140,7 @@ openCameraDialog.addEventListener('click',function(e) {
 		allowImageEditing:true,
 		saveToPhotoGallery:false
 		});
+		
 	} else {
 		//cancel was tapped
 		//user opted not to choose a photo
@@ -134,7 +150,7 @@ openCameraDialog.addEventListener('click',function(e) {
 //Choosing Barcode
 var bacodeInputTypeWin = Ti.UI.createWindow({
 	backgroundColor: '#FFFFFF',
-	modal: true
+	//modal: true
 });
 
 var bookTitleImage = Ti.UI.createImageView({
@@ -252,6 +268,3 @@ barcodeScannerRow.add(scannerWinButton);
 barcodeOptionTable.appendRow(barcodeScannerRow);
 
 bacodeInputTypeWin.add(barcodeOptionTable);
-
-
-
