@@ -99,18 +99,17 @@ openCameraDialog.addEventListener('click',function(e) {
 		Titanium.Media.showCamera({
 			
 			success:function(event){
-			var image = event.media;
-			if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
-				
-				//set image view
-				
-				originalImage.image = image;
-				imgView.image = cropImage(originalImage);
-				
-				currentTab.open(bacodeInputTypeWin);
-				currentTab.add(bacodeInputTypeWin);
-				bacodeInputTypeWin.open();
-				}
+				var image = event.media;
+				if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+					
+					//set image view
+					originalImage.image = image;
+					imgView.image = cropImage(originalImage);
+					
+					currentTab.open(bacodeInputTypeWin);
+					currentTab.add(bacodeInputTypeWin);
+					bacodeInputTypeWin.open();
+					}
 			},
 			
 			cancel:function(){
@@ -128,12 +127,12 @@ openCameraDialog.addEventListener('click',function(e) {
 				} else {
 					a.setMessage('Unexpected error: ' + error.code);
 				}
-			// show alert
-			a.show();
+				// show alert
+				a.show();
 			},
 			
-		allowImageEditing:true,
-		saveToPhotoGallery:false
+			allowImageEditing:true,
+			saveToPhotoGallery:false
 		});
 		
 	} else if(e.index == 1){ //obtain an image from the gallery
@@ -145,9 +144,6 @@ openCameraDialog.addEventListener('click',function(e) {
 				// set image view
 				Ti.API.debug('Our type was: '+event.mediaType);
 				if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO){
-					
-					//imgView.image = image;
-					//win.add(imgView);
 					
 					originalImage.image = image;
 					imgView.image = cropImage(originalImage);
@@ -202,6 +198,7 @@ var nextStepImage = Ti.UI.createImageView({
 
 var typeBarcodeTextField = Ti.UI.createTextField({
 	hintText: '13 ISBN w\/o \'-\'',
+	value:'9780071244640',
 	font:{
 		fontSize: '14dp',
 	},

@@ -1,6 +1,8 @@
 /**
  * @author Yi Hong
  */
+var Cloud = require('ti.cloud');
+Cloud.debug = true; 
 
 var sellingDetailsWin = Ti.UI.currentWindow;
 var isbnNo = sellingDetailsWin.isbnNo;
@@ -495,3 +497,69 @@ buttonRow.add(cancelButton);
 displayTable.appendRow(buttonRow);
 
 sellingDetailsWin.add(displayTable);
+
+
+/*--- CONNECT TO NUS ---
+var ivleConnect = Ti.Network.createHTTPClient();
+ivleConnect.open("GET", "https://ivle.nus.edu.sg/api/Lapi.svc/UserID_Get?APIKey=" + Ti.App.Properties.getString('apikey') + "&Token=" + Ti.App.Properties.getString('token'));
+
+ivleConnect.onload = function(){
+	var output = this.responseText;
+	Ti.App.Properties.setString("userID", output.substring(1, output.length - 1));
+}
+ivleConnect.send();
+*/
+
+var publishDialog = Ti.UI.createAlertDialog({
+	title: 'Publish Dialog',
+	message: 'Are you sure you would like to publish this?',
+	cancel: 1,
+    buttonNames: ['Confirm', 'Cancel'],
+});
+publishButton.addEventListener('click', function(){
+	publishDialog.show();
+});
+
+publishDialog.addEventListener('click', function(e) {
+    if (e.index == 0) { // clicked "Confirm"
+    
+	    Cloud.Users.login({
+		    login: 'jessicalee_88@hotmail.com',
+		    password: 'test_password'
+		}, function (e) {
+		    if (e.success) {
+		        var user = e.users[0];
+		        Ti.API.info('Success Login:\\n' +
+		            'id: ' + user.id + '\\n' +
+		            'first name: ' + user.first_name + '\\n' +
+		            'last name: ' + user.last_name);
+		            
+				Cloud.Posts.create({
+				    title: Ti.App.Properties.getString('name') + ' Selling ' + moduleCodeField.value +' Book!',
+				    content: 'Selling ' + moduleCodeField.value + ' Book via ShootNSell',
+				    //photo: bookImage.toImage,
+				    custom_fields: '{ "userId": "'+Ti.App.Properties.getString('email')+'","bookTitle": "'+titleField.value+'", "bookSubtitle": "'+subtitleField.value+'","author": "'+authorsField.value+'", "publisher": "'+publisherField.value+'","publishedDate": "'+publishedDateField.value+'","edition": "'+editionField.value+'", "condition": "'+conditionField.value+'","faculty": "'+facultyPicker.getSelectedRow(0).title+'","moduleCode": "'+moduleCodeField.value+'", "price": "'+priceField.value+'"}',
+
+				}, function (e) {
+				    if (e.success) {
+				        var post = e.posts[0];
+				        alert('Success create post:\\n' +
+				            'id: ' + post.id + '\\n' +
+				            'title: ' + post.title + '\\n' +
+				            'content: ' + post.content + '\\n');
+				    } else {
+				        alert('Error in post creating:\\n' +
+				            ((e.error && e.message) || JSON.stringify(e)));
+				    }
+				});
+				
+		    } else {
+		        alert('Error in Login :\\n' +
+		            ((e.error && e.message) || JSON.stringify(e)));
+		    }
+		});
+		
+    } else if (e.index == 1) { // clicked "Cancel"
+      // do nothing
+    }
+});
