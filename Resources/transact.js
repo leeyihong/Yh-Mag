@@ -149,6 +149,8 @@ openCameraDialog.addEventListener('click', function(e) {
 				// set image view
 				Ti.API.debug('Our type was: ' + event.mediaType);
 				if (event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+					
+					sellingDetailsWin.originalImage = event.media;
 
 					originalImage.image = image;
 					imgView.image = cropImage(originalImage);
