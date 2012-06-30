@@ -76,6 +76,7 @@ loginWin.add(ivleLoginButton);
 //loginWin.add(facebookLoginButton);
 loginWin.open();
 
+
 // WEBVIEW FOR IVLE LOGIN
 var ivleloginWeb = Titanium.UI.createWebView({
 	url : 'https://ivle.nus.edu.sg/api/login/?apikey=' + Ti.App.Properties.getString('apikey')
@@ -120,6 +121,6 @@ overlay.add(Ti.UI.createLabel({
 	}
 }));
 
-var ivleLoginWindow = Titanium.UI.createWindow();
+var ivleLoginWindow = Titanium.UI.createWindow({});
 ivleLoginWindow.add(ivleloginWeb);
 ivleLoginWindow.add(overlay); 

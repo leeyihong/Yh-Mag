@@ -287,7 +287,7 @@ var publishButton = Ti.UI.createButton({
 		fontWeight : 'bold'
 	},
 	color : '#000014',
-	left : '80dp',
+	//left : '80dp',
 	width : '80dp',
 	height : '35dp'
 });
@@ -575,7 +575,7 @@ publishDialog.addEventListener('click', function(e) {
 					title : Ti.App.Properties.getString('name') + ' Selling ' + moduleCodeField.value + ' Book!',
 					content : 'Selling ' + moduleCodeField.value + ' Book via ShootNSell',
 					photo : sellingDetailsWin.originalImage,
-					custom_fields : '{ "userId": "' + Ti.App.Properties.getString('email') + '","bookTitle": "' + titleField.value + '", "bookSubtitle": "' + subtitleField.value + '","author": "' + authorsField.value + '", "publisher": "' + publisherField.value + '","publishedDate": "' + publishedDateField.value + '","edition": "' + editionField.value + '", "condition": "' + conditionField.value + '","faculty": "' + facultyPicker.getSelectedRow(0).title + '","moduleCode": "' + moduleCodeField.value + '", "price": "' + priceField.value + '"}',
+					custom_fields : '{ "userId": "' + Ti.App.Properties.getString('email') + '","bookTitle": "' + titleField.value + '", "bookSubtitle": "' + subtitleField.value + '","author": "' + authorsField.value + '", "publisher": "' + publisherField.value + '","publishedDate": "' + publishedDateField.value + '","edition": "' + editionField.value + '", "condition": "' + conditionField.value + '","faculty": "' + facultyPicker.getSelectedRow(0).title + '","moduleCode": "' + moduleCodeField.value + '", "price": "' + priceField.value + '", "isDeleted": false , "bookStatus": "onSales"}',
 
 				}, function(e) {
 					if (e.success) {
