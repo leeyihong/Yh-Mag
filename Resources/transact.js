@@ -205,7 +205,7 @@ var nextStepImage = Ti.UI.createImageView({
 
 var typeBarcodeTextField = Ti.UI.createTextField({
 	hintText : '13 ISBN w\/o \'-\'',
-	value : '9780071244640',
+	//value : '9780071244640',
 	font : {
 		fontSize : '14dp',
 	},

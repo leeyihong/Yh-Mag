@@ -545,10 +545,6 @@ var activityIndicator = Ti.UI.createActivityIndicator({
 	font: {fontFamily:'Helvetica Neue', fontSize:'26dp', fontWeight:'bold'},
 	message: 'Loading...',
 	style:Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
-	//top: GetHeight(227),
-	//left: GetWidth(100),
-	//height:'auto',
-	//width:'auto'
 });
 
 publishDialog.addEventListener('click', function(e) {
@@ -584,7 +580,11 @@ publishDialog.addEventListener('click', function(e) {
 					if (e.success) {
 						var post = e.posts[0];
 						activityIndicator.hide();
-						alert('Success create post:\\n' + 'id: ' + post.id + '\\n' + 'title: ' + post.title + '\\n' + 'content: ' + post.content + '\\n');
+						var homeWin = Ti.UI.createWindow({
+							url: "home.js",
+						});
+						homeWin.open();
+						//alert('Success create post:\\n' + 'id: ' + post.id + '\\n' + 'title: ' + post.title + '\\n' + 'content: ' + post.content + '\\n');
 					} else {
 						alert('Error in post creating:\\n' + ((e.error && e.message) || JSON.stringify(e)));
 					}
