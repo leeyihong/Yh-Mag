@@ -291,7 +291,7 @@ var publishButton = Ti.UI.createButton({
 	width : '80dp',
 	height : '35dp'
 });
-var cancelButton = Ti.UI.createButton({
+/*var cancelButton = Ti.UI.createButton({
 	title : 'Cancel',
 	font : {
 		fontSize : '14dp',
@@ -307,6 +307,7 @@ var transacWindow = Ti.UI.createWindow({
 	backgroundColor : 'white',
 	url : 'transact.js'
 });
+
 var cancelDialog = Ti.UI.createAlertDialog({
 	title : 'Cancel Dialog',
 	message : 'Are you sure you would like to cancel this?',
@@ -323,7 +324,7 @@ cancelDialog.addEventListener('click', function(ev) {
 		// do nothing
 	}
 });
-
+*/
 var isbnAPIUrl = 'https://www.googleapis.com/books/v1/volumes?q=isbn:';
 var isbnApiKey = 'AIzaSyBgUbjxOGiJNbKS39ZHF2NH2hLVHdo6FEs';
 
@@ -511,10 +512,10 @@ displayTable.appendRow(priceRow);
 var buttonRow = Ti.UI.createTableViewRow({
 	height : 'auto',
 });
-publishButton.left = '80dp';
+publishButton.center;
 buttonRow.add(publishButton);
-cancelButton.left = '180dp';
-buttonRow.add(cancelButton);
+//cancelButton.left = '180dp';
+//buttonRow.add(cancelButton);
 displayTable.appendRow(buttonRow);
 
 sellingDetailsWin.add(displayTable);
