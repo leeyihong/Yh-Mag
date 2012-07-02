@@ -81,7 +81,8 @@ var winProfile= Titanium.UI.createWindow({
     width: 320,
 	height: 480,
 	top: 0,
-	left: 0
+	left: 0,
+	exitOnClose: true
 });
 
 var tabProfile = Titanium.UI.createTab({  

@@ -65,11 +65,12 @@ sellingListImage.addEventListener('click', function(e) {
 				page : 1,
 				per_page : 20,
 				where : {
-					"userId" : "yihong@nus.edu.sg"
+					"userId" : "yihong@nus.edu.sg"  // *** NEED TO CHANGE THIS AFTER SETTING UP DETAILS OF USER! ***
 				}
 			}, function(e) {
 				if (e.success) {
 					//alert('Success:\\n' + 'Count: ' + e.posts.length);
+					// *** CHECK IF THERE IS ANY DATA FOR THE USER IF NOT RETURN NO DATA ***
 					for (var i = 0; i < e.posts.length; i++) {
 						var post = e.posts[i];
 						mySellingData[i] = post;
@@ -102,7 +103,7 @@ sellingListImage.addEventListener('click', function(e) {
 
 						mySellingItemRow.add(bookImage);
 						mySellingItemRow.add(bookTitle);
-						//mySellingItemRow.hasChild = mySellingData[i].hasChild;
+						mySellingItemRow.hasChild = true;
 
 						//mySellingItemRow.className = 'My Selling List';
 						resultData[i] = mySellingItemRow;
