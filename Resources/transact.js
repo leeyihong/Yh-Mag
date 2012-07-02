@@ -2,7 +2,6 @@
 var Cloud = require('ti.cloud');
 Cloud.debug = true;
 
-
 var transactWin = Titanium.UI.currentWindow;
 
 var screenHeight = Ti.Platform.displayCaps.platformHeight;
@@ -13,6 +12,7 @@ function GetWidth(value) {
 
 var currentTab = Ti.UI.currentTab;
 
+/*CREATE IMAGE BUTTON*/
 var sellABookImage = Ti.UI.createButton({
 	backgroundImage : 'images/shootNSell.png',
 	backgroundSelectedImage : 'images/shootNSell_click.png',
@@ -34,6 +34,103 @@ var sellingListImage = Ti.UI.createButton({
 	left : '10dp',
 	right : '10dp',
 	top : '10dp'
+});
+var mySellingListWin = Ti.UI.createWindow({
+	backgroundColor : '#FFFFFF'
+});
+var loadingIndicator = Ti.UI.createActivityIndicator({
+	color : 'Red',
+	font : {
+		fontFamily : 'Helvetica Neue',
+		fontSize : 26,
+		fontWeight : 'bold'
+	},
+	message : 'Loading...',
+	style : Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
+});
+var mySellingData = [];
+var resultData = [];
+
+sellingListImage.addEventListener('click', function(e) {
+	loadingIndicator.show();
+	//currentTab.open(mySellingListWin);
+	Cloud.Users.login({
+		login : 'jessicalee_88@hotmail.com',
+		password : 'test_password'
+	}, function(e) {
+		if (e.success) {
+			var user = e.users[0];
+			//alert('Success:\\n' + 'id: ' + user.id + '\\n' + 'first name: ' + user.first_name + '\\n' + 'last name: ' + user.last_name);
+			Cloud.Posts.query({
+				page : 1,
+				per_page : 20,
+				where : {
+					"userId" : "yihong@nus.edu.sg"
+				}
+			}, function(e) {
+				if (e.success) {
+					//alert('Success:\\n' + 'Count: ' + e.posts.length);
+					for (var i = 0; i < e.posts.length; i++) {
+						var post = e.posts[i];
+						mySellingData[i] = post;
+						//alert('id: ' + post.id + '\\n' + 'id: ' + post.id + '\\n' + 'title: ' + post.title + '\\n' + 'content: ' + post.content + '\\n' + 'updated_at: ' + post.updated_at);
+
+						var mySellingItemRow = Ti.UI.createTableViewRow({
+							height: '100dp',
+						});
+
+						var bookImage = Titanium.UI.createImageView({
+							image : post.photo.urls.square_75 ,
+							width : '80dp',
+							height : '80dp',
+							left : '10dp',
+							top : '10dp'
+						});
+
+						var bookTitle = Titanium.UI.createLabel({
+							text : post.custom_fields.bookTitle,
+							font : {
+								fontSize : '15dp',
+								fontWeight : 'bold'
+							},
+							color: '#000014',
+							width : 'auto',
+							textAlign : 'left',
+							left : '100dp',
+						});
+						Ti.API.info('The book title is : ' + bookTitle.text);
+
+						mySellingItemRow.add(bookImage);
+						mySellingItemRow.add(bookTitle);
+						//mySellingItemRow.hasChild = mySellingData[i].hasChild;
+
+						//mySellingItemRow.className = 'My Selling List';
+						resultData[i] = mySellingItemRow;
+						//resultData.push(mySellingItemRow);
+						//mySellingListTable.appendRow(mySellingItemRow);
+					};
+					Ti.API.info('No of data : ' + resultData.length);
+
+					//mySellingListTable.data = resultData;
+					//mySellingListTable.setData = data
+					var mySellingListTable = Titanium.UI.createTableView({
+						data: resultData,
+						color : '#000014',
+					});
+					mySellingListWin.add(mySellingListTable);
+					loadingIndicator.hide();
+					mySellingListWin.open();
+				} else {
+					loadingIndicator.hide();
+					alert('Error in query:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+				}
+			});
+		} else {
+			loadingIndicator.hide();
+			alert('Error in login:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+		}
+	}); 
+	
 });
 
 var buyingListImage = Ti.UI.createButton({
@@ -149,7 +246,7 @@ openCameraDialog.addEventListener('click', function(e) {
 				// set image view
 				Ti.API.debug('Our type was: ' + event.mediaType);
 				if (event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
-					
+
 					sellingDetailsWin.originalImage = event.media;
 
 					originalImage.image = image;
