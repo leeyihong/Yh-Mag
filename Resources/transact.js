@@ -38,6 +38,12 @@ var sellingListImage = Ti.UI.createButton({
 var mySellingListWin = Ti.UI.createWindow({
 	backgroundColor : '#FFFFFF'
 });
+var sellingListDetailwin = Ti.UI.createWindow({
+	url: 'mySellingListDetail.js',
+	backgroundColor: '#FFFFFF',
+	modal: true,
+	exitOnClose: true
+});
 var loadingIndicator = Ti.UI.createActivityIndicator({
 	color : 'Red',
 	font : {
@@ -101,6 +107,10 @@ sellingListImage.addEventListener('click', function(e) {
 						});
 						Ti.API.info('The book title is : ' + bookTitle.text);
 
+						var mySellingListRowNumber = Ti.UI.createLabel({
+							text : i,
+						});
+						
 						mySellingItemRow.add(bookImage);
 						mySellingItemRow.add(bookTitle);
 						mySellingItemRow.hasChild = true;
@@ -120,7 +130,17 @@ sellingListImage.addEventListener('click', function(e) {
 					});
 					mySellingListWin.add(mySellingListTable);
 					loadingIndicator.hide();
-					mySellingListWin.open();
+					currentTab.open(mySellingListWin);
+					//mySellingListWin.open();
+					
+					mySellingListTable.addEventListener('click', function(e){
+						
+						sellingListDetailwin.sellingDetails = mySellingData;
+						sellingListDetailwin.mySellingListRowNumber = e.index;
+						//mySellingListWin.open(sellingListDetailwin);
+						sellingListDetailwin.open({animated:true,});
+					})
+					
 				} else {
 					loadingIndicator.hide();
 					alert('Error in query:\\n' + ((e.error && e.message) || JSON.stringify(e)));
