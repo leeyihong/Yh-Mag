@@ -6,9 +6,8 @@ var sellingListDetailwin = Ti.UI.currentWindow;
 sellingListDetailwin.exitOnClose = true;
 
 var mySellingData = sellingListDetailwin.sellingDetails;
-//var mySellingListRowNumber = sellingListDetailwin.mySellingListRowNumber;
 
-alert('Selling Data information about book ' + mySellingData.custom_fields.bookTitle);
+//alert('Selling Data information about book ' + mySellingData.custom_fields.bookTitle);
 
 //Setting global varible for book details
 var output;
@@ -183,8 +182,8 @@ var FacultyLabel = Ti.UI.createLabel({
 	color : '#000014',
 	left : '10dp',
 });
+
 var facultyField = Ti.UI.createTextField({
-	//value : mySellingData.custom_fields.faculty,
 	font : {
 		fontSize : '14dp',
 		fontFamily : 'Helvetica',
@@ -195,7 +194,6 @@ var facultyField = Ti.UI.createTextField({
 	width : '200dp'
 });
 var facultyPicker = Titanium.UI.createPicker({
-	value : mySellingData.custom_fields.bookTitle,
 	height : '35dp',
 	width : '200dp',
 	font : {
@@ -232,6 +230,15 @@ facultiesList[8] = Titanium.UI.createPickerRow({
 	title : 'Science'
 });
 facultyPicker.add(facultiesList);
+function getCorrectPosition(dbString){
+	for(var i = 0; i < facultiesList.length; i++){
+		if(dbString === facultiesList[i].title){
+			return i;
+		}
+	}; 
+	return null;
+};
+facultyPicker.setSelectedRow(0,getCorrectPosition(mySellingData.custom_fields.faculty), true);
 
 var moduleCodeLabel = Ti.UI.createLabel({
 	text : 'Module Code :*',
