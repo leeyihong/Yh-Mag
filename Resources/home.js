@@ -103,3 +103,61 @@ tabGroup.addTab(tabTransact);
 tabGroup.addTab(tabProfile);  
 
 tabGroup.open();
+
+var rowData = [];
+ 
+for(i=0;i<5;i++) {
+    var homeTableRow = Ti.UI.createTableViewRow({
+    	height : '100dp'
+    });
+    var column1View = Ti.UI.createImageView({
+    	image: 'logo.png',
+    	top : '8dp',
+        left : '20dp',
+        width : "85dp",
+        height : '85dp',
+        backgroundColor : "blue"
+    });
+    var column2View = Ti.UI.createImageView({
+    	image: 'logo.png',
+    	top : '8dp',
+        left : "120dp",
+        width : "85dp",
+        height : '85dp',
+        backgroundColor : "red"
+    });
+    var column3View = Ti.UI.createImageView({
+    	image: 'logo.png',
+    	top : '8dp',
+        left : "220dp",
+        width : "85dp",
+        height : '85dp',
+        backgroundColor : "green"
+    });
+    /*
+    var column4View = Ti.UI.createImageView({
+    	image: 'logo.png',
+        left : "75%",
+        width : "25%",
+        backgroundColor : "yellow"
+    });*/
+    homeTableRow.add(column1View);
+    homeTableRow.add(column2View);
+    homeTableRow.add(column3View);
+    //homeTableRow.add(column4View);
+    rowData.push(homeTableRow);
+};
+ 
+var homeTableView = Ti.UI.createTableView({
+    data : rowData,
+});
+ /*
+homeTableView.addEventListener('click',function(e){
+    alert(e.row.children[0].backgroundColor);
+    alert(e.row.children[1].backgroundColor);
+    alert(e.row.children[2].backgroundColor);
+    alert(e.row.children[3].backgroundColor);
+    
+});*/
+
+winHome.add(homeTableView);
