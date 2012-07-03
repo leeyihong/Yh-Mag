@@ -1,5 +1,8 @@
 // after login successful, go to home page
 
+var Cloud = require('ti.cloud');
+Cloud.debug = true;
+
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
 Titanium.UI.setBackgroundColor('#000');
 
@@ -104,60 +107,95 @@ tabGroup.addTab(tabProfile);
 
 tabGroup.open();
 
-var rowData = [];
- 
-for(i=0;i<5;i++) {
-    var homeTableRow = Ti.UI.createTableViewRow({
-    	height : '100dp'
-    });
-    var column1View = Ti.UI.createImageView({
-    	image: 'logo.png',
-    	top : '8dp',
-        left : '20dp',
-        width : "85dp",
-        height : '85dp',
-        backgroundColor : "blue"
-    });
-    var column2View = Ti.UI.createImageView({
-    	image: 'logo.png',
-    	top : '8dp',
-        left : "120dp",
-        width : "85dp",
-        height : '85dp',
-        backgroundColor : "red"
-    });
-    var column3View = Ti.UI.createImageView({
-    	image: 'logo.png',
-    	top : '8dp',
-        left : "220dp",
-        width : "85dp",
-        height : '85dp',
-        backgroundColor : "green"
-    });
-    /*
-    var column4View = Ti.UI.createImageView({
-    	image: 'logo.png',
-        left : "75%",
-        width : "25%",
-        backgroundColor : "yellow"
-    });*/
-    homeTableRow.add(column1View);
-    homeTableRow.add(column2View);
-    homeTableRow.add(column3View);
-    //homeTableRow.add(column4View);
-    rowData.push(homeTableRow);
+var allSellingResult = [];
+var tableLeftSetting = ['15dp', '115dp', '215dp', ];
+var othersTableSetting = {
+	columnImage: 'logo.png',
+	columnTop : '10dp',
+    columnWidth : "90dp",
+    columnHeight : '90dp',
+    overlayBottom : '0dp',
+	overlayHeight : '20dp',
+	overlayWidth : '90dp',
+	overlayOpacity : 0.50
 };
- 
-var homeTableView = Ti.UI.createTableView({
-    data : rowData,
-});
- /*
-homeTableView.addEventListener('click',function(e){
-    alert(e.row.children[0].backgroundColor);
-    alert(e.row.children[1].backgroundColor);
-    alert(e.row.children[2].backgroundColor);
-    alert(e.row.children[3].backgroundColor);
-    
-});*/
+var rowData = [];
 
-winHome.add(homeTableView);
+Cloud.Users.login({
+	login : 'jessicalee_88@hotmail.com',
+	password : 'test_password'
+}, function(e) {
+	if (e.success) {
+		var user = e.users[0];
+		alert('Success Login:\\n' + 'id: ' + user.id + '\\n' + 'first name: ' + user.first_name + '\\n' + 'last name: ' + user.last_name);
+		Cloud.Posts.query({
+			page : 1,
+			per_page : 9,
+			where : {
+				"bookTitle" : { '$ne' : ""}
+			}
+		}, function(e) {
+			if (e.success) {
+				alert('Success getting data:\\n' + 'Count: ' + e.posts.length);
+				for (var i = 0; i <= e.posts.length-3; i+=3) {
+					
+					//allSellingResult[i] = post;
+					//alert('id: ' + post.id + '\\n' + 'id: ' + post.id + '\\n' + 'title: ' + post.title + '\\n' + 'content: ' + post.content + '\\n' + 'updated_at: ' + post.updated_at);
+					
+					var homeTableRow = Ti.UI.createTableViewRow({
+				    	height : '100dp',
+				    });
+				      
+				    for(var r = 0; r < 3; r++){
+				    	var currentPointer = i+r;
+				    	var post = e.posts[currentPointer];
+				    	
+				    	var columnView = Ti.UI.createImageView({
+					    	image: e.posts[currentPointer].photo.urls.square_75,
+					    	top : '10dp',
+					        left : tableLeftSetting[r],
+					        width : "90dp",
+					        height : '90dp',
+					        backgroundColor : "blue"
+					    });
+					    var moduleOverlay = Ti.UI.createView({
+							backgroundColor : 'Black',
+							left : tableLeftSetting[r],
+							bottom : '0dp',
+							height : '20dp',
+							width : '90dp',
+							opacity : 0.50
+						});
+						moduleOverlay.add(Ti.UI.createLabel({
+							text : e.posts[currentPointer].custom_fields.moduleCode,
+							textAlign : 'center',
+							color : '#FFFFFF',
+							font : {
+								fontSize : '15dp',
+								fontWeight : 'bold'
+							}
+						}));
+						homeTableRow.add(columnView);
+						homeTableRow.add(moduleOverlay);
+				    };
+				    //rowData.push(homeTableRow);
+				    rowData[i/3] = homeTableRow;
+				};	
+				var homeTableView = Ti.UI.createTableView({
+					data : rowData,
+					separatorColor : 'transparent'
+				});
+
+				winHome.add(homeTableView); 
+
+			} else {
+				alert('Error in query:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+			}
+		});
+	} else {
+		alert('Error in login:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+	}
+}); 
+
+
+
