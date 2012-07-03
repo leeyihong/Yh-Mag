@@ -1,6 +1,8 @@
 // app initialization
-Ti.App.Properties.setString('apikey', 'B35vgIdq2a3SpGSBD81Be');
-//var myApp = new ivle(myApiKey);
+var apikey = 'B35vgIdq2a3SpGSBD81Be'
+Ti.App.Properties.setString('apikey', apikey);
+var Cloud = require('ti.cloud');
+Cloud.debug = true;
 
 // login window
 var loginWin = Titanium.UI.createWindow({
@@ -79,11 +81,12 @@ loginWin.open();
 
 // WEBVIEW FOR IVLE LOGIN
 var ivleloginWeb = Titanium.UI.createWebView({
-	url : 'https://ivle.nus.edu.sg/api/login/?apikey=' + Ti.App.Properties.getString('apikey')
+	url : 'https://ivle.nus.edu.sg/api/login/?apikey=' + apikey
 });
 
 var string;
 var token;
+var xhr;
 
 ivleloginWeb.addEventListener('load', function(e) {
 	if(ivleloginWeb.url.indexOf('/api/login/login_result.ashx') > 0) {
@@ -91,7 +94,44 @@ ivleloginWeb.addEventListener('load', function(e) {
 			string = JSON.stringify(e),
 			token = string.substring(string.indexOf('<body>') + 6, string.indexOf('</body>')), 
 			Ti.App.Properties.setString("token", token),
-			homeWin.open()
+			// verify user and get username and email
+			// get username
+			xhr = Ti.Network.createHTTPClient();
+			xhr.open("GET", "https://ivle.nus.edu.sg/api/Lapi.svc/UserName_Get?APIKey=" + apikey + "&Token=" + token);
+			xhr.onload = function(){
+				var output = this.responseText;
+				Ti.App.Properties.setString("name", output.substring(1, output.length - 1));
+			}
+			xhr.send();
+			
+			// get email
+			xhr = Ti.Network.createHTTPClient();
+			xhr.open("GET", "https://ivle.nus.edu.sg/api/Lapi.svc/UserEmail_Get?APIKey=" + apikey + "&Token=" + token);
+			xhr.onload = function(){
+				var output2 = this.responseText;
+				Ti.App.Properties.setString("email", output2.substring(1, output2.length - 1));
+			}
+			xhr.send();
+			
+			// create a user on successful login
+			Cloud.Users.create({
+			    email: Ti.App.Properties.getString('email'),
+			    username: Ti.App.Properties.getString('name'),
+			    password: 'test_password',
+			    password_confirmation: 'test_password'
+			}, function (e) {
+			    if (e.success) {
+			        var user = e.users[0];
+			        alert('Success:\\n' +
+			            'email: ' + user.email + '\\n' +
+			            'username: ' + user.username + '\\n');
+			    } else {
+			        Ti.API.info('Error:\\n' +
+			            ((e.error && e.message) || JSON.stringify(e)));
+			    }
+			});
+			homeWin.open();
+			
 		}
 	}
 });

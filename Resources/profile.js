@@ -133,7 +133,7 @@ dialog.addEventListener('click',function(e){
 });
 	
 // save photo to database??
-
+/*
 // get username
 var xhr = Ti.Network.createHTTPClient();
 xhr.open("GET", "https://ivle.nus.edu.sg/api/Lapi.svc/UserName_Get?APIKey=" + apikey + "&Token=" + token);
@@ -154,7 +154,7 @@ xhr.onload = function(){
 	Ti.App.Properties.setString("email", output2.substring(1, output2.length - 1));
 }
 xhr.send();
-
+*/
 
 nameText = nameText + Ti.App.Properties.getString('name');
 emailText = emailText + Ti.App.Properties.getString('email');
@@ -242,7 +242,22 @@ var details = Titanium.UI.createTextField({
 });
 
 winProfile.add(details);
+/*
+// save button
+var save = Titanium.UI.createButton({
+	title: 'Save',
+	font: {fontsize: 25},
+	bottom: '20dp',
+	left: '60dp',
+	width: '100dp',
+	height: '30dp'
+})
+winProfile.add(save);
 
+save.addEventListener('click', function(e){
+	
+});
+*/
 // login window
 var loginWin = Titanium.UI.createWindow({
 	backgroundColor : '#FFFFFF',
@@ -255,8 +270,8 @@ var logout = Titanium.UI.createButton({
 	title: 'Logout',
 	font: {fontsize: 25},
 	bottom: '20dp',
-	left: '100dp',
-	width: '120dp',
+	right: '60dp',
+	width: '100dp',
 	height: '30dp'
 })
 winProfile.add(logout);
