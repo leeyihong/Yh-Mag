@@ -242,7 +242,7 @@ var details = Titanium.UI.createTextField({
 });
 
 winProfile.add(details);
-
+/*
 // save button
 var save = Titanium.UI.createButton({
 	title: 'Save',
@@ -257,7 +257,7 @@ winProfile.add(save);
 save.addEventListener('click', function(e){
 	
 });
-
+*/
 // login window
 var loginWin = Titanium.UI.createWindow({
 	backgroundColor : '#FFFFFF',
