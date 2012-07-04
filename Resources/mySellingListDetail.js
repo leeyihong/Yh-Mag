@@ -277,7 +277,6 @@ var priceLabel = Ti.UI.createLabel({
 var priceField = Ti.UI.createTextField({
 	value : mySellingData.custom_fields.price,
 	hintText : '$30',
-	value: '$',
 	font : {
 		fontSize : '14dp',
 		fontFamily : 'Helvetica',
