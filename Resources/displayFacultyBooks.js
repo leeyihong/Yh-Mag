@@ -1,109 +1,20 @@
-// after login successful, go to home page
+// create new window
 
 var Cloud = require('ti.cloud');
 Cloud.debug = true;
 
-// this sets the background color of the master UIView (when there are no windows/tab groups on it)
-Titanium.UI.setBackgroundColor('#000');
+var displayFacultyBookWin = Ti.UI.currentWindow;
+var facultyName = displayFacultyBookWin.facultyName ;
 
-
-// create tab group
-var tabGroup = Titanium.UI.createTabGroup();
-
-var windowHeight = Ti.Platform.displayCaps.platformHeight;
-var windowWidth = Ti.Platform.displayCaps.platformWidth;
-
-//create the view to hold all of our UI controls
-var view = Titanium.UI.createView({
-	width: 300,
-	height: 350,
-	left: 10,
-	top: 10,
-	backgroundColor: '#fff',
-	borderRadius: 5
+var loadingIndicator = Ti.UI.createActivityIndicator({
+	font : {
+		fontFamily : 'Helvetica Neue',
+		fontSize : '26dp',
+		fontWeight : 'bold'
+	},
+	message : 'Loading...',
+	style : Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
 });
-
-
-// create 'home' tab and window
-var winHome = Titanium.UI.createWindow({  
-    title:'Home',
-    backgroundColor:'#fff',
-    width: 320,
-	height: 480,
-	top: 0,
-	left: 0
-    //url:"home.js"
-});
-var tabHome = Titanium.UI.createTab({  
-    icon:'images/light_home.png',
-    title:'Home',
-    window:winHome
-});
-
-// create 'search' tab and window
-var winSearch= Titanium.UI.createWindow({  
-    title:'Search',
-    backgroundColor:'#fff',
-    url: 'search.js',
-    width: 320,
-	height: 480,
-	top: 0,
-	left: 0
-});
-
-var tabSearch = Titanium.UI.createTab({  
-    icon:'images/light_search.png',
-    title:'Search',
-    window:winSearch
-});
-
-// create 'transaction' tab and window
-var winTransact = Titanium.UI.createWindow({  
-    title:'Transaction',
-    backgroundColor:'#fff',
-    url:'transact.js',
-    width: 320,
-	height: 480,
-	top: 0,
-	left: 0
-});
-
-var tabTransact = Titanium.UI.createTab({  
-    icon:'images/light_coins.png',
-    title:'Transact',
-    window:winTransact
-});
-
-// create 'search' tab and window
-var winProfile= Titanium.UI.createWindow({  
-    title:'Profile',
-    backgroundColor:'#fff',
-    url: 'profile.js',
-    width: 320,
-	height: 480,
-	top: 0,
-	left: 0,
-	exitOnClose: true
-});
-
-var tabProfile = Titanium.UI.createTab({  
-    icon:'images/light_pictures.png',
-    title:'Profile',
-    window: winProfile
-});
-
-//add the view to our window
-winHome.add(view);
-
-//
-//  add tabs
-//
-tabGroup.addTab(tabHome);  
-tabGroup.addTab(tabSearch);  
-tabGroup.addTab(tabTransact);  
-tabGroup.addTab(tabProfile);  
-
-tabGroup.open();
 
 var allSellingResult = [];
 var tableLeftSetting = ['15dp', '115dp', '215dp', ];
@@ -119,44 +30,32 @@ var labelRotation = Titanium.UI.create2DMatrix({
 labelRotation = labelRotation.translate(-5,-17);
 var rowData = [];
 
-var loadingIndicator = Ti.UI.createActivityIndicator({
-	font : {
-		fontFamily : 'Helvetica Neue',
-		fontSize : '26dp',
-		fontWeight : 'bold'
-	},
-	message : 'Loading...',
-	style : Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
-});
-
-loadingIndicator.show();
-
 Cloud.Users.login({
 	login : 'jessicalee_88@hotmail.com',
 	password : 'test_password'
 }, function(e) {
 	if (e.success) {
-		
 		var user = e.users[0];
 		//alert('Success Login: ' + 'id: ' + user.id + ' ' + 'first name: ' + user.first_name + ' ' + 'last name: ' + user.last_name);
 		Cloud.Posts.query({
 			page : 1,
 			per_page : 12,
-			//where : {  // *** CHECK IF DELETED IS TRUE
-			//	"bookTitle" : { '$ne' : ""}
-			//}
+			where : {faculty :  facultyName}
 		}, function(e) {
 			if (e.success) {
-				//alert('Success getting data: ' + 'Count: ' + e.posts.length);
+				alert("Total Result is " +  e.posts.length);
+				loadingIndicator.show();
 				var resultLength =  e.posts.length
 				for (var i = 0; i <= resultLength; i+=3) {
-
+		
 					var homeTableRow = Ti.UI.createTableViewRow({
 				    	height : '100dp',
 				    });
 				      
 				    for(var r = 0; r < 3; r++){
+				    	
 				    	var currentPointer = i+r;
+				    	
 				    	if(resultLength - currentPointer < 1){
 				    		break;
 				    	}
@@ -217,8 +116,8 @@ Cloud.Users.login({
 					data : rowData,
 					separatorColor : 'transparent'
 				});
-
-				winHome.add(homeTableView); 
+		
+				displayFacultyBookWin.add(homeTableView); 
 				loadingIndicator.hide();
 				
 				homeTableView.addEventListener('click', function(e){
@@ -242,10 +141,88 @@ Cloud.Users.login({
 			}
 		});
 	} else {
-		alert('Error in login: ' + ((e.error && e.message) || JSON.stringify(e)));
+			alert('Error in login: ' + ((e.error && e.message) || JSON.stringify(e)));
 	}
 	
 }); 
 
+/*
+var homeWin = Titanium.UI.createWindow({
+	backgroundColor : '#FFFFFF',
+	url: 'home.js'
+});
 
 
+// access ti properties to get the view name
+
+var pageTitle = Ti.App.Properties.getString('title');
+
+var heading = Titanium.UI.createLabel({
+	width: 'auto',
+	height: '30dp',
+	top: '10dp',
+	left: '10dp',
+	color: '#000014',
+	font: {fontSize: '15dp', fontFamily: 'Helvetica',
+	fontWeight:'bold'},
+	text: pageTitle
+})
+
+bookWin.add(heading);
+
+var book = Titanium.UI.createImageView({
+	image: 'images/light_home.png',
+	width: '100dp',
+	height:	'133dp',
+	left: '10dp',
+	top: '50dp'
+})
+
+var priceDisplay = Ti.UI.createView({
+	backgroundColor : '#FFFACD',
+	bottom : '0dp',
+	left : '0dp',
+	height : '15dp',
+	//borderWidth : '5',
+	//borderColor : '#FFFFFF',
+	width : '100dp',
+	opacity : 0.20
+});
+
+var price = Ti.UI.createLabel({
+	text : '$10',
+	textAlign : 'center',
+	top : 0,
+	left : 0,
+	height : '15dp',
+	width : '100%',
+	font : {
+		fontSize : '10dp',
+		fontWeight : 'bold'
+	}
+});
+
+bookWin.add(heading);
+bookWin.add(book);
+priceDisplay.add(price);
+book.add(priceDisplay);
+*/
+// access database to get books according to date upload
+	// overlay- price of book 
+/*	
+// back button
+var back = Titanium.UI.createButton({
+	title: 'Back',
+	font: {fontsize: 25},
+	bottom: '20dp',
+	right: '110dp',
+	width: '100dp',
+	height: '30dp'
+})
+bookWin.add(back);
+
+back.addEventListener('click', function(e){
+	homeWin.open();
+});
+
+bookWin.open();*/

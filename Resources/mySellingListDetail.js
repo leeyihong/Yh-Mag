@@ -205,7 +205,7 @@ var facultyPicker = Titanium.UI.createPicker({
 });
 var facultiesList = [];
 facultiesList[0] = Titanium.UI.createPickerRow({
-	title : 'Arts & Social Sciences'
+	title : 'Arts and Social Sciences'
 });
 facultiesList[1] = Titanium.UI.createPickerRow({
 	title : 'Business'
@@ -217,7 +217,7 @@ facultiesList[3] = Titanium.UI.createPickerRow({
 	title : 'Dentistry'
 });
 facultiesList[4] = Titanium.UI.createPickerRow({
-	title : 'Design & Environment'
+	title : 'Design and Environment'
 });
 facultiesList[5] = Titanium.UI.createPickerRow({
 	title : 'Engineering'
