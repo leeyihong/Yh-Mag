@@ -105,7 +105,6 @@ tabGroup.addTab(tabProfile);
 
 tabGroup.open();
 
-var currentHomeTab = Ti.UI.currentTab;
 var allSellingResult = [];
 var tableLeftSetting = ['15dp', '115dp', '215dp', ];
 var priceOverlayleft = ['55dp', '155dp', '255dp']; //tableLeftSetting[i] +  othersTableSetting.imageLength - othersTableSetting.priceOverlayLength
@@ -129,6 +128,7 @@ var loadingIndicator = Ti.UI.createActivityIndicator({
 	message : 'Loading...',
 	style : Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
 });
+
 loadingIndicator.show();
 
 Cloud.Users.login({
@@ -136,6 +136,7 @@ Cloud.Users.login({
 	password : 'test_password'
 }, function(e) {
 	if (e.success) {
+		
 		var user = e.users[0];
 		//alert('Success Login: ' + 'id: ' + user.id + ' ' + 'first name: ' + user.first_name + ' ' + 'last name: ' + user.last_name);
 		Cloud.Posts.query({
@@ -161,12 +162,12 @@ Cloud.Users.login({
 				    	
 				    	var columnView = Ti.UI.createView({
 				    		backgroundImage :post.photo.urls.square_75,
-					    	//image: post.photo.urls.square_75,
 					    	top : othersTableSetting.imageTop,
 					        left : tableLeftSetting[r],
 					        width : othersTableSetting.imageLength,
 					        height : othersTableSetting.imageLength,
 					        pointer : currentPointer.toString(),
+					        postID : post.id
 					    });
 					    var moduleOverlay = Ti.UI.createView({
 							backgroundColor : 'Black',
@@ -217,21 +218,24 @@ Cloud.Users.login({
 				loadingIndicator.hide();
 				
 				homeTableView.addEventListener('click', function(e){
-					if(e.source.pointer)
-					alert ('You had click on ' + e.source.pointer )
-					/*var sellingViewDetailsWin = Ti.UI.createWindow({
-						url: 'sellingViewDetails.js',
-						backgroundColor: '#FFFFFF',
-						modal: true, 
-						exitOnClose: true
-					});
-					currentHomeTab.open(sellingViewDetailsWin);*/
+					if(e.source.postID){
+						//alert ('You had click on ' + e.source.pointer );
+						loadingIndicator.show();
+						var sellingViewDetailsWin = Ti.UI.createWindow({
+							url: 'sellingViewDetails.js',
+							backgroundColor: '#FFFFFF',
+							modal: true, 
+							exitOnClose: true
+						});
+						sellingViewDetailsWin.postID = e.source.postID;
+						loadingIndicator.hide();
+						sellingViewDetailsWin.open();
+					};
 				});
 			} else {
 				loadingIndicator.hide();
 				alert('Error in query: ' + ((e.error && e.message) || JSON.stringify(e)));
 			}
-			
 		});
 	} else {
 		alert('Error in login: ' + ((e.error && e.message) || JSON.stringify(e)));
