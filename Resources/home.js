@@ -148,7 +148,8 @@ Cloud.Users.login({
 		}, function(e) {
 			if (e.success) {
 				//alert('Success getting data: ' + 'Count: ' + e.posts.length);
-				for (var i = 0; i <= e.posts.length-3; i+=3) {
+				var resultLength =  e.posts.length
+				for (var i = 0; i <= e.posts.resultLength; i+=3) {
 
 					var homeTableRow = Ti.UI.createTableViewRow({
 				    	height : '100dp',
@@ -156,6 +157,9 @@ Cloud.Users.login({
 				      
 				    for(var r = 0; r < 3; r++){
 				    	var currentPointer = i+r;
+				    	if(resultLength - currentPointer < 1){
+				    		break;
+				    	}
 				    	var post = e.posts[currentPointer];
 				    	//alert('id: ' + post.id + ' ' + 'id: ' + post.id + ' ' + 'title: ' + post.title + ' ' + 'content: ' + post.content + ' ' + 'updated_at: ' + post.updated_at);
 				    	//allSellingResult[i] = post;
