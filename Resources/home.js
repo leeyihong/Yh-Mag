@@ -12,8 +12,6 @@ var tabGroup = Titanium.UI.createTabGroup();
 
 var windowHeight = Ti.Platform.displayCaps.platformHeight;
 var windowWidth = Ti.Platform.displayCaps.platformWidth;
-Ti.API.info(windowHeight);
-Ti.API.info(windowWidth);
 
 //create the view to hold all of our UI controls
 var view = Titanium.UI.createView({
@@ -107,6 +105,7 @@ tabGroup.addTab(tabProfile);
 
 tabGroup.open();
 
+var currentHomeTab = Ti.UI.currentTab;
 var allSellingResult = [];
 var tableLeftSetting = ['15dp', '115dp', '215dp', ];
 var priceOverlayleft = ['55dp', '155dp', '255dp']; //tableLeftSetting[i] +  othersTableSetting.imageLength - othersTableSetting.priceOverlayLength
@@ -160,13 +159,14 @@ Cloud.Users.login({
 				    	//alert('id: ' + post.id + ' ' + 'id: ' + post.id + ' ' + 'title: ' + post.title + ' ' + 'content: ' + post.content + ' ' + 'updated_at: ' + post.updated_at);
 				    	//allSellingResult[i] = post;
 				    	
-				    	var columnView = Ti.UI.createImageView({
-					    	image: post.photo.urls.square_75,
+				    	var columnView = Ti.UI.createView({
+				    		backgroundImage :post.photo.urls.square_75,
+					    	//image: post.photo.urls.square_75,
 					    	top : othersTableSetting.imageTop,
 					        left : tableLeftSetting[r],
 					        width : othersTableSetting.imageLength,
 					        height : othersTableSetting.imageLength,
-					        backgroundColor : "blue"
+					        pointer : currentPointer.toString(),
 					    });
 					    var moduleOverlay = Ti.UI.createView({
 							backgroundColor : 'Black',
@@ -187,7 +187,6 @@ Cloud.Users.login({
 						}));
 						var priceOverlay = Ti.UI.createView({
 							backgroundImage: 'images/priceOverlay.png',
-							//image : 'images/priceOverlay.png',
 							top :othersTableSetting.imageTop,
 							left : priceOverlayleft[r],
 							width : othersTableSetting.priceOverlayLength,
@@ -195,7 +194,6 @@ Cloud.Users.login({
 						});
 						priceOverlay.add(Ti.UI.createLabel({
 							text : post.custom_fields.price,
-							//textAlign : 'center',
 							color : '#FFFFFF',
 							font : {
 								fontSize : '14.5dp',
@@ -216,11 +214,24 @@ Cloud.Users.login({
 				});
 
 				winHome.add(homeTableView); 
-
+				loadingIndicator.hide();
+				
+				homeTableView.addEventListener('click', function(e){
+					if(e.source.pointer)
+					alert ('You had click on ' + e.source.pointer )
+					/*var sellingViewDetailsWin = Ti.UI.createWindow({
+						url: 'sellingViewDetails.js',
+						backgroundColor: '#FFFFFF',
+						modal: true, 
+						exitOnClose: true
+					});
+					currentHomeTab.open(sellingViewDetailsWin);*/
+				});
 			} else {
+				loadingIndicator.hide();
 				alert('Error in query: ' + ((e.error && e.message) || JSON.stringify(e)));
 			}
-			loadingIndicator.hide();
+			
 		});
 	} else {
 		alert('Error in login: ' + ((e.error && e.message) || JSON.stringify(e)));
