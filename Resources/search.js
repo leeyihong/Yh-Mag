@@ -58,10 +58,11 @@ for (var i=0; i<facultiesList.length; i++){
 	
 	var facultyLogo =  Titanium.UI.createImageView({
 		url:facultiesList[i].facultyLogo,
-		width:40,
-		height:40,
-		left:4,
-		top:2
+		width:'40dp',
+		height:'40dp',
+		left: '5dp',
+		top:'5dp',
+		bottom: '5dp'
 	});
 	 
 	var faculty = Titanium.UI.createLabel({

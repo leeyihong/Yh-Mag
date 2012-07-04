@@ -136,7 +136,7 @@ Cloud.Users.login({
 		Cloud.Posts.query({
 			page : 1,
 			per_page : 9,
-			//where : {
+			//where : {  //CHECK IF DELETED IS TRUE
 			//	"bookTitle" : { '$ne' : ""}
 			//}
 		}, function(e) {
