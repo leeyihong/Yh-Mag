@@ -109,10 +109,16 @@ tabGroup.open();
 
 var allSellingResult = [];
 var tableLeftSetting = ['15dp', '115dp', '215dp', ];
+var priceOverlayleft = ['55dp', '155dp', '255dp']; //tableLeftSetting[i] +  othersTableSetting.imageLength - othersTableSetting.priceOverlayLength
 var othersTableSetting = {
-    imageLength : "90dp",
-   
+    imageLength : '90dp',
+    imageTop : '10dp',
+    priceOverlayLength : '50dp',
 };
+var labelRotation = Titanium.UI.create2DMatrix({
+	rotate : 45,
+});
+labelRotation = labelRotation.translate(-5,-17);
 var rowData = [];
 
 var loadingIndicator = Ti.UI.createActivityIndicator({
@@ -136,7 +142,7 @@ Cloud.Users.login({
 		Cloud.Posts.query({
 			page : 1,
 			per_page : 9,
-			//where : {  //CHECK IF DELETED IS TRUE
+			//where : {  // *** CHECK IF DELETED IS TRUE
 			//	"bookTitle" : { '$ne' : ""}
 			//}
 		}, function(e) {
@@ -155,8 +161,8 @@ Cloud.Users.login({
 				    	//allSellingResult[i] = post;
 				    	
 				    	var columnView = Ti.UI.createImageView({
-					    	image: e.posts[currentPointer].photo.urls.square_75,
-					    	top : '10dp',
+					    	image: post.photo.urls.square_75,
+					    	top : othersTableSetting.imageTop,
 					        left : tableLeftSetting[r],
 					        width : othersTableSetting.imageLength,
 					        height : othersTableSetting.imageLength,
@@ -171,7 +177,7 @@ Cloud.Users.login({
 							opacity : 0.50
 						});
 						moduleOverlay.add(Ti.UI.createLabel({
-							text : e.posts[currentPointer].custom_fields.moduleCode,
+							text : post.custom_fields.moduleCode,
 							textAlign : 'center',
 							color : '#FFFFFF',
 							font : {
@@ -179,8 +185,27 @@ Cloud.Users.login({
 								fontWeight : 'bold'
 							}
 						}));
+						var priceOverlay = Ti.UI.createView({
+							backgroundImage: 'images/priceOverlay.png',
+							//image : 'images/priceOverlay.png',
+							top :othersTableSetting.imageTop,
+							left : priceOverlayleft[r],
+							width : othersTableSetting.priceOverlayLength,
+							height : othersTableSetting.priceOverlayLength,
+						});
+						priceOverlay.add(Ti.UI.createLabel({
+							text : post.custom_fields.price,
+							//textAlign : 'center',
+							color : '#FFFFFF',
+							font : {
+								fontSize : '14.5dp',
+								fontWeight : 'bold'
+							},
+							transform : labelRotation,
+						}));
 						homeTableRow.add(columnView);
 						homeTableRow.add(moduleOverlay);
+						homeTableRow.add(priceOverlay);
 				    };
 				    //rowData.push(homeTableRow);
 				    rowData[i/3] = homeTableRow;
@@ -195,11 +220,12 @@ Cloud.Users.login({
 			} else {
 				alert('Error in query: ' + ((e.error && e.message) || JSON.stringify(e)));
 			}
+			loadingIndicator.hide();
 		});
 	} else {
 		alert('Error in login: ' + ((e.error && e.message) || JSON.stringify(e)));
 	}
-	loadingIndicator.hide();
+	
 }); 
 
 
