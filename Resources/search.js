@@ -1,6 +1,20 @@
 // initiate the window for 'search' tab
 var searchWin = Ti.UI.currentWindow;
 var currentTab = Ti.UI.currentTab;
+
+var searchBar = Titanium.UI.createSearchBar({
+	hintText : 'Search by Module Code, eg. IS1234',
+	font : {
+		fontSize : '14dp',
+		fontFamily : 'Helvetica',
+	},
+    barColor:'#000', 
+    showCancel:true,
+    height:'40dp',
+    top:0,
+});
+searchWin.add(searchBar);
+
 /*
 var facultiesList = [
 "Arts & Social Sciences",
@@ -84,7 +98,9 @@ for (var i=0; i<facultiesList.length; i++){
 	//facultiesList[i] = row;
 };
 
-var facultyTable = Titanium.UI.createTableView({});
+var facultyTable = Titanium.UI.createTableView({
+	top : '40dp'
+});
 
 facultyTable.setData(data);
 searchWin.add(facultyTable);
