@@ -110,16 +110,21 @@ tabGroup.open();
 var allSellingResult = [];
 var tableLeftSetting = ['15dp', '115dp', '215dp', ];
 var othersTableSetting = {
-	columnImage: 'logo.png',
-	columnTop : '10dp',
-    columnWidth : "90dp",
-    columnHeight : '90dp',
-    overlayBottom : '0dp',
-	overlayHeight : '20dp',
-	overlayWidth : '90dp',
-	overlayOpacity : 0.50
+    imageLength : "90dp",
+   
 };
 var rowData = [];
+
+var loadingIndicator = Ti.UI.createActivityIndicator({
+	font : {
+		fontFamily : 'Helvetica Neue',
+		fontSize : '26dp',
+		fontWeight : 'bold'
+	},
+	message : 'Loading...',
+	style : Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
+});
+loadingIndicator.show();
 
 Cloud.Users.login({
 	login : 'jessicalee_88@hotmail.com',
@@ -127,21 +132,18 @@ Cloud.Users.login({
 }, function(e) {
 	if (e.success) {
 		var user = e.users[0];
-		alert('Success Login:\\n' + 'id: ' + user.id + '\\n' + 'first name: ' + user.first_name + '\\n' + 'last name: ' + user.last_name);
+		//alert('Success Login: ' + 'id: ' + user.id + ' ' + 'first name: ' + user.first_name + ' ' + 'last name: ' + user.last_name);
 		Cloud.Posts.query({
 			page : 1,
 			per_page : 9,
-			where : {
-				"bookTitle" : { '$ne' : ""}
-			}
+			//where : {
+			//	"bookTitle" : { '$ne' : ""}
+			//}
 		}, function(e) {
 			if (e.success) {
-				alert('Success getting data:\\n' + 'Count: ' + e.posts.length);
+				//alert('Success getting data: ' + 'Count: ' + e.posts.length);
 				for (var i = 0; i <= e.posts.length-3; i+=3) {
-					
-					//allSellingResult[i] = post;
-					//alert('id: ' + post.id + '\\n' + 'id: ' + post.id + '\\n' + 'title: ' + post.title + '\\n' + 'content: ' + post.content + '\\n' + 'updated_at: ' + post.updated_at);
-					
+
 					var homeTableRow = Ti.UI.createTableViewRow({
 				    	height : '100dp',
 				    });
@@ -149,13 +151,15 @@ Cloud.Users.login({
 				    for(var r = 0; r < 3; r++){
 				    	var currentPointer = i+r;
 				    	var post = e.posts[currentPointer];
+				    	//alert('id: ' + post.id + ' ' + 'id: ' + post.id + ' ' + 'title: ' + post.title + ' ' + 'content: ' + post.content + ' ' + 'updated_at: ' + post.updated_at);
+				    	//allSellingResult[i] = post;
 				    	
 				    	var columnView = Ti.UI.createImageView({
 					    	image: e.posts[currentPointer].photo.urls.square_75,
 					    	top : '10dp',
 					        left : tableLeftSetting[r],
-					        width : "90dp",
-					        height : '90dp',
+					        width : othersTableSetting.imageLength,
+					        height : othersTableSetting.imageLength,
 					        backgroundColor : "blue"
 					    });
 					    var moduleOverlay = Ti.UI.createView({
@@ -163,7 +167,7 @@ Cloud.Users.login({
 							left : tableLeftSetting[r],
 							bottom : '0dp',
 							height : '20dp',
-							width : '90dp',
+							width : othersTableSetting.imageLength,
 							opacity : 0.50
 						});
 						moduleOverlay.add(Ti.UI.createLabel({
@@ -189,12 +193,13 @@ Cloud.Users.login({
 				winHome.add(homeTableView); 
 
 			} else {
-				alert('Error in query:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+				alert('Error in query: ' + ((e.error && e.message) || JSON.stringify(e)));
 			}
 		});
 	} else {
-		alert('Error in login:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+		alert('Error in login: ' + ((e.error && e.message) || JSON.stringify(e)));
 	}
+	loadingIndicator.hide();
 }); 
 
 
