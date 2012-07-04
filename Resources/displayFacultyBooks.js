@@ -43,7 +43,7 @@ Cloud.Users.login({
 			where : {faculty :  facultyName}
 		}, function(e) {
 			if (e.success) {
-				alert("Total Result is " +  e.posts.length);
+				//alert("Total Result is " +  e.posts.length);
 				loadingIndicator.show();
 				var resultLength =  e.posts.length
 				for (var i = 0; i <= resultLength; i+=3) {

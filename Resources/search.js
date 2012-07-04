@@ -65,15 +65,14 @@ var facultyTable = Titanium.UI.createTableView({
 
 facultyTable.setData(data);
 searchWin.add(facultyTable);
-
-var facultyBookWin= Titanium.UI.createWindow({  
-	backgroundColor:'#FFFFFF',
-	url: 'displayFacultyBooks.js',
-	modal : true,
-	exitOnClose : true
-});
 	
 facultyTable.addEventListener('click', function(e){
+	var facultyBookWin= Titanium.UI.createWindow({  
+		backgroundColor:'#FFFFFF',
+		url: 'displayFacultyBooks.js',
+		modal : true,
+		exitOnClose : true
+	});
 	facultyBookWin.facultyName = e.rowData.title;
 	currentTab.open(facultyBookWin);
 });
