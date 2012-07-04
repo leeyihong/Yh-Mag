@@ -6,10 +6,23 @@ var Cloud = require('ti.cloud');
 Cloud.debug = true;
 
 var sellingViewDetailsWin = Ti.UI.currentWindow;
-//sellingViewDetailsWin.title = 'ShootNSell';
-
 var postID = sellingViewDetailsWin.postID;
-//alert(postID);
+
+/*	    
+var productDetailsList = [
+{heading: "Image : ", details: "notting" },
+{heading: "Title : ", details:  'post.custom_fields.bookTitle' },
+{heading: "Subtitle : ", details:  'post.custom_fields.bookSubtitle' },
+{heading: "Author : ", details:  'post.custom_fields.author' },
+{heading: "Publisher : ", details:  'post.custom_fields.publisher' },
+{heading: "Date of Publish : ", details:  'post.custom_fields.publishedDate' },
+{heading: "Edition : ", details:  'post.custom_fields.edition' },
+{heading: "Condition : ", details:  'post.custom_fields.condition' },
+{heading: "Faculty : ", details:  'post.custom_fields.faculty' },
+{heading: "Module Code : ", details:  'post.custom_fields.moduleCode' },
+{heading: "Price : ", details:  'post.custom_fields.price' },
+
+];	*/
 
 var sellingViewDetailsData = [];
 Cloud.Posts.show({
@@ -18,7 +31,10 @@ Cloud.Posts.show({
     if (e.success) {
         var post = e.posts[0];
         //alert('Success: ' + 'id: ' + post.id + ' ' + 'title: ' + post.title + ' ' + 'content: ' + post.content + ' ' + 'updated_at: ' + post.updated_at);
+        
         var sellingViewDetailsRow = Ti.UI.createTableViewRow();
+        
+        //IMAGE
         var imageView = Ti.UI.createImageView({
     		image :post.photo.urls.small_240,
 	    	top : '10dp',
@@ -28,6 +44,64 @@ Cloud.Posts.show({
 	    sellingViewDetailsRow.add(imageView);
 	    sellingViewDetailsData[0] = sellingViewDetailsRow
 	    
+	    //BOOKDETAILS
+	    var productHeaderView = Ti.UI.createView({
+	    	height : '30dp'
+	    });
+	    productHeaderView.add(Ti.UI.createLabel({
+	    	text : 'Product Details',
+	    	font : {
+				fontSize : '16dp',
+				fontFamily : 'Helvetica',
+				fontWeight : 'bold'
+			},
+			top : '10dp'
+	    }));
+	    var productHeader = Ti.UI.createTableViewSection({
+	    	headerView : productHeaderView,
+	    	height : '40dp'
+	    });
+	    
+	    for(var i = 1; i < 11; i++){
+	    	
+		    var rowlabel = Ti.UI.createLabel({
+				font : {
+					fontSize : '14dp',
+					fontFamily : 'Helvetica',
+					fontWeight : 'bold'
+				},
+				color : '#000014',
+				left : '10dp',
+			});
+			var bookDetailsRow = Ti.UI.createTableViewRow({});
+			
+			if (i == 1){
+				rowlabel.text = "Title : " + post.custom_fields.bookTitle;
+			} else if (i == 2) {
+				rowlabel.text = "Subtitle : " + post.custom_fields.bookSubtitle;
+			} else if (i == 3) {
+				rowlabel.text = "Author : " + post.custom_fields.author;
+			} else if (i == 4) {
+				rowlabel.text = "Publisher : " + post.custom_fields.publisher;
+			} else if (i == 5) {
+				rowlabel.text = "Date of Publish : " + post.custom_fields.publishedDate;
+			} else if (i == 6) {
+				rowlabel.text = "Edition : " + post.custom_fields.edition;
+			} else if (i == 7) {
+				rowlabel.text = "Condition : " + post.custom_fields.condition;
+			} else if (i == 8) {
+				rowlabel.text = "Faculty : " + post.custom_fields.faculty;
+			} else if (i == 9) {
+				rowlabel.text = "Module Code : " + post.custom_fields.moduleCode
+			} else if (i == 10) {
+				rowlabel.text = "Price : " + post.custom_fields.price
+			}
+			
+			bookDetailsRow.add(rowlabel);
+			productHeader.add(bookDetailsRow);
+			sellingViewDetailsData[1] = productHeader;
+	    };
+
 	    var sellingViewDetailsTable = Ti.UI.createTableView({
 	    	data : sellingViewDetailsData,
 	    	separatorColor : 'transparent'
@@ -37,56 +111,3 @@ Cloud.Posts.show({
         alert('Error: ' +  ((e.error && e.message) || JSON.stringify(e)));
     }
 });
-
-
-/*
-var viewOne  = Ti.UI.createView({
-    backgroundColor:'#999',
-    height:'auto'
-});
-var headerLabel = Ti.UI.createLabel({
-    font:{fontFamily:'Helvetica Neue',fontSize:18,fontWeight:'bold'},
-    text:'Custom Header - first label',
-    color:'#222',
-    textAlign:'left',
-    top:0,
-    left:10,
-    width:300,
-    height:30
-});
-var viewTwo  = Ti.UI.createView({
-    backgroundColor:'#990',
-    height:'auto'
-});
-var headerLabel2 = Ti.UI.createLabel({
-    font:{fontFamily:'Helvetica Neue',fontSize:24,fontWeight:'bold'},
-    text:'Custom Header - Second label',
-    color:'#222',
-    textAlign:'left',
-    top:0,
-    left:10,
-    width:300,
-    height:30
-});
-viewOne.add(headerLabel);
-viewTwo.add(headerLabel2);
- 
-var settingsTableData = [];
-settingsTableData[0] = Ti.UI.createTableViewSection({
-    headerView:viewOne
-});
-settingsTableData[0].add(Ti.UI.createTableViewRow({title:'ROW ONE'}));
-settingsTableData[0].add(Ti.UI.createTableViewRow({title:'ROW TWO'}));
-settingsTableData[1] = Ti.UI.createTableViewSection({
-    headerView:viewTwo
-});
-settingsTableData[1].add(Ti.UI.createTableViewRow({title:'ROW ONE'}));
-settingsTableData[1].add(Ti.UI.createTableViewRow({title:'ROW TWO'}));
- 
- 
-var table = Ti.UI.createTableView({
-    data: settingsTableData
-});
-sellingViewDetailsWin.add(table);
- 
-sellingViewDetailsWin.open();*/
