@@ -27,7 +27,6 @@ var loadingIndicator = Ti.UI.createActivityIndicator({
 		fontWeight : 'bold'
 	},
 	message : 'Loading...',
-	style : Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
 });
 
 var searchBar = Titanium.UI.createSearchBar({
@@ -51,7 +50,7 @@ searchBar.addEventListener('return', function(e){
 		per_page : 12,
 		order : "-created_at", 
 		where : {  // *** CHECK IF DELETED IS TRUE
-			"moduleCode" : { '$regex' : searchBar.value}
+			"moduleCode" : { '$regex' : searchBar.value}, bookStatus : 	"onSales" ,
 		}
 	}, function(e) {
 		if (e.success) {

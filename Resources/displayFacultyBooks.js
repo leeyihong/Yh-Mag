@@ -40,7 +40,7 @@ Cloud.Users.login({
 		Cloud.Posts.query({
 			page : 1,
 			per_page : 12,
-			where : {faculty :  facultyName},
+			where : {faculty :  facultyName, bookStatus : 	"onSales" },
 			order : "-created_at"
 		}, function(e) {
 			if (e.success) {
