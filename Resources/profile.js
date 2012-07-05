@@ -278,7 +278,7 @@ Cloud.Users.login({
 					var photo = e.photos[0];
 					Cloud.Users.update({
 						first_name : usernameText.value,
-						otherDetails : details.value,
+						other_details : details.value,
 					}, function(e) {
 						if(e.success) {
 							var user = e.users[0];
