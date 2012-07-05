@@ -101,6 +101,7 @@ ivleloginWeb.addEventListener('load', function(e) {
 			xhr.onload = function(){
 				var output = this.responseText;
 				Ti.App.Properties.setString("name", output.substring(1, output.length - 1));
+				//Ti.API.info ('name:' + Ti.App.Properties.getString('name'));
 			}
 			xhr.send();
 			
@@ -110,6 +111,7 @@ ivleloginWeb.addEventListener('load', function(e) {
 			xhr.onload = function(){
 				var output2 = this.responseText;
 				Ti.App.Properties.setString("email", output2.substring(1, output2.length - 1));
+				//Ti.API.info ('email:' + Ti.App.Properties.getString('email'));
 			}
 			xhr.send();
 			
@@ -117,14 +119,18 @@ ivleloginWeb.addEventListener('load', function(e) {
 			Cloud.Users.create({
 			    email: Ti.App.Properties.getString('email'),
 			    username: Ti.App.Properties.getString('name'),
+			    first_name: Ti.App.Properties.getString('name'),
 			    password: 'test_password',
-			    password_confirmation: 'test_password'
+			    password_confirmation: 'test_password',
+			    photo: 'profile.png',
+			    custom_fields: {other_details: 'Handphone, etc...'}
 			}, function (e) {
 			    if (e.success) {
 			        var user = e.users[0];
-			        alert('Success:\\n' +
-			            'email: ' + user.email + '\\n' +
-			            'username: ' + user.username + '\\n');
+			        alert ('Welcome to ShootNSell!');
+			        //alert('Success:\\n' +
+			          //  'email: ' + user.email + '\\n' +
+			            //'username: ' + user.username + '\\n');
 			    } else {
 			        Ti.API.info('Error:\\n' +
 			            ((e.error && e.message) || JSON.stringify(e)));
