@@ -2,7 +2,14 @@
 var Cloud = require('ti.cloud');
 Cloud.debug = true;
 
-if (Ti.App.Properties.getString('email'))
+// home window upon successful login
+var homeWin = Titanium.UI.createWindow({
+	navBarHidden : true,
+	backgroundColor : '#FFFFFF',
+	url : 'home.js',
+});
+
+if(Ti.App.Properties.getString('email'))
 	login(Ti.App.Properties.getString('email'));
 else {
 	var apikey = 'B35vgIdq2a3SpGSBD81Be'
@@ -12,13 +19,6 @@ else {
 	var loginWin = Titanium.UI.createWindow({
 		backgroundColor : '#FFFFFF',
 		navBarHidden : true
-	});
-
-	// home window upon successful login
-	var homeWin = Titanium.UI.createWindow({
-		navBarHidden : true,
-		backgroundColor : '#FFFFFF',
-		url : 'home.js',
 	});
 
 	var windowWidth = Ti.Platform.displayCaps.platformWidth;
@@ -54,7 +54,7 @@ else {
 	Ti.Facebook.permissions = ['publish_stream'];
 
 	Ti.Facebook.addEventListener('login', function(e) {
-		if (e.success) {
+		if(e.success) {
 			alert('Logged in'), homeWin.open()
 		}
 	});
@@ -64,7 +64,7 @@ else {
 
 	// Use wide button style -- constant not supported on Android yet.
 	var buttonStyle;
-	if (Ti.Platform.name === 'android') {
+	if(Ti.Platform.name === 'android') {
 		buttonStyle = 'wide';
 	} else {
 		buttonStyle = Ti.Facebook.BUTTON_STYLE_WIDE;
@@ -93,8 +93,8 @@ else {
 	var xhr;
 
 	ivleloginWeb.addEventListener('load', function(e) {
-		if (ivleloginWeb.url.indexOf('/api/login/login_result.ashx') > 0) {
-			if (ivleloginWeb.url.indexOf('&r=0') > 0) {
+		if(ivleloginWeb.url.indexOf('/api/login/login_result.ashx') > 0) {
+			if(ivleloginWeb.url.indexOf('&r=0') > 0) {
 				string = JSON.stringify(e), token = string.substring(string.indexOf('<body>') + 6, string.indexOf('</body>')), Ti.App.Properties.setString("token", token),
 				// verify user and get username and email
 				// get username
@@ -164,7 +164,7 @@ function login(email) {
 		login : email,
 		password : 'test_password'
 	}, function(e) {
-		if (e.success) {
+		if(e.success) {
 			var user = e.users[0];
 			//alert('Welcome to ShootNSell!');
 			homeWin.open();
@@ -187,14 +187,14 @@ function createUser(name, email) {
 		custom_fields : '{ "other_details" : "Handphone, etc..."}'
 	}, function(e) {
 		Ti.API.info('Function entered')
-		if (e.success) {
+		if(e.success) {
 			var user = e.users[0];
 
 			//alert('Welcome to ShootNSell!');
 			homeWin.open();
 
 		} else {
-			alert('1 Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+			//alert('1 Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
 
 			//login function
 			login(email);
