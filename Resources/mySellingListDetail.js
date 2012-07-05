@@ -434,6 +434,16 @@ var activityIndicator = Ti.UI.createActivityIndicator({
 });
 
 editButton.addEventListener('click', function(e) {
+		
+	if(!moduleCodeField.value){
+		alert('Please enter your module code');
+		return;	
+	}
+	if((!priceField.value)||(priceField.value.length <= 1)){
+		alert('Please enter the price');
+		return;
+	}
+	
 	activityIndicator.show();
 	Cloud.Posts.update({
 	    post_id: mySellingData.id,
