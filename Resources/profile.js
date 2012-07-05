@@ -329,9 +329,9 @@ Cloud.Users.login({
 				if(e.index == 0) {
 					Cloud.Users.logout(function(e) {
 						if(e.success) {
-							Ti.App.Properties.setString("token", ''), 
-							Ti.App.Properties.setString("email", ''),
-							Ti.App.Properties.setString("name", ''),
+							Ti.App.Properties.removeProperty('token');//.setString("token", ''), 
+							Ti.App.Properties.removeProperty('email');//setString("email", ''),
+							Ti.App.Properties.removeProperty('name');//setString("name", ''),
 							alert('Success: Logged out'),
 							loginWin.open();
 						} else {
