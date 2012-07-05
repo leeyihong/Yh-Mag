@@ -199,6 +199,8 @@ function login(email) {
 	}, function(e) {
 		if (e.success) {
 			var user = e.users[0];
+			Ti.App.Properties.setString('userid', user.id);
+			
 			alert('Welcome to ShootNSell!');
 			loginWin.close();
 			homeWin.open();
@@ -223,6 +225,8 @@ function createUser(name, email) {
 		Ti.API.info('Function entered')
 		if (e.success) {
 			var user = e.users[0];
+			
+			Ti.App.Properties.setString('userid', user.id);
 
 			alert('Welcome to ShootNSell!');
 			loginWin.close();
