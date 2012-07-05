@@ -538,7 +538,11 @@ var publishDialog = Ti.UI.createAlertDialog({
 	buttonNames : ['Confirm', 'Cancel'],
 });
 publishButton.addEventListener('click', function() {
+<<<<<<< HEAD
 		
+=======
+	
+>>>>>>> 99587b09d084d37af58f6c63473b1481d358ef0c
 	if(!moduleCodeField.value){
 		alert('Please enter your module code');
 		return;	
@@ -559,7 +563,10 @@ var activityIndicator = Ti.UI.createActivityIndicator({
 });
 
 publishDialog.addEventListener('click', function(e) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 99587b09d084d37af58f6c63473b1481d358ef0c
 	
 	if (e.index == 0) {// clicked "Confirm"
 		activityIndicator.show();
@@ -586,7 +593,7 @@ publishDialog.addEventListener('click', function(e) {
 					title : Ti.App.Properties.getString('name') + ' Selling ' + moduleCodeField.value + ' Book!',
 					content : 'Selling ' + moduleCodeField.value + ' Book via ShootNSell',
 					photo : sellingDetailsWin.originalImage,
-					custom_fields : '{ "userId": "' + Ti.App.Properties.getString('email') + '","bookTitle": "' + titleField.value + '", "bookSubtitle": "' + subtitleField.value + '","author": "' + authorsField.value + '", "publisher": "' + publisherField.value + '","publishedDate": "' + publishedDateField.value + '","edition": "' + editionField.value + '", "condition": "' + conditionField.value + '","faculty": "' + facultyPicker.getSelectedRow(0).title + '","moduleCode": "' + moduleCodeField.value + '", "price": "' + priceField.value + '", "isDeleted": false , "bookStatus": "onSales"}',
+					custom_fields : '{ "userId": "' + Ti.App.Properties.getString('email') + '","bookTitle": "' + titleField.value + '", "bookSubtitle": "' + subtitleField.value + '","author": "' + authorsField.value + '", "publisher": "' + publisherField.value + '","publishedDate": "' + publishedDateField.value + '","edition": "' + editionField.value + '", "condition": "' + conditionField.value + '","faculty": "' + facultyPicker.getSelectedRow(0).title + '","moduleCode": "' + moduleCodeField.value + '", "price": "' + priceField.value + '", "bookStatus": "onSales"}',
 
 				}, function(e) {
 					if (e.success) {

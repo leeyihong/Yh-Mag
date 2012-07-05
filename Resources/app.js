@@ -99,80 +99,27 @@ ivleloginWeb.addEventListener('load', function(e) {
 			xhr.onload = function() {
 				var output = this.responseText;
 				Ti.App.Properties.setString("name", output.substring(1, output.length - 1));
-			}
-			xhr.send();
-
-			// get email
-			xhr = Ti.Network.createHTTPClient();
-			xhr.open("GET", "https://ivle.nus.edu.sg/api/Lapi.svc/UserEmail_Get?APIKey=" + apikey + "&Token=" + token);
-			xhr.onload = function() {
-				var output2 = this.responseText;
-				Ti.App.Properties.setString("email", output2.substring(1, output2.length - 1));
-			}
-			xhr.send();
-			var email, name;
-			if(Ti.App.Properties.getString('email')) email= Ti.App.Properties.getString('email');
-			if(Ti.App.Properties.getString('name')) name = Ti.App.Properties.getString('name');
-			// create user/ login if exist
-			Cloud.Users.create({
-			    email: email,
-			    username: name,
-			    first_name: name,
-			    last_name: name,
-			    password: 'test_password',
-			    password_confirmation: 'test_password',
-			    photo : 'profile.png',
-				custom_fields : '{ "other_details" : "Handphone, etc..."}'
-			}, function (e) {
-				Ti.API.info ('Function entered')
-			    if (e.success) {
-			        var user = e.users[0];
-
-			        alert('Welcome to ShootNSell!');
-					homeWin.open();
+				
+				//alert(Ti.App.Properties.getString('name'));
+				
+				// get email
+				var xhr2 = Ti.Network.createHTTPClient();
+				xhr2.open("GET", "https://ivle.nus.edu.sg/api/Lapi.svc/UserEmail_Get?APIKey=" + apikey + "&Token=" + token);
+				xhr2.onload = function() {
+					var output2 = this.responseText;
+					Ti.App.Properties.setString("email", output2.substring(1, output2.length - 1));
 					
-			    } else {
-			        Ti.API.info('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
-			        
-			        //login function
-			        login(email);
-			    }
-			});
-			/*// create a user on successful login
-			Cloud.Users.create({
-				email : Ti.App.Properties.getString('email'),
-				username : Ti.App.Properties.getString('name'),
-				first_name : Ti.App.Properties.getString('name'),
-				last_name : Ti.App.Properties.getString('name'),
-				password : 'test_password',
-				password_confirmation : 'test_password',
-				photo : 'profile.png',
-				custom_fields : '{ "other_details" : "Handphone, etc..."}'
-			}, function(e) {
-				if(e.success) {
-					var user = e.users[0];
-					Ti.API.info ('Create: ' + Ti.App.Properties.getString('email') + ' ' + Ti.App.Properties.getString('name'))
-					alert('Welcome to ShootNSell!');
-					homeWin.open();
-				} else {
-					/*Cloud.Users.login({
-						login : Ti.App.Properties.getString('email'),
-						password : 'test_password'
-					}, function(e) {
-						if(e.success) {
-							var user = e.users[0];
-							alert('Welcome to ShootNSell!');
-							homeWin.open();
-						} else {
-							alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
-						}
-					});
-					Ti.API.info('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+					//alert(Ti.App.Properties.getString('email'));
+					
+					createUser(Ti.App.Properties.getString('name'), Ti.App.Properties.getString('email'));
 				}
-			});*/
+				xhr2.send();
+			}
+			xhr.send();
 
 		}
 	}
+
 });
 
 function login(email){
@@ -185,8 +132,36 @@ function login(email){
 			alert('Welcome to ShootNSell!');
 			homeWin.open();
 		} else {
-			alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+			alert('2 Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
 		}
+	});
+}
+
+function createUser(name, email){
+	// create user/ login if exist
+	Cloud.Users.create({
+	    email: email,
+	    username: name,
+	    first_name: name,
+	    last_name: name,
+	    password: 'test_password',
+	    password_confirmation: 'test_password',
+	    //photo : 'profile.png',
+		custom_fields : '{ "other_details" : "Handphone, etc..."}'
+	}, function (e) {
+		Ti.API.info ('Function entered')
+	    if (e.success) {
+	        var user = e.users[0];
+
+	        alert('Welcome to ShootNSell!');
+			homeWin.open();
+			
+	    } else {
+	        alert('1 Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+	        
+	        //login function
+	        login(email);
+	    }
 	});
 }
 

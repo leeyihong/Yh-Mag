@@ -273,13 +273,13 @@ Cloud.Users.login({
 
 			Cloud.Photos.update({
 				photo_id : user.photo.id,
-				photo : localImage,
+				photo : photoLogo.image,
 			}, function(e) {
 				if(e.success) {
 					var photo = e.photos[0];
 					Cloud.Users.update({
 						first_name : usernameText.value,
-						other_details : details.value,
+						custom_fields: {other_details : details.value},
 					}, function(e) {
 						if(e.success) {
 							var user = e.users[0];
@@ -330,8 +330,9 @@ Cloud.Users.login({
 					Cloud.Users.logout(function(e) {
 						if(e.success) {
 							Ti.App.Properties.setString("token", ''), 
-							alert('Success: Logged out'), 
-							winProfile.close(),
+							Ti.App.Properties.setString("email", ''),
+							Ti.App.Properties.setString("name", ''),
+							alert('Success: Logged out'),
 							loginWin.open();
 						} else {
 							alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
