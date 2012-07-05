@@ -124,10 +124,9 @@ ivleloginWeb.addEventListener('load', function(e) {
 			    photo : 'profile.png',
 				custom_fields : '{ "other_details" : "Handphone, etc..."}'
 			}, function (e) {
-				Ti.API.info ('Function entered')
 			    if (e.success) {
 			        var user = e.users[0];
-
+			        
 			        alert('Welcome to ShootNSell!');
 					homeWin.open();
 					
@@ -138,38 +137,6 @@ ivleloginWeb.addEventListener('load', function(e) {
 			        login(email);
 			    }
 			});
-			/*// create a user on successful login
-			Cloud.Users.create({
-				email : Ti.App.Properties.getString('email'),
-				username : Ti.App.Properties.getString('name'),
-				first_name : Ti.App.Properties.getString('name'),
-				last_name : Ti.App.Properties.getString('name'),
-				password : 'test_password',
-				password_confirmation : 'test_password',
-				photo : 'profile.png',
-				custom_fields : '{ "other_details" : "Handphone, etc..."}'
-			}, function(e) {
-				if(e.success) {
-					var user = e.users[0];
-					Ti.API.info ('Create: ' + Ti.App.Properties.getString('email') + ' ' + Ti.App.Properties.getString('name'))
-					alert('Welcome to ShootNSell!');
-					homeWin.open();
-				} else {
-					/*Cloud.Users.login({
-						login : Ti.App.Properties.getString('email'),
-						password : 'test_password'
-					}, function(e) {
-						if(e.success) {
-							var user = e.users[0];
-							alert('Welcome to ShootNSell!');
-							homeWin.open();
-						} else {
-							alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
-						}
-					});
-					Ti.API.info('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
-				}
-			});*/
 
 		}
 	}
