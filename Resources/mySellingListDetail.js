@@ -1,6 +1,3 @@
-/**
- * @author Yi Hong
- */
 var Cloud = require('ti.cloud');
 Cloud.debug = true;
 
@@ -443,7 +440,6 @@ editButton.addEventListener('click', function(e) {
 		alert('Please enter the price');
 		return;
 	}
-
 	activityIndicator.show();
 	Cloud.Posts.update({
 	    post_id: mySellingData.id,
