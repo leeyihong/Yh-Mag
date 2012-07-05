@@ -47,6 +47,19 @@ Cloud.Users.login({
 				//alert("Total Result is " +  e.posts.length);
 				loadingIndicator.show();
 				var resultLength =  e.posts.length
+				if (resultLength === 0 ) {
+					var noResult = Ti.UI.createLabel({
+						text : "No result found",
+						color : '#000014',
+						font : {
+							fontSize : '15dp',
+							fontWeight : 'bold'
+						}
+					});
+					displayFacultyBookWin.add(noResult);
+					loadingIndicator.hide();
+					return
+				};
 				for (var i = 0; i <= resultLength; i+=3) {
 		
 					var homeTableRow = Ti.UI.createTableViewRow({

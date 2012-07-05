@@ -46,7 +46,6 @@ var loadingIndicator = Ti.UI.createActivityIndicator({
 		fontWeight : 'bold'
 	},
 	message : 'Loading...',
-	style : Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
 });
 var mySellingData = [];
 var resultData = [];
@@ -71,7 +70,26 @@ sellingListImage.addEventListener('click', function(e) {
 			}, function(e) {
 				if (e.success) {
 					//alert('Success:\\n' + 'Count: ' + e.posts.length);
-					// *** CHECK IF THERE IS ANY DATA FOR THE USER IF NOT RETURN NO DATA ***
+					if (e.posts.length === 0 ) {
+						var blackWindow = Ti.UI.createWindow({
+							backgroundColor : '#FFFFFF',
+							modal : true
+						});
+						var noResult = Ti.UI.createLabel({
+							text : "There are no book on your selling list.  Created one at Transact Tab",
+							left : '10dp',
+							right : '10dp'
+							color : '#000014',
+							font : {
+								fontSize : '15dp',
+								fontWeight : 'bold'
+							}
+						});
+						blackWindow.add(noResult);
+						loadingIndicator.hide();
+						currentTab.open(blackWindow);
+						return
+					};
 					for (var i = 0; i < e.posts.length; i++) {
 						var post = e.posts[i];
 						mySellingData[i] = post;
