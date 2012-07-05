@@ -102,11 +102,48 @@ Cloud.Posts.show({
 			sellingViewDetailsData[1] = productHeader;
 	    };
 
+		  // CHAT BUTTON
+		var chatbtn = Ti.UI.createButton({
+			title : 'Contact seller',
+			font : {
+				fontsize : 25
+			},
+			bottom: '20dp',
+			width :  'auto',
+			height : '30dp'
+		}); 
+		
+		var chatRow = Ti.UI.createTableViewRow();
+		chatRow.add(chatbtn);
+	    sellingViewDetailsData[2] = chatRow;		
+	    
+		// chat window
+		var chatWin = Titanium.UI.createWindow({
+			backgroundColor : '#FFFFFF',
+			url : 'chat.js',
+		});        
+ 
+	    
+		chatbtn.addEventListener('click', function(e) {
+			Ti.App.Properties.setString("seller", post.custom_fields.userId);
+			Ti.App.Properties.setString("buyer", Ti.App.Properties.getString("email"));
+			if (Ti.App.Properties.getString("seller") === Ti.App.Properties.getString("buyer") ){
+				alert("You can't chat with yourself.")
+			}
+			else{
+				chatWin.open();
+			}
+			
+		})
+		
+		
 	    var sellingViewDetailsTable = Ti.UI.createTableView({
 	    	data : sellingViewDetailsData,
 	    	separatorColor : 'transparent'
 	    });
 	    sellingViewDetailsWin.add(sellingViewDetailsTable);
+	    
+		
     } else {
         alert('Error: ' +  ((e.error && e.message) || JSON.stringify(e)));
     }

@@ -78,7 +78,7 @@ sellingListImage.addEventListener('click', function(e) {
 						var noResult = Ti.UI.createLabel({
 							text : "There are no book on your selling list.  Created one at Transact Tab",
 							left : '10dp',
-							right : '10dp'
+							right : '10dp',
 							color : '#000014',
 							font : {
 								fontSize : '15dp',
