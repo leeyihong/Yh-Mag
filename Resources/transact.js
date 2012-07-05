@@ -346,6 +346,7 @@ var submitISBNButton = Ti.UI.createButton({
 var isbnNo;
 submitISBNButton.addEventListener('click', function(e) {
 	if (typeBarcodeTextField.value.length == 13) {
+		Ti.UI.Android.hideSoftKeyboard();
 		sellingDetailsWin.isbnNo = typeBarcodeTextField.value;
 		sellingDetailsWin.image = imgView;
 		sellingDetailsWin.open();
