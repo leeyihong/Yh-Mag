@@ -94,6 +94,8 @@ Cloud.Posts.show({
 		// chat window
 		var chatWin = Titanium.UI.createWindow({
 			backgroundColor : '#FFFFFF',
+			to_id: post.user,
+			postId: post,
 			url : 'chat.js',
 		});        
  
