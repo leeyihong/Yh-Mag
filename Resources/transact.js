@@ -173,9 +173,9 @@ sellingListImage.addEventListener('click', function(e) {
 	
 });
 
-var buyingListImage = Ti.UI.createButton({
-	backgroundImage : 'images/buyingList.png',
-	backgroundSelectedImage : 'images/buyingList_click.png',
+var myChatListImage = Ti.UI.createButton({
+	backgroundImage : 'images/myChatList.png',
+	backgroundSelectedImage : 'images/myChatList_click.png',
 	width : '300dp',
 	height : '130dp',
 	left : '10dp',
@@ -210,7 +210,7 @@ var buyingListRow = Ti.UI.createTableViewRow({
 	height : 'auto',
 });
 buyingListRow.center
-buyingListRow.add(buyingListImage);
+buyingListRow.add(myChatListImage);
 trasacOptionTable.appendRow(buyingListRow);
 
 transactWin.add(trasacOptionTable);
