@@ -22,6 +22,7 @@ Cloud.Users.login({
 		var image;
 		var localImage;
 		var otherDetails;
+		var displayName;
 		var userName;
 		var emailAdd;
 		var photoLogo;
@@ -32,7 +33,8 @@ Cloud.Users.login({
 			if(e.success) {
 				// get user profile pic, username and other details
 				var user = e.users[0];
-				userName = user.first_name;
+				userName = user.username;
+				displayName = user.first_name
 				otherDetails = user.custom_fields.other_details;
 				emailAdd = user.email;
 
@@ -153,7 +155,6 @@ Cloud.Users.login({
 				});
 
 				// prompt for app username
-				var displayName;
 				var usernameLabel = Titanium.UI.createLabel({
 					width : 'auto',
 					height : '30dp',
@@ -175,9 +176,9 @@ Cloud.Users.login({
 				nameText = nameText + userName;
 				emailText = emailText + emailAdd;
 
-				// text field to enter username
+				// text field to enter display name
 				usernameText = Titanium.UI.createTextField({
-					value : userName,
+					value : displayName,
 					font : {
 						fontSize : '13dp',
 					},
@@ -188,7 +189,7 @@ Cloud.Users.login({
 				});
 				winProfile.add(usernameText);
 
-				// create a label to display name
+				// create a label for username
 				var nameDisplay = Titanium.UI.createLabel({
 					width : 'auto',
 					height : '30dp',
@@ -328,7 +329,10 @@ Cloud.Users.login({
 				if(e.index == 0) {
 					Cloud.Users.logout(function(e) {
 						if(e.success) {
-							Ti.App.Properties.setString("token", ''), alert('Success: Logged out'), loginWin.open();
+							Ti.App.Properties.setString("token", ''), 
+							alert('Success: Logged out'), 
+							winProfile.close(),
+							loginWin.open();
 						} else {
 							alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
 						}

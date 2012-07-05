@@ -7,7 +7,7 @@ Cloud.debug = true;
 // login window
 var loginWin = Titanium.UI.createWindow({
 	backgroundColor : '#FFFFFF',
-	navBarHidden: true
+	navBarHidden : true
 });
 
 // home window upon successful login
@@ -20,10 +20,10 @@ var windowWidth = Ti.Platform.displayCaps.platformWidth;
 
 // display app logo
 var logo = Titanium.UI.createImageView({
-	image: 'logo.png',
-	width: 200,
-	height: 200,
-	top: 20
+	image : 'logo.png',
+	width : 200,
+	height : 200,
+	top : 20
 });
 
 loginWin.add(logo);
@@ -78,7 +78,6 @@ loginWin.add(ivleLoginButton);
 //loginWin.add(facebookLoginButton);
 loginWin.open();
 
-
 // WEBVIEW FOR IVLE LOGIN
 var ivleloginWeb = Titanium.UI.createWebView({
 	url : 'https://ivle.nus.edu.sg/api/login/?apikey=' + apikey
@@ -91,56 +90,102 @@ var xhr;
 ivleloginWeb.addEventListener('load', function(e) {
 	if(ivleloginWeb.url.indexOf('/api/login/login_result.ashx') > 0) {
 		if(ivleloginWeb.url.indexOf('&r=0') > 0) {
-			string = JSON.stringify(e),
-			token = string.substring(string.indexOf('<body>') + 6, string.indexOf('</body>')), 
-			Ti.App.Properties.setString("token", token),
+			string = JSON.stringify(e), token = string.substring(string.indexOf('<body>') + 6, string.indexOf('</body>')), Ti.App.Properties.setString("token", token),
 			// verify user and get username and email
 			// get username
 			xhr = Ti.Network.createHTTPClient();
 			xhr.open("GET", "https://ivle.nus.edu.sg/api/Lapi.svc/UserName_Get?APIKey=" + apikey + "&Token=" + token);
-			xhr.onload = function(){
+			xhr.onload = function() {
 				var output = this.responseText;
 				Ti.App.Properties.setString("name", output.substring(1, output.length - 1));
-				//Ti.API.info ('name:' + Ti.App.Properties.getString('name'));
 			}
 			xhr.send();
-			
+
 			// get email
 			xhr = Ti.Network.createHTTPClient();
 			xhr.open("GET", "https://ivle.nus.edu.sg/api/Lapi.svc/UserEmail_Get?APIKey=" + apikey + "&Token=" + token);
-			xhr.onload = function(){
+			xhr.onload = function() {
 				var output2 = this.responseText;
 				Ti.App.Properties.setString("email", output2.substring(1, output2.length - 1));
-				//Ti.API.info ('email:' + Ti.App.Properties.getString('email'));
 			}
 			xhr.send();
-			
-			// create a user on successful login
+			var email, name;
+			if(Ti.App.Properties.getString('email')) email= Ti.App.Properties.getString('email');
+			if(Ti.App.Properties.getString('name')) name = Ti.App.Properties.getString('name');
+			// create user/ login if exist
 			Cloud.Users.create({
-			    email: Ti.App.Properties.getString('email'),
-			    username: Ti.App.Properties.getString('name'),
-			    first_name: Ti.App.Properties.getString('name'),
+			    email: email,
+			    username: name,
+			    first_name: name,
+			    last_name: name,
 			    password: 'test_password',
-			    password_confirmation: 'test_password',
-			    photo: 'profile.png',
-			    custom_fields: {other_details: 'Handphone, etc...'}
+			    password_confirmation: 'test_password'
 			}, function (e) {
+				Ti.API.info ('Function entered')
 			    if (e.success) {
 			        var user = e.users[0];
-			        alert ('Welcome to ShootNSell!');
-			        //alert('Success:\\n' +
-			          //  'email: ' + user.email + '\\n' +
-			            //'username: ' + user.username + '\\n');
+			        alert('Welcome to ShootNSell!');
+					homeWin.open();
 			    } else {
-			        Ti.API.info('Error:\\n' +
-			            ((e.error && e.message) || JSON.stringify(e)));
+			        Ti.API.info('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+			        
+			        //login function
+			        login(email);
 			    }
 			});
-			homeWin.open();
-			
+			/*// create a user on successful login
+			Cloud.Users.create({
+				email : Ti.App.Properties.getString('email'),
+				username : Ti.App.Properties.getString('name'),
+				first_name : Ti.App.Properties.getString('name'),
+				last_name : Ti.App.Properties.getString('name'),
+				password : 'test_password',
+				password_confirmation : 'test_password',
+				photo : 'profile.png',
+				custom_fields : '{ "other_details" : "Handphone, etc..."}'
+			}, function(e) {
+				if(e.success) {
+					var user = e.users[0];
+					Ti.API.info ('Create: ' + Ti.App.Properties.getString('email') + ' ' + Ti.App.Properties.getString('name'))
+					alert('Welcome to ShootNSell!');
+					homeWin.open();
+				} else {
+					/*Cloud.Users.login({
+						login : Ti.App.Properties.getString('email'),
+						password : 'test_password'
+					}, function(e) {
+						if(e.success) {
+							var user = e.users[0];
+							alert('Welcome to ShootNSell!');
+							homeWin.open();
+						} else {
+							alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+						}
+					});
+					Ti.API.info('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+				}
+			});*/
+
 		}
 	}
 });
+
+function login(email){
+	Cloud.Users.login({
+		login : email,
+		password : 'test_password'
+	}, function(e) {
+		if(e.success) {
+			var user = e.users[0];
+			alert('Welcome to ShootNSell!');
+			homeWin.open();
+		} else {
+			alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+		}
+	});
+}
+
+if(Ti.App.Properties.getString('email')) login(Ti.App.Properties.getString('email'));
 
 var overlay = Ti.UI.createView({
 	backgroundColor : '#0000CC',
@@ -169,4 +214,4 @@ overlay.add(Ti.UI.createLabel({
 
 var ivleLoginWindow = Titanium.UI.createWindow({});
 ivleLoginWindow.add(ivleloginWeb);
-ivleLoginWindow.add(overlay); 
+ivleLoginWindow.add(overlay);
