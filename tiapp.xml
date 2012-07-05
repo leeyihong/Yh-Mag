@@ -8,7 +8,7 @@
     <property name="acs-api-key-development" type="string">ixOS1pqwrPacih3dhYBmQ3h0nbOR0xlK</property>
     <deployment-targets>
         <target device="mobileweb">true</target>
-        <target device="iphone">false</target>
+        <target device="iphone">true</target>
         <target device="ipad">false</target>
         <target device="android">true</target>
         <target device="blackberry">false</target>

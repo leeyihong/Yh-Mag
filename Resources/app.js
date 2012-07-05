@@ -12,6 +12,7 @@ var loginWin = Titanium.UI.createWindow({
 
 // home window upon successful login
 var homeWin = Titanium.UI.createWindow({
+	navBarHidden: true,
 	backgroundColor : '#FFFFFF',
 	url : 'home.js',
 });
@@ -169,7 +170,9 @@ overlay.add(Ti.UI.createLabel({
 	}
 }));
 
-var ivleLoginWindow = Titanium.UI.createWindow({});
+var ivleLoginWindow = Titanium.UI.createWindow({
+	navBarHidden:true
+});
 ivleLoginWindow.add(ivleloginWeb);
 ivleLoginWindow.add(overlay); 
 
