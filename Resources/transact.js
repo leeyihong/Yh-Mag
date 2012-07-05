@@ -65,7 +65,7 @@ sellingListImage.addEventListener('click', function(e) {
 				page : 1,
 				per_page : 20,
 				where : {
-					"userId" : "yihong@nus.edu.sg"  // *** NEED TO CHANGE THIS AFTER SETTING UP DETAILS OF USER! ***
+					"userId" : Ti.App.Properties.getString('email')  // *** NEED TO CHANGE THIS AFTER SETTING UP DETAILS OF USER! ***
 				},
 				order : "-created_at"
 			}, function(e) {

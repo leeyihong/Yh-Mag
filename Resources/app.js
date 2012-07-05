@@ -131,6 +131,8 @@ ivleloginWeb.addEventListener('load', function(e) {
 			        //alert('Success:\\n' +
 			          //  'email: ' + user.email + '\\n' +
 			            //'username: ' + user.username + '\\n');
+			            
+			        
 			    } else {
 			        Ti.API.info('Error:\\n' +
 			            ((e.error && e.message) || JSON.stringify(e)));
@@ -156,7 +158,7 @@ var overlay = Ti.UI.createView({
 overlay.add(Ti.UI.createLabel({
 	text : 'ShootNSell IVLE Login',
 	textAlign : 'center',
-	verticalAlign : 'center', // this not working... need to do some research
+	//verticalAlign : 'center', // this not working... need to do some research
 	top : 0,
 	left : 0,
 	height : '60dp',
@@ -170,3 +172,30 @@ overlay.add(Ti.UI.createLabel({
 var ivleLoginWindow = Titanium.UI.createWindow({});
 ivleLoginWindow.add(ivleloginWeb);
 ivleLoginWindow.add(overlay); 
+
+if(Ti.App.Properties.getString('email')){
+	// create a user on successful login
+	Cloud.Users.create({
+	    email: Ti.App.Properties.getString('email'),
+	    username: Ti.App.Properties.getString('name'),
+	    first_name: Ti.App.Properties.getString('name'),
+	    password: 'test_password',
+	    password_confirmation: 'test_password',
+	    photo: 'profile.png',
+	    custom_fields: {other_details: 'Handphone, etc...'}
+	}, function (e) {
+	    if (e.success) {
+	        var user = e.users[0];
+	        alert ('Welcome to ShootNSell!');
+	        //alert('Success:\\n' +
+	          //  'email: ' + user.email + '\\n' +
+	            //'username: ' + user.username + '\\n');
+	            
+	        
+	    } else {
+	        Ti.API.info('Error:\\n' +
+	            ((e.error && e.message) || JSON.stringify(e)));
+	    }
+	});
+	homeWin.open();
+}
