@@ -40,7 +40,7 @@ Cloud.Users.login({
 		Cloud.Posts.query({
 			page : 1,
 			per_page : 12,
-			where : {faculty :  facultyName},
+			where : {faculty :  facultyName, bookStatus : 	"onSales" },
 			order : "-created_at"
 		}, function(e) {
 			if (e.success) {
@@ -141,8 +141,7 @@ Cloud.Users.login({
 						var sellingViewDetailsWin = Ti.UI.createWindow({
 							url: 'sellingViewDetails.js',
 							backgroundColor: '#FFFFFF',
-							modal: true, 
-							exitOnClose: true
+							modal: true
 						});
 						sellingViewDetailsWin.postID = e.source.postID;
 						loadingIndicator.hide();

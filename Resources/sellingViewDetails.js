@@ -8,22 +8,6 @@ Cloud.debug = true;
 var sellingViewDetailsWin = Ti.UI.currentWindow;
 var postID = sellingViewDetailsWin.postID;
 
-/*	    
-var productDetailsList = [
-{heading: "Image : ", details: "notting" },
-{heading: "Title : ", details:  'post.custom_fields.bookTitle' },
-{heading: "Subtitle : ", details:  'post.custom_fields.bookSubtitle' },
-{heading: "Author : ", details:  'post.custom_fields.author' },
-{heading: "Publisher : ", details:  'post.custom_fields.publisher' },
-{heading: "Date of Publish : ", details:  'post.custom_fields.publishedDate' },
-{heading: "Edition : ", details:  'post.custom_fields.edition' },
-{heading: "Condition : ", details:  'post.custom_fields.condition' },
-{heading: "Faculty : ", details:  'post.custom_fields.faculty' },
-{heading: "Module Code : ", details:  'post.custom_fields.moduleCode' },
-{heading: "Price : ", details:  'post.custom_fields.price' },
-
-];	*/
-
 var sellingViewDetailsData = [];
 Cloud.Posts.show({
     post_id: postID
@@ -75,26 +59,16 @@ Cloud.Posts.show({
 			});
 			var bookDetailsRow = Ti.UI.createTableViewRow({});
 			
-			if (i == 1){
-				rowlabel.text = "Title : " + post.custom_fields.bookTitle;
-			} else if (i == 2) {
-				rowlabel.text = "Subtitle : " + post.custom_fields.bookSubtitle;
-			} else if (i == 3) {
-				rowlabel.text = "Author : " + post.custom_fields.author;
-			} else if (i == 4) {
-				rowlabel.text = "Publisher : " + post.custom_fields.publisher;
-			} else if (i == 5) {
-				rowlabel.text = "Date of Publish : " + post.custom_fields.publishedDate;
-			} else if (i == 6) {
-				rowlabel.text = "Edition : " + post.custom_fields.edition;
-			} else if (i == 7) {
-				rowlabel.text = "Condition : " + post.custom_fields.condition;
-			} else if (i == 8) {
-				rowlabel.text = "Faculty : " + post.custom_fields.faculty;
-			} else if (i == 9) {
-				rowlabel.text = "Module Code : " + post.custom_fields.moduleCode
-			} else if (i == 10) {
-				rowlabel.text = "Price : " + post.custom_fields.price
+			if (i == 1){ rowlabel.text = "Title : " + post.custom_fields.bookTitle;
+			} else if (i == 2) { rowlabel.text = "Subtitle : " + post.custom_fields.bookSubtitle;
+			} else if (i == 3) { rowlabel.text = "Author : " + post.custom_fields.author;
+			} else if (i == 4) { rowlabel.text = "Publisher : " + post.custom_fields.publisher;
+			} else if (i == 5) { rowlabel.text = "Date of Publish : " + post.custom_fields.publishedDate;
+			} else if (i == 6) { rowlabel.text = "Edition : " + post.custom_fields.edition;
+			} else if (i == 7) { rowlabel.text = "Condition : " + post.custom_fields.condition;
+			} else if (i == 8) { rowlabel.text = "Faculty : " + post.custom_fields.faculty;
+			} else if (i == 9) { rowlabel.text = "Module Code : " + post.custom_fields.moduleCode
+			} else if (i == 10) { rowlabel.text = "Price : " + post.custom_fields.price
 			}
 			
 			bookDetailsRow.add(rowlabel);

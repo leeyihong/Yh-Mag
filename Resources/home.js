@@ -142,6 +142,7 @@ Cloud.Users.login({
 		Cloud.Posts.query({
 			page : 1,
 			per_page : 12,
+			where : { bookStatus : 	"onSales" } ,
 			order : "-created_at" 
 			//where : {  // *** CHECK IF DELETED IS TRUE
 			//	"bookTitle" : { '$ne' : ""}
@@ -242,8 +243,7 @@ Cloud.Users.login({
 						var sellingViewDetailsWin = Ti.UI.createWindow({
 							url: 'sellingViewDetails.js',
 							backgroundColor: '#FFFFFF',
-							modal: true, 
-							exitOnClose: true
+							modal: true
 						});
 						sellingViewDetailsWin.postID = e.source.postID;
 						loadingIndicator.hide();
