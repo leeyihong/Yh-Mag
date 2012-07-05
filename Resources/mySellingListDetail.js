@@ -1,6 +1,3 @@
-/**
- * @author Yi Hong
- */
 var Cloud = require('ti.cloud');
 Cloud.debug = true;
 
@@ -434,11 +431,6 @@ var activityIndicator = Ti.UI.createActivityIndicator({
 });
 
 editButton.addEventListener('click', function(e) {
-<<<<<<< HEAD
-		
-=======
-	
->>>>>>> 99587b09d084d37af58f6c63473b1481d358ef0c
 	if(!moduleCodeField.value){
 		alert('Please enter your module code');
 		return;	
@@ -447,10 +439,7 @@ editButton.addEventListener('click', function(e) {
 		alert('Please enter the price');
 		return;
 	}
-<<<<<<< HEAD
 	
-=======
->>>>>>> 99587b09d084d37af58f6c63473b1481d358ef0c
 	activityIndicator.show();
 	Cloud.Posts.update({
 	    post_id: mySellingData.id,

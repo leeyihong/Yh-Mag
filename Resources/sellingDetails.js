@@ -538,11 +538,6 @@ var publishDialog = Ti.UI.createAlertDialog({
 	buttonNames : ['Confirm', 'Cancel'],
 });
 publishButton.addEventListener('click', function() {
-<<<<<<< HEAD
-		
-=======
-	
->>>>>>> 99587b09d084d37af58f6c63473b1481d358ef0c
 	if(!moduleCodeField.value){
 		alert('Please enter your module code');
 		return;	
@@ -563,11 +558,6 @@ var activityIndicator = Ti.UI.createActivityIndicator({
 });
 
 publishDialog.addEventListener('click', function(e) {
-<<<<<<< HEAD
-
-=======
->>>>>>> 99587b09d084d37af58f6c63473b1481d358ef0c
-	
 	if (e.index == 0) {// clicked "Confirm"
 		activityIndicator.show();
 		Cloud.Users.login({
