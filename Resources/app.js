@@ -219,7 +219,9 @@ function createUser(name, email) {
 		last_name : name,
 		password : 'test_password',
 		password_confirmation : 'test_password',
-		photo : 'profile.png',
+		//BRYAN: set default photo to profile.png instead. No need to set photo attribute to every User.
+		//BRYAN: use photo when user decides to change photo from his profile.
+		//photo : 'profile.png', 
 		custom_fields : '{ "other_details" : "Handphone, etc..."}'
 	}, function(e) {
 		Ti.API.info('Function entered')
