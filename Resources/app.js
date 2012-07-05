@@ -9,6 +9,11 @@ var homeWin = Titanium.UI.createWindow({
 	url : 'home.js',
 });
 
+var loginWin = Titanium.UI.createWindow({
+	backgroundColor : '#FFFFFF',
+	navBarHidden : true
+});
+
 var loadingIndicator = Ti.UI.createActivityIndicator({
 	font : {
 		fontFamily : 'Helvetica Neue',
@@ -24,12 +29,6 @@ if (Ti.App.Properties.getString('email'))
 else {
 	var apikey = 'B35vgIdq2a3SpGSBD81Be'
 	Ti.App.Properties.setString('apikey', apikey);
-
-	// login window
-	var loginWin = Titanium.UI.createWindow({
-		backgroundColor : '#FFFFFF',
-		navBarHidden : true
-	});
 
 	var windowWidth = Ti.Platform.displayCaps.platformWidth;
 
@@ -109,10 +108,15 @@ else {
 
 			if (ivleloginWeb.url.indexOf('/api/login/login_result.ashx') > 0) {
 				if (ivleloginWeb.url.indexOf('&r=0') > 0) {
-					string = JSON.stringify(e), token = string.substring(string.indexOf('<body>') + 6, string.indexOf('</body>')), Ti.App.Properties.setString("token", token),
+
+					var string = e.source.html;
+
+					var token = string.substring(string.indexOf('<body>') + 6, string.indexOf('</body>'));
+					Ti.App.Properties.setString("token", token);
+
 					// verify user and get username and email
 					// get username
-					xhr = Ti.Network.createHTTPClient();
+					var xhr = Ti.Network.createHTTPClient();
 					xhr.open("GET", "https://ivle.nus.edu.sg/api/Lapi.svc/UserName_Get?APIKey=" + apikey + "&Token=" + token);
 					xhr.onload = function() {
 						var output = this.responseText;
@@ -130,9 +134,17 @@ else {
 							//alert(Ti.App.Properties.getString('email'));
 
 							createUser(Ti.App.Properties.getString('name'), Ti.App.Properties.getString('email'));
-						}
+						};
+						xhr2.onerror = function() {
+							alert('error getting email');
+						};
+						xhr2.timeout = 10000;
 						xhr2.send();
-					}
+					};
+					xhr.onerror = function() {
+						alert('error getting username');
+					};
+					xhr.timeout = 10000;
 					xhr.send();
 
 				}
@@ -141,11 +153,10 @@ else {
 
 		} catch(err) {
 			loadingIndicator.hide();
-			alert('Error in IVLE token');
+			alert('Pls retry (Error in IVLE login)');
 			ivleloginWeb.goBack();
 			return;
 		}
-
 	});
 
 	var overlay = Ti.UI.createView({
@@ -189,6 +200,7 @@ function login(email) {
 		if (e.success) {
 			var user = e.users[0];
 			alert('Welcome to ShootNSell!');
+			loginWin.close();
 			homeWin.open();
 		} else {
 			//alert('2 Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
@@ -213,6 +225,7 @@ function createUser(name, email) {
 			var user = e.users[0];
 
 			alert('Welcome to ShootNSell!');
+			loginWin.close();
 			homeWin.open();
 
 		} else {

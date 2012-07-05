@@ -59,6 +59,7 @@ Cloud.Users.login({
 						// profile pic - click to edit
 						photoLogo = Titanium.UI.createImageView({
 							image : image,
+							defaultImage : 'profile.png',
 							width : '140dp',
 							height : '133dp',
 							left : '85dp',
