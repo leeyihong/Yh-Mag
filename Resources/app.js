@@ -12,6 +12,7 @@ var loginWin = Titanium.UI.createWindow({
 
 // home window upon successful login
 var homeWin = Titanium.UI.createWindow({
+	navBarHidden: true,
 	backgroundColor : '#FFFFFF',
 	url : 'home.js',
 });
@@ -119,13 +120,17 @@ ivleloginWeb.addEventListener('load', function(e) {
 			    first_name: name,
 			    last_name: name,
 			    password: 'test_password',
-			    password_confirmation: 'test_password'
+			    password_confirmation: 'test_password',
+			    photo : 'profile.png',
+				custom_fields : '{ "other_details" : "Handphone, etc..."}'
 			}, function (e) {
 				Ti.API.info ('Function entered')
 			    if (e.success) {
 			        var user = e.users[0];
+
 			        alert('Welcome to ShootNSell!');
 					homeWin.open();
+					
 			    } else {
 			        Ti.API.info('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
 			        
@@ -201,7 +206,7 @@ var overlay = Ti.UI.createView({
 overlay.add(Ti.UI.createLabel({
 	text : 'ShootNSell IVLE Login',
 	textAlign : 'center',
-	verticalAlign : 'center', // this not working... need to do some research
+	//verticalAlign : 'center', // this not working... need to do some research
 	top : 0,
 	left : 0,
 	height : '60dp',
@@ -212,6 +217,8 @@ overlay.add(Ti.UI.createLabel({
 	}
 }));
 
-var ivleLoginWindow = Titanium.UI.createWindow({});
+var ivleLoginWindow = Titanium.UI.createWindow({
+	navBarHidden:true
+});
 ivleLoginWindow.add(ivleloginWeb);
 ivleLoginWindow.add(overlay);

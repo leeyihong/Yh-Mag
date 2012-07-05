@@ -40,7 +40,8 @@ Cloud.Users.login({
 		Cloud.Posts.query({
 			page : 1,
 			per_page : 12,
-			where : {faculty :  facultyName}
+			where : {faculty :  facultyName},
+			order : "-created_at"
 		}, function(e) {
 			if (e.success) {
 				//alert("Total Result is " +  e.posts.length);

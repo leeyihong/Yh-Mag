@@ -142,6 +142,7 @@ Cloud.Users.login({
 		Cloud.Posts.query({
 			page : 1,
 			per_page : 12,
+			order : "-created_at" 
 			//where : {  // *** CHECK IF DELETED IS TRUE
 			//	"bookTitle" : { '$ne' : ""}
 			//}
@@ -241,6 +242,7 @@ Cloud.Users.login({
 				alert('Error in query: ' + ((e.error && e.message) || JSON.stringify(e)));
 			}
 		});
+		
 	} else {
 		alert('Error in login: ' + ((e.error && e.message) || JSON.stringify(e)));
 	}
