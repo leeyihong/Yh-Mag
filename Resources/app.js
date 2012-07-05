@@ -2,7 +2,6 @@
 var Cloud = require('ti.cloud');
 Cloud.debug = true;
 
-<<<<<<< HEAD
 // home window upon successful login
 var homeWin = Titanium.UI.createWindow({
 	navBarHidden : true,
@@ -10,8 +9,6 @@ var homeWin = Titanium.UI.createWindow({
 	url : 'home.js',
 });
 
-if(Ti.App.Properties.getString('email'))
-=======
 var loadingIndicator = Ti.UI.createActivityIndicator({
 	font : {
 		fontFamily : 'Helvetica Neue',
@@ -23,7 +20,6 @@ var loadingIndicator = Ti.UI.createActivityIndicator({
 });
 
 if (Ti.App.Properties.getString('email'))
->>>>>>> Login fixes
 	login(Ti.App.Properties.getString('email'));
 else {
 	var apikey = 'B35vgIdq2a3SpGSBD81Be'
@@ -68,7 +64,7 @@ else {
 	Ti.Facebook.permissions = ['publish_stream'];
 
 	Ti.Facebook.addEventListener('login', function(e) {
-		if(e.success) {
+		if (e.success) {
 			alert('Logged in'), homeWin.open()
 		}
 	});
@@ -78,7 +74,7 @@ else {
 
 	// Use wide button style -- constant not supported on Android yet.
 	var buttonStyle;
-	if(Ti.Platform.name === 'android') {
+	if (Ti.Platform.name === 'android') {
 		buttonStyle = 'wide';
 	} else {
 		buttonStyle = Ti.Facebook.BUTTON_STYLE_WIDE;
@@ -107,32 +103,8 @@ else {
 	var xhr;
 
 	ivleloginWeb.addEventListener('load', function(e) {
-<<<<<<< HEAD
-		if(ivleloginWeb.url.indexOf('/api/login/login_result.ashx') > 0) {
-			if(ivleloginWeb.url.indexOf('&r=0') > 0) {
-				string = JSON.stringify(e), token = string.substring(string.indexOf('<body>') + 6, string.indexOf('</body>')), Ti.App.Properties.setString("token", token),
-				// verify user and get username and email
-				// get username
-				xhr = Ti.Network.createHTTPClient();
-				xhr.open("GET", "https://ivle.nus.edu.sg/api/Lapi.svc/UserName_Get?APIKey=" + apikey + "&Token=" + token);
-				xhr.onload = function() {
-					var output = this.responseText;
-					Ti.App.Properties.setString("name", output.substring(1, output.length - 1));
 
-					//alert(Ti.App.Properties.getString('name'));
-
-					// get email
-					var xhr2 = Ti.Network.createHTTPClient();
-					xhr2.open("GET", "https://ivle.nus.edu.sg/api/Lapi.svc/UserEmail_Get?APIKey=" + apikey + "&Token=" + token);
-					xhr2.onload = function() {
-						var output2 = this.responseText;
-						Ti.App.Properties.setString("email", output2.substring(1, output2.length - 1));
-
-						//alert(Ti.App.Properties.getString('email'));
-
-						createUser(Ti.App.Properties.getString('name'), Ti.App.Properties.getString('email'));
-=======
-		try{
+		try {
 			loadingIndicator.show();
 
 			if (ivleloginWeb.url.indexOf('/api/login/login_result.ashx') > 0) {
@@ -145,30 +117,29 @@ else {
 					xhr.onload = function() {
 						var output = this.responseText;
 						Ti.App.Properties.setString("name", output.substring(1, output.length - 1));
-	
+
 						//alert(Ti.App.Properties.getString('name'));
-	
+
 						// get email
 						var xhr2 = Ti.Network.createHTTPClient();
 						xhr2.open("GET", "https://ivle.nus.edu.sg/api/Lapi.svc/UserEmail_Get?APIKey=" + apikey + "&Token=" + token);
 						xhr2.onload = function() {
 							var output2 = this.responseText;
 							Ti.App.Properties.setString("email", output2.substring(1, output2.length - 1));
-	
+
 							//alert(Ti.App.Properties.getString('email'));
-	
+
 							createUser(Ti.App.Properties.getString('name'), Ti.App.Properties.getString('email'));
 						}
 						xhr2.send();
->>>>>>> Login fixes
 					}
 					xhr.send();
-	
+
 				}
 			} else
 				loadingIndicator.hide();
 
-		}catch(err){
+		} catch(err) {
 			loadingIndicator.hide();
 			alert('Error in IVLE token');
 			ivleloginWeb.goBack();
@@ -215,7 +186,7 @@ function login(email) {
 		login : email,
 		password : 'test_password'
 	}, function(e) {
-		if(e.success) {
+		if (e.success) {
 			var user = e.users[0];
 			alert('Welcome to ShootNSell!');
 			homeWin.open();
@@ -238,7 +209,7 @@ function createUser(name, email) {
 		custom_fields : '{ "other_details" : "Handphone, etc..."}'
 	}, function(e) {
 		Ti.API.info('Function entered')
-		if(e.success) {
+		if (e.success) {
 			var user = e.users[0];
 
 			alert('Welcome to ShootNSell!');
