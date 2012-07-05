@@ -166,7 +166,7 @@ Cloud.Users.login({
 				    	//allSellingResult[i] = post;
 				    	
 				    	var columnView = Ti.UI.createView({
-				    		backgroundImage :post.photo.urls.square_75,
+				    		backgroundImage : post.photo.urls.square_75,
 					    	top : othersTableSetting.imageTop,
 					        left : tableLeftSetting[r],
 					        width : othersTableSetting.imageLength,
