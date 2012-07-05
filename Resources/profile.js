@@ -11,7 +11,6 @@ var token = Ti.App.Properties.getString('token');
 // retrieve data from database
 Cloud.Users.login({
 	login : Ti.App.Properties.getString('email'),
-	//login : 'jessicalee_88@hotmail.com',
 	password : 'test_password'
 }, function(e) {
 	if(e.success) {
@@ -33,12 +32,11 @@ Cloud.Users.login({
 			if(e.success) {
 				// get user profile pic, username and other details
 				var user = e.users[0];
-				userName = user.username;
+				userName = user.last_name;
 				displayName = user.first_name
 				otherDetails = user.custom_fields.other_details;
 				emailAdd = user.email;
-				
-				/*
+
 				Cloud.Photos.show({
 					photo_id : user.photo.id
 				}, function(e) {
@@ -155,10 +153,7 @@ Cloud.Users.login({
 						alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
 					}
 				});
-				
-				
-				*/
-				
+
 				//dialog with the options of where to get an image from
 				var dialog = Titanium.UI.createOptionDialog({
 					title : 'Choose an image source...',
@@ -367,6 +362,18 @@ Cloud.Users.login({
 			}
 		});
 
+		// loading indicator while saving updates on profile
+		var loadingIndicator = Ti.UI.createActivityIndicator({
+			font : {
+				fontFamily : 'Helvetica Neue',
+				fontSize : '26dp',
+				fontWeight : 'bold'
+			},
+			message : 'Loading...',
+			style : Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
+		});
+
+		
 		// save button
 		var save = Titanium.UI.createButton({
 			title : 'Save',
@@ -382,7 +389,7 @@ Cloud.Users.login({
 
 		save.addEventListener('click', function(e) {
 			// save new profile pic, userName and otherDetails
-
+			loadingIndicator.show();
 			Cloud.Photos.update({
 				photo_id : user.photo.id,
 				photo : photoLogo.image,
@@ -391,10 +398,13 @@ Cloud.Users.login({
 					var photo = e.photos[0];
 					Cloud.Users.update({
 						first_name : usernameText.value,
-						custom_fields: {other_details : details.value},
+						custom_fields : {
+							other_details : details.value
+						},
 					}, function(e) {
 						if(e.success) {
 							var user = e.users[0];
+							loadingIndicator.hide();
 							alert("Profile details updated.");
 						} else {
 							alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
@@ -440,12 +450,9 @@ Cloud.Users.login({
 				if(e.index == 0) {
 					Cloud.Users.logout(function(e) {
 						if(e.success) {
-							Ti.App.Properties.setString("token", ''), 
-							Ti.App.Properties.setString("email", ''),
-							Ti.App.Properties.setString("name", ''),
-							//alert('Success: Logged out'),
+							Ti.App.Properties.setString("token", ''), Ti.App.Properties.setString("email", ''), Ti.App.Properties.setString("name", ''),
 							loginWin.open();
-						}else
+						} else
 							alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
 
 					});

@@ -219,7 +219,7 @@ function createUser(name, email) {
 		last_name : name,
 		password : 'test_password',
 		password_confirmation : 'test_password',
-		//photo : 'profile.png',
+		photo : 'profile.png',
 		custom_fields : '{ "other_details" : "Handphone, etc..."}'
 	}, function(e) {
 		Ti.API.info('Function entered')
