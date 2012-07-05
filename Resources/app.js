@@ -2,6 +2,7 @@
 var Cloud = require('ti.cloud');
 Cloud.debug = true;
 
+<<<<<<< HEAD
 // home window upon successful login
 var homeWin = Titanium.UI.createWindow({
 	navBarHidden : true,
@@ -10,6 +11,19 @@ var homeWin = Titanium.UI.createWindow({
 });
 
 if(Ti.App.Properties.getString('email'))
+=======
+var loadingIndicator = Ti.UI.createActivityIndicator({
+	font : {
+		fontFamily : 'Helvetica Neue',
+		fontSize : '26dp',
+		fontWeight : 'bold'
+	},
+	message : 'Loading...',
+	style : Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
+});
+
+if (Ti.App.Properties.getString('email'))
+>>>>>>> Login fixes
 	login(Ti.App.Properties.getString('email'));
 else {
 	var apikey = 'B35vgIdq2a3SpGSBD81Be'
@@ -93,6 +107,7 @@ else {
 	var xhr;
 
 	ivleloginWeb.addEventListener('load', function(e) {
+<<<<<<< HEAD
 		if(ivleloginWeb.url.indexOf('/api/login/login_result.ashx') > 0) {
 			if(ivleloginWeb.url.indexOf('&r=0') > 0) {
 				string = JSON.stringify(e), token = string.substring(string.indexOf('<body>') + 6, string.indexOf('</body>')), Ti.App.Properties.setString("token", token),
@@ -116,12 +131,48 @@ else {
 						//alert(Ti.App.Properties.getString('email'));
 
 						createUser(Ti.App.Properties.getString('name'), Ti.App.Properties.getString('email'));
-					}
-					xhr2.send();
-				}
-				xhr.send();
+=======
+		try{
+			loadingIndicator.show();
 
-			}
+			if (ivleloginWeb.url.indexOf('/api/login/login_result.ashx') > 0) {
+				if (ivleloginWeb.url.indexOf('&r=0') > 0) {
+					string = JSON.stringify(e), token = string.substring(string.indexOf('<body>') + 6, string.indexOf('</body>')), Ti.App.Properties.setString("token", token),
+					// verify user and get username and email
+					// get username
+					xhr = Ti.Network.createHTTPClient();
+					xhr.open("GET", "https://ivle.nus.edu.sg/api/Lapi.svc/UserName_Get?APIKey=" + apikey + "&Token=" + token);
+					xhr.onload = function() {
+						var output = this.responseText;
+						Ti.App.Properties.setString("name", output.substring(1, output.length - 1));
+	
+						//alert(Ti.App.Properties.getString('name'));
+	
+						// get email
+						var xhr2 = Ti.Network.createHTTPClient();
+						xhr2.open("GET", "https://ivle.nus.edu.sg/api/Lapi.svc/UserEmail_Get?APIKey=" + apikey + "&Token=" + token);
+						xhr2.onload = function() {
+							var output2 = this.responseText;
+							Ti.App.Properties.setString("email", output2.substring(1, output2.length - 1));
+	
+							//alert(Ti.App.Properties.getString('email'));
+	
+							createUser(Ti.App.Properties.getString('name'), Ti.App.Properties.getString('email'));
+						}
+						xhr2.send();
+>>>>>>> Login fixes
+					}
+					xhr.send();
+	
+				}
+			} else
+				loadingIndicator.hide();
+
+		}catch(err){
+			loadingIndicator.hide();
+			alert('Error in IVLE token');
+			ivleloginWeb.goBack();
+			return;
 		}
 
 	});
@@ -166,7 +217,7 @@ function login(email) {
 	}, function(e) {
 		if(e.success) {
 			var user = e.users[0];
-			//alert('Welcome to ShootNSell!');
+			alert('Welcome to ShootNSell!');
 			homeWin.open();
 		} else {
 			//alert('2 Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
@@ -190,7 +241,7 @@ function createUser(name, email) {
 		if(e.success) {
 			var user = e.users[0];
 
-			//alert('Welcome to ShootNSell!');
+			alert('Welcome to ShootNSell!');
 			homeWin.open();
 
 		} else {
