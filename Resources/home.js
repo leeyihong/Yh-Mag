@@ -243,8 +243,7 @@ Cloud.Users.login({
 						var sellingViewDetailsWin = Ti.UI.createWindow({
 							url: 'sellingViewDetails.js',
 							backgroundColor: '#FFFFFF',
-							modal: true, 
-							exitOnClose: true
+							modal: true
 						});
 						sellingViewDetailsWin.postID = e.source.postID;
 						loadingIndicator.hide();

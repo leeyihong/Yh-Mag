@@ -209,7 +209,6 @@ facultyTable.addEventListener('click', function(e){
 		backgroundColor:'#FFFFFF',
 		url: 'displayFacultyBooks.js',
 		modal : true,
-		exitOnClose : true
 	});
 	facultyBookWin.facultyName = e.rowData.title;
 	currentTab.open(facultyBookWin);
