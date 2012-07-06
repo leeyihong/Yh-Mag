@@ -3,7 +3,7 @@
  */
 /*--- SCANNER WINDOW ---*/
 var barcodeScanningWin = Ti.UI.currentWindow;
-var imageTaken = bacodeScanningWin.image;
+var imageTaken = barcodeScanningWin.image;
 
 var label = Ti.UI.createLabel();
 barcodeScanningWin.add(label);

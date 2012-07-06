@@ -23,7 +23,7 @@ function GetHeight(value) {
 var output;
 var details;
 var bookImage = Ti.UI.createImageView({
-	image : imageTaken.image,
+	image : imageTaken,
 	top : '10dp',
 	//left: 'center',
 	width : '100dp',

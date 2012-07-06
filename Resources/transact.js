@@ -57,7 +57,7 @@ sellingListImage.addEventListener('click', function(e) {
 		login : 'jessicalee_88@hotmail.com',
 		password : 'test_password'
 	}, function(e) {
-		if (e.success) {
+		if(e.success) {
 			var user = e.users[0];
 			//alert('Success:\\n' + 'id: ' + user.id + '\\n' + 'first name: ' + user.first_name + '\\n' + 'last name: ' + user.last_name);
 			Cloud.Posts.query({
@@ -68,9 +68,9 @@ sellingListImage.addEventListener('click', function(e) {
 				},
 				order : "-created_at"
 			}, function(e) {
-				if (e.success) {
+				if(e.success) {
 					//alert('Success:\\n' + 'Count: ' + e.posts.length);
-					if (e.posts.length === 0 ) {
+					if(e.posts.length === 0) {
 						var blackWindow = Ti.UI.createWindow({
 							backgroundColor : '#FFFFFF',
 							modal : true
@@ -90,17 +90,17 @@ sellingListImage.addEventListener('click', function(e) {
 						currentTab.open(blackWindow);
 						return;
 					};
-					for (var i = 0; i < e.posts.length; i++) {
+					for(var i = 0; i < e.posts.length; i++) {
 						var post = e.posts[i];
 						mySellingData[i] = post;
 						//alert('id: ' + post.id + '\\n' + 'id: ' + post.id + '\\n' + 'title: ' + post.title + '\\n' + 'content: ' + post.content + '\\n' + 'updated_at: ' + post.updated_at);
 
 						var mySellingItemRow = Ti.UI.createTableViewRow({
-							height: '100dp',
+							height : '100dp',
 						});
 
 						var bookImage = Titanium.UI.createImageView({
-							image : post.photo.urls.square_75 ,
+							image : post.photo.urls.square_75,
 							width : '80dp',
 							height : '80dp',
 							left : '10dp',
@@ -113,7 +113,7 @@ sellingListImage.addEventListener('click', function(e) {
 								fontSize : '15dp',
 								fontWeight : 'bold'
 							},
-							color: '#000014',
+							color : '#000014',
 							width : 'auto',
 							textAlign : 'left',
 							left : '100dp',
@@ -123,7 +123,7 @@ sellingListImage.addEventListener('click', function(e) {
 						var mySellingListRowNumber = Ti.UI.createLabel({
 							text : i,
 						});
-						
+
 						mySellingItemRow.add(bookImage);
 						mySellingItemRow.add(bookTitle);
 						mySellingItemRow.hasChild = true;
@@ -138,28 +138,29 @@ sellingListImage.addEventListener('click', function(e) {
 					//mySellingListTable.data = resultData;
 					//mySellingListTable.setData = data
 					var mySellingListTable = Titanium.UI.createTableView({
-						data: resultData,
+						data : resultData,
 						color : '#000014',
 					});
 					mySellingListWin.add(mySellingListTable);
 					loadingIndicator.hide();
 					currentTab.open(mySellingListWin);
 					//mySellingListWin.open();
-					
-					mySellingListTable.addEventListener('click', function(e){
-						
+
+					mySellingListTable.addEventListener('click', function(e) {
+
 						var sellingListDetailwin = Ti.UI.createWindow({
-							url: 'mySellingListDetail.js',
-							backgroundColor: '#FFFFFF',
-							modal: true, 
-							exitOnClose: true
+							url : 'mySellingListDetail.js',
+							backgroundColor : '#FFFFFF',
+							modal : true,
+							exitOnClose : true
 						});
 						sellingListDetailwin.sellingDetails = mySellingData[e.index];
 						//sellingListDetailwin.mySellingListRowNumber = e.index;
 						//mySellingListWin.open(sellingListDetailwin);
-						sellingListDetailwin.open({animated:true,});
+						sellingListDetailwin.open({
+							animated : true,
+						});
 					})
-					
 				} else {
 					loadingIndicator.hide();
 					alert('Error in query:\\n' + ((e.error && e.message) || JSON.stringify(e)));
@@ -169,8 +170,8 @@ sellingListImage.addEventListener('click', function(e) {
 			loadingIndicator.hide();
 			alert('Error in login:\\n' + ((e.error && e.message) || JSON.stringify(e)));
 		}
-	}); 
-	
+	});
+
 });
 
 var myChatListImage = Ti.UI.createButton({
@@ -234,13 +235,13 @@ var originalImage = Titanium.UI.createImageView({
 
 openCameraDialog.addEventListener('click', function(e) {
 
-	if (e.index == 0) {//from the camera
+	if(e.index == 0) {//from the camera
 
 		Titanium.Media.showCamera({
 
 			success : function(event) {
 				var image = event.media;
-				if (event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+				if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
 
 					sellingDetailsWin.originalImage = event.media;
 
@@ -264,7 +265,7 @@ openCameraDialog.addEventListener('click', function(e) {
 					title : 'Camera'
 				});
 				// set message
-				if (error.code == Titanium.Media.NO_CAMERA) {
+				if(error.code == Titanium.Media.NO_CAMERA) {
 					a.setMessage('Device does not have image recording capabilities');
 				} else {
 					a.setMessage('Unexpected error: ' + error.code);
@@ -277,7 +278,7 @@ openCameraDialog.addEventListener('click', function(e) {
 			saveToPhotoGallery : false
 		});
 
-	} else if (e.index == 1) {//obtain an image from the gallery
+	} else if(e.index == 1) {//obtain an image from the gallery
 
 		Titanium.Media.openPhotoGallery({
 
@@ -285,7 +286,7 @@ openCameraDialog.addEventListener('click', function(e) {
 				var image = event.media;
 				// set image view
 				Ti.API.debug('Our type was: ' + event.mediaType);
-				if (event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+				if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
 
 					sellingDetailsWin.originalImage = event.media;
 
@@ -363,7 +364,7 @@ var submitISBNButton = Ti.UI.createButton({
 });
 var isbnNo;
 submitISBNButton.addEventListener('click', function(e) {
-	if (typeBarcodeTextField.value.length == 13) {
+	if(typeBarcodeTextField.value.length == 13) {
 		Ti.UI.Android.hideSoftKeyboard();
 		sellingDetailsWin.isbnNo = typeBarcodeTextField.value;
 		sellingDetailsWin.image = imgView;
@@ -389,13 +390,14 @@ var scannerWinButton = Ti.UI.createButton({
 	height : '40dp'
 });
 scannerWinButton.addEventListener('click', function() {
-	bacodeScanningWin.image = imgView.image;
-	bacodeScanningWin.open();
-});
+	var bacodeScanningWin = Titanium.UI.createWindow({
+		backgroundColor : '#FFFFFF',
+		url : 'barcodeScanner.js',
+		image: imgView.image
+	});
 
-var bacodeScanningWin = Titanium.UI.createWindow({
-	backgroundColor : '#FFFFFF',
-	url : 'barcodeScanner.js',
+	//bacodeScanningWin.image = imgView.image;
+	bacodeScanningWin.open();
 });
 
 // Scrollable table

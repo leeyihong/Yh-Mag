@@ -60,5 +60,6 @@
     <modules>
         <module platform="commonjs" version="2.0.1">ti.cloud</module>
         <module platform="android" version="2.0.5">ti.cloudpush</module>
+        <module platform="android" version="0.3">com.mwaysolutions.barcode</module>
     </modules>
 </ti:app>
