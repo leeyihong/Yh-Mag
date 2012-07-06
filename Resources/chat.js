@@ -77,12 +77,10 @@ sendBtn.addEventListener('click', function(e) {
 			is_reply : false
 		}
 	}, function(e) {
-		if (e.success) {
-			message.value = 'RESULT: ' + JSON.stringify(e);
-			alert('Success: ' + e.messages[0].id);
-		} else {
+		if (e.success)
+			refresh();
+		else
 			alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
-		}
 	});
 
 });
@@ -94,76 +92,83 @@ var previousMessagesTable = Ti.UI.createTableView({
 	bottom : '80dp'
 });
 
-Cloud.Objects.query({
-	classname : 'messages',
-	page : 1,
-	per_page : 100,
-	where : {
-		post_id : chatWin.postId.id
-	}
-}, function(e) {
-	if (e.success) {
-		alert('Success:\\n' + 'Count: ' + e.messages.length);
-
-		var fromUser, toUser;
-
-		for (var i = 0; i < e.messages.length; i++) {
-			var message = e.messages[i];
-			//alert('id: ' + message.id + '\\n' + 'make: ' + message.content);
-
-			var messageRow = Ti.UI.createTableViewRow();
-
-			if (!fromUser)
-				fromUser = getUser(message.from_id);
-			if (!toUser)
-				toUser = getUser(message.to_id);
-
-			var messageUserLabel = Ti.UI.createLabel({
-				left:'5dp',
-				right:'5dp',
-				top:'5dp',
-				font:{
-					fontWeight: 'bold',
-					fontSize:'14dp'
-				},
-				color:'#000000'
-			});
-			
-			if(message.from_id === Ti.App.Properties.getString('userid'))
-				messageUserLabel.text = 'Me';
-			else
-				messageUserLabel.text = fromUser.username;
-			
-			var messageContentLabel = Ti.UI.createLabel({
-				left:'5dp',
-				right:'5dp',
-				top: '22dp',
-				text:message.content,
-				font:{
-					fontSize:'14dp'
-				},
-				color:'#000000'
-			});
-
-			if (message.is_reply) {
-				messageUserLabel.textAlign = 'right';
-				messageContentLabel.textAlign = 'right';
-			} else {
-				messageUserLabel.textAlign = 'left';
-				messageContentLabel.textAlign = 'left';
-			}
-			
-			messageRow.add(messageUserLabel);
-			messageRow.add(messageContentLabel);
-			
-			previousMessagesData.push(messageRow);
-
+function refresh() {
+	previousMessagesData = [];
+	
+	Cloud.Objects.query({
+		classname : 'messages',
+		page : 1,
+		per_page : 100,
+		where : {
+			post_id : chatWin.postId.id
 		}
-		previousMessagesTable.setData(previousMessagesData);
-	} else {
-		alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
-	}
-});
+	}, function(e) {
+		if (e.success) {
+			alert('Success:\\n' + 'Count: ' + e.messages.length);
+
+			var fromUser, toUser;
+
+			for (var i = 0; i < e.messages.length; i++) {
+				var message = e.messages[i];
+				//alert('id: ' + message.id + '\\n' + 'make: ' + message.content);
+
+				if ((message.from_id !== Ti.App.Properties.getString('userid')) && (message.to_id !== Ti.App.Properties.getString('userid')))
+					return;
+
+				var messageRow = Ti.UI.createTableViewRow();
+
+				if (!fromUser)
+					fromUser = getUser(message.from_id);
+				if (!toUser)
+					toUser = getUser(message.to_id);
+
+				var messageUserLabel = Ti.UI.createLabel({
+					left : '5dp',
+					right : '5dp',
+					top : '5dp',
+					font : {
+						fontWeight : 'bold',
+						fontSize : '14dp'
+					},
+					color : '#000000'
+				});
+
+				if (message.from_id === Ti.App.Properties.getString('userid'))
+					messageUserLabel.text = 'Me';
+				else
+					messageUserLabel.text = fromUser.username;
+
+				var messageContentLabel = Ti.UI.createLabel({
+					left : '5dp',
+					right : '5dp',
+					top : '22dp',
+					text : message.content,
+					font : {
+						fontSize : '14dp'
+					},
+					color : '#000000'
+				});
+
+				if (message.is_reply) {
+					messageUserLabel.textAlign = 'right';
+					messageContentLabel.textAlign = 'right';
+				} else {
+					messageUserLabel.textAlign = 'left';
+					messageContentLabel.textAlign = 'left';
+				}
+
+				messageRow.add(messageUserLabel);
+				messageRow.add(messageContentLabel);
+
+				previousMessagesData.push(messageRow);
+
+			}
+			previousMessagesTable.setData(previousMessagesData);
+		} else {
+			alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+		}
+	});
+}
 
 chatWin.add(previousMessagesTable);
 
@@ -179,3 +184,5 @@ function getUser(user_id) {
 		}
 	});
 }
+
+refresh();

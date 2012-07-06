@@ -563,7 +563,7 @@ publishDialog.addEventListener('click', function(e) {
 	if (e.index == 0) {// clicked "Confirm"
 		activityIndicator.show();
 		Cloud.Users.login({
-			login : 'jessicalee_88@hotmail.com',
+			login : Ti.App.Properties.getString('email'),
 			password : 'test_password'
 		}, function(e) {
 			if (e.success) {

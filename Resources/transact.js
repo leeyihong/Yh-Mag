@@ -54,7 +54,7 @@ sellingListImage.addEventListener('click', function(e) {
 	loadingIndicator.show();
 	//currentTab.open(mySellingListWin);
 	Cloud.Users.login({
-		login : 'jessicalee_88@hotmail.com',
+		login : Ti.App.Properties.getString('email'),
 		password : 'test_password'
 	}, function(e) {
 		if(e.success) {
