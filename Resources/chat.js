@@ -22,7 +22,9 @@ var heading = Titanium.UI.createLabel({
 		fontWeight : 'bold'
 	},
 	text : 'CHAT'
-})
+});
+
+heading.text = chatWin.postId.title;
 
 chatWin.add(heading);
 
@@ -144,12 +146,10 @@ function refresh() {
 					},
 					color : '#000000'
 				});
-				/*
+				
 				 if (message.from_id === Ti.App.Properties.getString('userid'))
-				 messageUserLabel.text = 'Me';
-				 else
-				 messageUserLabel.text = fromUser.username;
-				 */
+				 	messageUserLabel.text += ' (You)';
+
 				var messageContentLabel = Ti.UI.createLabel({
 					left : '5dp',
 					right : '5dp',

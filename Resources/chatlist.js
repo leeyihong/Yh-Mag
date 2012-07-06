@@ -33,7 +33,7 @@ Cloud.Objects.query({
 				return;
 
 			var messageRow = Ti.UI.createTableViewRow({
-				hasDetail:true,
+				hasChild:true,
 				to_id : message.from_id,
 				postId : message.post
 			});
@@ -42,6 +42,18 @@ Cloud.Objects.query({
 
 			var messageUserLabel = Ti.UI.createLabel({
 				text : message.from_id.username,
+				left : '5dp',
+				right : '5dp',
+				top : '20dp',
+				font : {
+					fontWeight : 'bold',
+					fontSize : '12dp'
+				},
+				color : '#000000'
+			});
+			
+			var messagePostLabel = Ti.UI.createLabel({
+				text: message.post.title,
 				left : '5dp',
 				right : '5dp',
 				top : '5dp',
@@ -55,7 +67,8 @@ Cloud.Objects.query({
 			var messageContentLabel = Ti.UI.createLabel({
 				left : '5dp',
 				right : '5dp',
-				top : '22dp',
+				top : '35dp',
+				bottom: '5dp',
 				text : message.content,
 				font : {
 					fontSize : '14dp'
