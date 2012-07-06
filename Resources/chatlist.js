@@ -79,7 +79,9 @@ Cloud.Objects.query({
 			messageUserLabel.textAlign = 'left';
 			messageContentLabel.textAlign = 'left';
 
+			
 			messageRow.add(messageUserLabel);
+			messageRow.add(messagePostLabel);
 			messageRow.add(messageContentLabel);
 
 			chatlistData.push(messageRow);
