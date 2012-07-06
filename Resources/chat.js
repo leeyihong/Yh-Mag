@@ -113,12 +113,13 @@ function refresh() {
 		classname : 'messages',
 		page : 1,
 		per_page : 100,
+		order : "-created_at",
 		where : {
 			'post.id' : chatWin.postId.id
 		}
 	}, function(e) {
 		if (e.success) {
-			alert('Success:\\n' + 'Count: ' + e.messages.length);
+			//alert('Success:\\n' + 'Count: ' + e.messages.length);
 
 			if (e.messages.length > 0)
 				replying = true;
