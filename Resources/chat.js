@@ -97,7 +97,7 @@ var previousMessagesTable = Ti.UI.createTableView({
 Cloud.Objects.query({
 	classname : 'messages',
 	page : 1,
-	per_page : 10,
+	per_page : 100,
 	where : {
 		post_id : chatWin.postId.id
 	}
@@ -109,7 +109,7 @@ Cloud.Objects.query({
 
 		for (var i = 0; i < e.messages.length; i++) {
 			var message = e.messages[i];
-			alert('id: ' + message.id + '\\n' + 'make: ' + message.content);
+			//alert('id: ' + message.id + '\\n' + 'make: ' + message.content);
 
 			var messageRow = Ti.UI.createTableViewRow();
 
