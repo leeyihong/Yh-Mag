@@ -4,7 +4,7 @@ var chatWin = Ti.UI.currentWindow;
 var Cloud = require('ti.cloud');
 Cloud.debug = true;
 
-var ids = [];
+var ids = [], previousMessagesData = [];
 
 ids.push(chatWin.to_id);
 //ids.push(Ti.App.Properties.getString('userid'));
@@ -60,7 +60,7 @@ Cloud.Users.login({
 }, function(e) {
 	if (e.success)
 		user = e.users[0];
-		
+
 	alert("ok, send now");
 });
 
@@ -71,8 +71,10 @@ sendBtn.addEventListener('click', function(e) {
 		classname : 'messages',
 		fields : {
 			post_id : chatWin.postId.id,
-			from_id : user.id,
-			to_id : chatWin.to_id.id
+			from_id : Ti.App.Properties.getString('userid'),
+			to_id : chatWin.to_id.id,
+			content : message.value,
+			is_reply : false
 		}
 	}, function(e) {
 		if (e.success) {
@@ -91,21 +93,89 @@ var previousMessagesTable = Ti.UI.createTableView({
 	top : '50dp',
 	bottom : '80dp'
 });
-/*
 
- Cloud.Chats.query({
- participate_ids : ids.join(','),
+Cloud.Objects.query({
+	classname : 'messages',
+	page : 1,
+	per_page : 10,
+	where : {
+		post_id : chatWin.postId.id
+	}
+}, function(e) {
+	if (e.success) {
+		alert('Success:\\n' + 'Count: ' + e.messages.length);
 
- order : "-created_at"
- }, function(e) {
- if (e.success) {
- for (var i = 0; i < e.chats.length; i++) {
- var chat = e.chats[i];
- alert('Success:\\n' + 'From: ' + chat.from.first_name + ' ' + chat.from.last_name + '\\n' + 'Updated: ' + chat.updated_at + '\\n' + 'Message: ' + chat.message);
- }
- } else {
- alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
- }
- });
- */
+		var fromUser, toUser;
+
+		for (var i = 0; i < e.messages.length; i++) {
+			var message = e.messages[i];
+			alert('id: ' + message.id + '\\n' + 'make: ' + message.content);
+
+			var messageRow = Ti.UI.createTableViewRow();
+
+			if (!fromUser)
+				fromUser = getUser(message.from_id);
+			if (!toUser)
+				toUser = getUser(message.to_id);
+
+			var messageUserLabel = Ti.UI.createLabel({
+				left:'5dp',
+				right:'5dp',
+				top:'5dp',
+				font:{
+					fontWeight: 'bold',
+					fontSize:'14dp'
+				},
+				color:'#000000'
+			});
+			
+			if(message.from_id === Ti.App.Properties.getString('userid'))
+				messageUserLabel.text = 'Me';
+			else
+				messageUserLabel.text = fromUser.username;
+			
+			var messageContentLabel = Ti.UI.createLabel({
+				left:'5dp',
+				right:'5dp',
+				top: '22dp',
+				text:message.content,
+				font:{
+					fontSize:'14dp'
+				},
+				color:'#000000'
+			});
+
+			if (message.is_reply) {
+				messageUserLabel.textAlign = 'right';
+				messageContentLabel.textAlign = 'right';
+			} else {
+				messageUserLabel.textAlign = 'left';
+				messageContentLabel.textAlign = 'left';
+			}
+			
+			messageRow.add(messageUserLabel);
+			messageRow.add(messageContentLabel);
+			
+			previousMessagesData.push(messageRow);
+
+		}
+		previousMessagesTable.setData(previousMessagesData);
+	} else {
+		alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
+	}
+});
+
 chatWin.add(previousMessagesTable);
+
+function getUser(user_id) {
+	Cloud.Users.show({
+		user_id : user_id
+	}, function(e) {
+		if (e.success) {
+			var user = e.users[0];
+			return user;
+		} else {
+			return null;
+		}
+	});
+}
