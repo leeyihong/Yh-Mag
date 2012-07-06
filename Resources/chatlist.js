@@ -20,9 +20,11 @@ Cloud.Objects.query({
 	order : "-updated_at"
 }, function(e) {
 	if (e.success) {
-		if (e.messages.length === 0)
+		if (e.messages.length === 0){
 			alert('You have no message at the moment... ');
-
+			chatlistWin.close();
+		}
+		
 		for (var i = 0; i < e.messages.length; i++) {
 			var message = e.messages[i];
 
