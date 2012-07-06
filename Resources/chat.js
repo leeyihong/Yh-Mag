@@ -53,6 +53,18 @@ var sendBtn = Ti.UI.createButton({
 });
 chatWin.add(sendBtn);
 
+var loadingIndicator = Ti.UI.createActivityIndicator({
+	font : {
+		fontFamily : 'Helvetica Neue',
+		fontSize : '26dp',
+		fontWeight : 'bold'
+	},
+	message : 'Loading...',
+	style : Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
+});
+
+loadingIndicator.show();
+
 var user;
 Cloud.Users.login({
 	login : Ti.App.Properties.getString('email'),
@@ -60,8 +72,8 @@ Cloud.Users.login({
 }, function(e) {
 	if (e.success)
 		user = e.users[0];
-
-	alert("ok, send now");
+		
+	loadingIndicator.hide();
 });
 
 var replying = false;
@@ -72,11 +84,11 @@ sendBtn.addEventListener('click', function(e) {
 	Cloud.Objects.create({
 		classname : 'messages',
 		fields : {
-			post_id : chatWin.postId.id,
-			from_id : Ti.App.Properties.getString('userid'),
-			to_id : chatWin.to_id.id,
-			content : message.value,
-			is_reply : replying
+			'post' : chatWin.postId,
+			'from_id' : user,
+			'to_id' : chatWin.to_id,
+			'content' : message.value,
+			'is_reply' : replying
 		}
 	}, function(e) {
 		if (e.success)
@@ -94,8 +106,6 @@ var previousMessagesTable = Ti.UI.createTableView({
 	bottom : '80dp'
 });
 
-var fromUser, toUser;
-
 function refresh() {
 	previousMessagesData = [];
 
@@ -104,7 +114,7 @@ function refresh() {
 		page : 1,
 		per_page : 100,
 		where : {
-			post_id : chatWin.postId.id
+			'post.id' : chatWin.postId.id
 		}
 	}, function(e) {
 		if (e.success) {
@@ -117,17 +127,13 @@ function refresh() {
 				var message = e.messages[i];
 				//alert('id: ' + message.id + '\\n' + 'make: ' + message.content);
 
-				if ((message.from_id !== Ti.App.Properties.getString('userid')) && (message.to_id !== Ti.App.Properties.getString('userid')))
+				if ((message.from_id.id !== Ti.App.Properties.getString('userid')) && (message.to_id.id !== Ti.App.Properties.getString('userid')))
 					return;
 
 				var messageRow = Ti.UI.createTableViewRow();
 
-				if (!fromUser)
-					fromUser = getUser(message.from_id);
-				if (!toUser)
-					toUser = getUser(message.to_id);
-
 				var messageUserLabel = Ti.UI.createLabel({
+					text : message.from_id.username,
 					left : '5dp',
 					right : '5dp',
 					top : '5dp',
@@ -137,12 +143,12 @@ function refresh() {
 					},
 					color : '#000000'
 				});
-
-				if (message.from_id === Ti.App.Properties.getString('userid'))
-					messageUserLabel.text = 'Me';
-				else
-					messageUserLabel.text = fromUser.username;
-
+				/*
+				 if (message.from_id === Ti.App.Properties.getString('userid'))
+				 messageUserLabel.text = 'Me';
+				 else
+				 messageUserLabel.text = fromUser.username;
+				 */
 				var messageContentLabel = Ti.UI.createLabel({
 					left : '5dp',
 					right : '5dp',
@@ -153,10 +159,10 @@ function refresh() {
 					},
 					color : '#000000'
 				});
-				
+
 				messageUserLabel.textAlign = 'left';
 				messageContentLabel.textAlign = 'left';
-				
+
 				messageRow.add(messageUserLabel);
 				messageRow.add(messageContentLabel);
 
@@ -172,17 +178,4 @@ function refresh() {
 
 chatWin.add(previousMessagesTable);
 
-function getUser(user_id) {
-	Cloud.Users.show({
-		user_id : user_id
-	}, function(e) {
-		if (e.success) {
-			var user = e.users[0];
-			return user;
-		} else {
-			return null;
-		}
-	});
-}
-
-refresh(); 
+refresh();
