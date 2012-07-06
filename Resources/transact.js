@@ -57,20 +57,20 @@ sellingListImage.addEventListener('click', function(e) {
 		login : Ti.App.Properties.getString('email'),
 		password : 'test_password'
 	}, function(e) {
-		if(e.success) {
+		if (e.success) {
 			var user = e.users[0];
 			//alert('Success:\\n' + 'id: ' + user.id + '\\n' + 'first name: ' + user.first_name + '\\n' + 'last name: ' + user.last_name);
 			Cloud.Posts.query({
 				page : 1,
 				per_page : 20,
 				where : {
-					"userId" : Ti.App.Properties.getString('email')  // *** NEED TO CHANGE THIS AFTER SETTING UP DETAILS OF USER! ***
+					"userId" : Ti.App.Properties.getString('email') // *** NEED TO CHANGE THIS AFTER SETTING UP DETAILS OF USER! ***
 				},
 				order : "-created_at"
 			}, function(e) {
-				if(e.success) {
+				if (e.success) {
 					//alert('Success:\\n' + 'Count: ' + e.posts.length);
-					if(e.posts.length === 0) {
+					if (e.posts.length === 0) {
 						var blackWindow = Ti.UI.createWindow({
 							backgroundColor : '#FFFFFF',
 							modal : true
@@ -90,7 +90,7 @@ sellingListImage.addEventListener('click', function(e) {
 						currentTab.open(blackWindow);
 						return;
 					};
-					for(var i = 0; i < e.posts.length; i++) {
+					for (var i = 0; i < e.posts.length; i++) {
 						var post = e.posts[i];
 						mySellingData[i] = post;
 						//alert('id: ' + post.id + '\\n' + 'id: ' + post.id + '\\n' + 'title: ' + post.title + '\\n' + 'content: ' + post.content + '\\n' + 'updated_at: ' + post.updated_at);
@@ -151,8 +151,7 @@ sellingListImage.addEventListener('click', function(e) {
 						var sellingListDetailwin = Ti.UI.createWindow({
 							url : 'mySellingListDetail.js',
 							backgroundColor : '#FFFFFF',
-							modal : true,
-							exitOnClose : true
+							modal : true
 						});
 						sellingListDetailwin.sellingDetails = mySellingData[e.index];
 						//sellingListDetailwin.mySellingListRowNumber = e.index;
@@ -182,6 +181,16 @@ var myChatListImage = Ti.UI.createButton({
 	left : '10dp',
 	right : '10dp',
 	top : '10dp'
+});
+
+var chatlistWin = Ti.UI.createWindow({
+	url : 'chatlist.js',
+	backgroundColor : '#FFFFFF',
+	modal : true
+});
+
+myChatListImage.addEventListener('click', function(e) {
+	chatlistWin.open();
 });
 
 /*CREATE TABLE*/
@@ -225,7 +234,7 @@ var openCameraDialog = Titanium.UI.createOptionDialog({
 var imgView = Titanium.UI.createImageView({
 	top : '5dp',
 	left : GetWidth(60),
-	width : '200dp',
+	//width : '200dp',
 	height : '200dp'
 });
 var originalImage = Titanium.UI.createImageView({
@@ -235,15 +244,16 @@ var originalImage = Titanium.UI.createImageView({
 
 openCameraDialog.addEventListener('click', function(e) {
 
-	if(e.index == 0) {//from the camera
+	if (e.index == 0) {//from the camera
 
 		Titanium.Media.showCamera({
 
 			success : function(event) {
 				var image = event.media;
-				if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+				if (event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
 
 					sellingDetailsWin.originalImage = event.media;
+					bacodeScanningWin.originalImage = event.media;
 
 					//set image view
 					originalImage.image = image;
@@ -265,7 +275,7 @@ openCameraDialog.addEventListener('click', function(e) {
 					title : 'Camera'
 				});
 				// set message
-				if(error.code == Titanium.Media.NO_CAMERA) {
+				if (error.code == Titanium.Media.NO_CAMERA) {
 					a.setMessage('Device does not have image recording capabilities');
 				} else {
 					a.setMessage('Unexpected error: ' + error.code);
@@ -278,7 +288,7 @@ openCameraDialog.addEventListener('click', function(e) {
 			saveToPhotoGallery : false
 		});
 
-	} else if(e.index == 1) {//obtain an image from the gallery
+	} else if (e.index == 1) {//obtain an image from the gallery
 
 		Titanium.Media.openPhotoGallery({
 
@@ -286,9 +296,10 @@ openCameraDialog.addEventListener('click', function(e) {
 				var image = event.media;
 				// set image view
 				Ti.API.debug('Our type was: ' + event.mediaType);
-				if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+				if (event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
 
 					sellingDetailsWin.originalImage = event.media;
+					bacodeScanningWin.originalImage = event.media;
 
 					originalImage.image = image;
 					imgView.image = cropImage(originalImage);
@@ -330,7 +341,7 @@ var bacodeInputTypeWin = Ti.UI.createWindow({
 
 var bookTitleImage = Ti.UI.createImageView({
 	url : 'images/Book Image.png',
-	width : '150dp',
+	//width : '150dp',
 	height : '60dp'
 })
 
@@ -364,10 +375,10 @@ var submitISBNButton = Ti.UI.createButton({
 });
 var isbnNo;
 submitISBNButton.addEventListener('click', function(e) {
-	if(typeBarcodeTextField.value.length == 13) {
-		Ti.UI.Android.hideSoftKeyboard();
+	if (typeBarcodeTextField.value.length == 13) {
+		//Ti.UI.Android.hideSoftKeyboard();
 		sellingDetailsWin.isbnNo = typeBarcodeTextField.value;
-		sellingDetailsWin.originalImage = imgView;
+		//sellingDetailsWin.originalImage = sellingDetailsWin.originalImage;
 		sellingDetailsWin.open();
 	} else {
 		alert('Invalid isbn number. Check that the isbn number is 13 digit long. And remove all \'-\'')
@@ -377,7 +388,22 @@ submitISBNButton.addEventListener('click', function(e) {
 var sellingDetailsWin = Ti.UI.createWindow({
 	backgroundColor : '#FFFFFF',
 	url : "sellingDetails.js",
-	originalImage: imgView.image
+});
+
+var bacodeScanningWin = Titanium.UI.createWindow({
+	backgroundColor : '#FFFFFF',
+	url : 'barcodeScanner.js',
+});
+
+sellingDetailsWin.addEventListener('close', function(e) {
+	bacodeInputTypeWin.close();
+	bacodeScanningWin.close();
+	loadingIndicator.hide();
+});
+
+bacodeScanningWin.addEventListener('close', function(e) {
+	bacodeInputTypeWin.close();
+	loadingIndicator.hide();
 });
 
 //Scanner Window
@@ -391,12 +417,6 @@ var scannerWinButton = Ti.UI.createButton({
 	height : '40dp'
 });
 scannerWinButton.addEventListener('click', function() {
-	var bacodeScanningWin = Titanium.UI.createWindow({
-		backgroundColor : '#FFFFFF',
-		url : 'barcodeScanner.js',
-		originalImage: imgView.image
-	});
-
 	bacodeScanningWin.open();
 });
 

@@ -6,7 +6,7 @@ Cloud.debug = true;
 
 var sellingDetailsWin = Ti.UI.currentWindow;
 var isbnNo = sellingDetailsWin.isbnNo;
-var imageTaken = sellingDetailsWin.image;
+var imageTaken = sellingDetailsWin.originalImage;
 Ti.API.info(isbnNo);
 var screenHeight = Ti.Platform.displayCaps.platformHeight;
 var screenWidth = Ti.Platform.displayCaps.platformWidth;
@@ -18,7 +18,6 @@ function GetHeight(value) {
 	return parseInt((screenWidth * value) / 480);
 };
 
-
 //Setting global varible for book details
 var output;
 var details;
@@ -26,7 +25,7 @@ var bookImage = Ti.UI.createImageView({
 	image : imageTaken,
 	top : '10dp',
 	//left: 'center',
-	width : '100dp',
+	//width : '100dp',
 	height : '100dp'
 });
 var titleLabel = Ti.UI.createLabel({
@@ -269,7 +268,7 @@ var priceLabel = Ti.UI.createLabel({
 });
 var priceField = Ti.UI.createTextField({
 	hintText : '$30',
-	value: '$',
+	value : '$',
 	font : {
 		fontSize : '14dp',
 		fontFamily : 'Helvetica',
@@ -292,39 +291,39 @@ var publishButton = Ti.UI.createButton({
 	height : '35dp'
 });
 /*var cancelButton = Ti.UI.createButton({
-	title : 'Cancel',
-	font : {
-		fontSize : '14dp',
-		fontFamily : 'Helvetica',
-		fontWeight : 'bold'
-	},
-	color : '#000014',
-	left : '180dp',
-	width : '80dp',
-	height : '35dp'
-});
-var transacWindow = Ti.UI.createWindow({
-	backgroundColor : 'white',
-	url : 'transact.js'
-});
+ title : 'Cancel',
+ font : {
+ fontSize : '14dp',
+ fontFamily : 'Helvetica',
+ fontWeight : 'bold'
+ },
+ color : '#000014',
+ left : '180dp',
+ width : '80dp',
+ height : '35dp'
+ });
+ var transacWindow = Ti.UI.createWindow({
+ backgroundColor : 'white',
+ url : 'transact.js'
+ });
 
-var cancelDialog = Ti.UI.createAlertDialog({
-	title : 'Cancel Dialog',
-	message : 'Are you sure you would like to cancel this?',
-	cancel : 1,
-	buttonNames : ['Confirm', 'Cancel'],
-});
-cancelButton.addEventListener('click', function() {
-	cancelDialog.show();
-});
-cancelDialog.addEventListener('click', function(ev) {
-	if (ev.index == 0) {// clicked "Confirm"
-		transacWindow.open();
-	} else if (ev.index == 1) {// clicked "Cancel"
-		// do nothing
-	}
-});
-*/
+ var cancelDialog = Ti.UI.createAlertDialog({
+ title : 'Cancel Dialog',
+ message : 'Are you sure you would like to cancel this?',
+ cancel : 1,
+ buttonNames : ['Confirm', 'Cancel'],
+ });
+ cancelButton.addEventListener('click', function() {
+ cancelDialog.show();
+ });
+ cancelDialog.addEventListener('click', function(ev) {
+ if (ev.index == 0) {// clicked "Confirm"
+ transacWindow.open();
+ } else if (ev.index == 1) {// clicked "Cancel"
+ // do nothing
+ }
+ });
+ */
 var isbnAPIUrl = 'https://www.googleapis.com/books/v1/volumes?q=isbn:';
 var isbnApiKey = 'AIzaSyBgUbjxOGiJNbKS39ZHF2NH2hLVHdo6FEs';
 
@@ -512,7 +511,7 @@ displayTable.appendRow(priceRow);
 var buttonRow = Ti.UI.createTableViewRow({
 	height : 'auto',
 });
-publishButton.center;
+publishButton.center
 buttonRow.add(publishButton);
 //cancelButton.left = '180dp';
 //buttonRow.add(cancelButton);
@@ -539,74 +538,53 @@ var publishDialog = Ti.UI.createAlertDialog({
 });
 publishButton.addEventListener('click', function() {
 
-	if(!moduleCodeField.value){
+	if (!moduleCodeField.value) {
 		alert('Please enter your module code');
-		return;	
+		return;
 	}
-	if((!priceField.value)||(priceField.value.length <= 1)){
+	if ((!priceField.value) || (priceField.value.length <= 1)) {
 		alert('Please enter the price');
 		return;
 	}
-	
+
 	publishDialog.show();
 });
 
 var activityIndicator = Ti.UI.createActivityIndicator({
-	color: 'Red',
-	font: {fontFamily:'Helvetica Neue', fontSize:'26dp', fontWeight:'bold'},
-	message: 'Loading...',
-	style:Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
+	color : 'Red',
+	font : {
+		fontFamily : 'Helvetica Neue',
+		fontSize : '26dp',
+		fontWeight : 'bold'
+	},
+	message : 'Loading...',
+	style : Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
 });
 
 publishDialog.addEventListener('click', function(e) {
 
 	if (e.index == 0) {// clicked "Confirm"
 		activityIndicator.show();
-		Cloud.Users.login({
-			login : Ti.App.Properties.getString('email'),
-			password : 'test_password'
+		Cloud.Posts.create({
+			title : Ti.App.Properties.getString('name') + ' Selling ' + moduleCodeField.value + ' Book!',
+			content : 'Selling ' + moduleCodeField.value + ' Book via ShootNSell',
+			photo : imageTaken,
+			custom_fields : '{ "userId": "' + Ti.App.Properties.getString('email') + '","bookTitle": "' + titleField.value + '", "bookSubtitle": "' + subtitleField.value + '","author": "' + authorsField.value + '", "publisher": "' + publisherField.value + '","publishedDate": "' + publishedDateField.value + '","edition": "' + editionField.value + '", "condition": "' + conditionField.value + '","faculty": "' + facultyPicker.getSelectedRow(0).title + '","moduleCode": "' + moduleCodeField.value + '", "price": "' + priceField.value + '", "bookStatus": "onSales"}',
+
 		}, function(e) {
 			if (e.success) {
-				var user = e.users[0];
-				//alert('Success Login:\\n' + 'id: ' + user.id + '\\n' + 'first name: ' + user.first_name + '\\n' + 'last name: ' + user.last_name);
 				/*
-				Cloud.Photos.create({
-					photo : sellingDetailsWin.originalImage
-				}, function(e) {
-					if (e.success) {
-						var photo = e.photos[0];
-						alert('Success:\\n' + 'id: ' + photo.id + '\\n' + 'filename: ' + photo.filename + '\\n' + 'size: ' + photo.size, 'updated_at: ' + photo.updated_at);
-					} else {
-						alert('Error:\\n' + ((e.error && e.message) || JSON.stringify(e)));
-					}
-				});
-				*/
-				Cloud.Posts.create({
-					title : Ti.App.Properties.getString('name') + ' Selling ' + moduleCodeField.value + ' Book!',
-					content : 'Selling ' + moduleCodeField.value + ' Book via ShootNSell',
-					photo : sellingDetailsWin.originalImage,
-					custom_fields : '{ "userId": "' + Ti.App.Properties.getString('email') + '","bookTitle": "' + titleField.value + '", "bookSubtitle": "' + subtitleField.value + '","author": "' + authorsField.value + '", "publisher": "' + publisherField.value + '","publishedDate": "' + publishedDateField.value + '","edition": "' + editionField.value + '", "condition": "' + conditionField.value + '","faculty": "' + facultyPicker.getSelectedRow(0).title + '","moduleCode": "' + moduleCodeField.value + '", "price": "' + priceField.value + '", "bookStatus": "onSales"}',
-
-				}, function(e) {
-					if (e.success) {
-						/*
-						var post = e.posts[0];
-						activityIndicator.hide();
-						var homeWin = Ti.UI.createWindow({
-							url: "home.js",
-						});
-						homeWin.open();
-						*/
-						activityIndicator.hide();
-						sellingDetailsWin.close();
-						//alert('Success create post:\\n' + 'id: ' + post.id + '\\n' + 'title: ' + post.title + '\\n' + 'content: ' + post.content + '\\n');
-					} else {
-						alert('Error in post creating:\\n' + ((e.error && e.message) || JSON.stringify(e)));
-					}
-				});
-
+				 var post = e.posts[0];
+				 activityIndicator.hide();
+				 var homeWin = Ti.UI.createWindow({
+				 url: "home.js",
+				 });
+				 homeWin.open();
+				 */
+				sellingDetailsWin.close();
+				//alert('Success create post:\\n' + 'id: ' + post.id + '\\n' + 'title: ' + post.title + '\\n' + 'content: ' + post.content + '\\n');
 			} else {
-				alert('Error in Login :\\n' + ((e.error && e.message) || JSON.stringify(e)));
+				alert('Error in post creating:\\n' + ((e.error && e.message) || JSON.stringify(e)));
 			}
 		});
 

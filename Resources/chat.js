@@ -64,6 +64,8 @@ Cloud.Users.login({
 	alert("ok, send now");
 });
 
+var replying = false;
+
 //BRYAN: use of custom object to create message. 'Chat' refers to real-time IM. 'Message' are still in Beta.
 //update msg to database
 sendBtn.addEventListener('click', function(e) {
@@ -74,7 +76,7 @@ sendBtn.addEventListener('click', function(e) {
 			from_id : Ti.App.Properties.getString('userid'),
 			to_id : chatWin.to_id.id,
 			content : message.value,
-			is_reply : false
+			is_reply : replying
 		}
 	}, function(e) {
 		if (e.success)
@@ -92,9 +94,11 @@ var previousMessagesTable = Ti.UI.createTableView({
 	bottom : '80dp'
 });
 
+var fromUser, toUser;
+
 function refresh() {
 	previousMessagesData = [];
-	
+
 	Cloud.Objects.query({
 		classname : 'messages',
 		page : 1,
@@ -106,7 +110,8 @@ function refresh() {
 		if (e.success) {
 			alert('Success:\\n' + 'Count: ' + e.messages.length);
 
-			var fromUser, toUser;
+			if (e.messages.length > 0)
+				replying = true;
 
 			for (var i = 0; i < e.messages.length; i++) {
 				var message = e.messages[i];
@@ -148,15 +153,10 @@ function refresh() {
 					},
 					color : '#000000'
 				});
-
-				if (message.is_reply) {
-					messageUserLabel.textAlign = 'right';
-					messageContentLabel.textAlign = 'right';
-				} else {
-					messageUserLabel.textAlign = 'left';
-					messageContentLabel.textAlign = 'left';
-				}
-
+				
+				messageUserLabel.textAlign = 'left';
+				messageContentLabel.textAlign = 'left';
+				
 				messageRow.add(messageUserLabel);
 				messageRow.add(messageContentLabel);
 
@@ -185,4 +185,4 @@ function getUser(user_id) {
 	});
 }
 
-refresh();
+refresh(); 

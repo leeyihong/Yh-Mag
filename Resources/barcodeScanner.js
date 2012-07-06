@@ -3,7 +3,6 @@
  */
 /*--- SCANNER WINDOW ---*/
 var barcodeScanningWin = Ti.UI.currentWindow;
-var imageTaken = barcodeScanningWin.originalImage;
 
 var label = Ti.UI.createLabel();
 barcodeScanningWin.add(label);
@@ -17,9 +16,8 @@ titaniumBarcode.scan({
 			var label = Titanium.UI.createLabel({
 				text : data.barcode,
 			});
-			
+
 			sellingDetailsWin.isbnNo = data.barcode;
-			sellingDetailsWin.originalImage = imageTaken;
 			sellingDetailsWin.open();
 
 		} else {
@@ -38,6 +36,12 @@ titaniumBarcode.scan({
 
 var sellingDetailsWin = Ti.UI.createWindow({
 	backgroundColor : '#FFFFFF',
-	url: "sellingDetails.js",
+	originalImage : barcodeScanningWin.originalImage,
+	url : "sellingDetails.js",
+});
+
+sellingDetailsWin.addEventListener('close', function(e) {
+	barcodeScanningWin.close();
+	alert('closing');
 });
 

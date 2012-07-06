@@ -141,7 +141,7 @@ Cloud.Users.login({
 		//alert('Success Login: ' + 'id: ' + user.id + ' ' + 'first name: ' + user.first_name + ' ' + 'last name: ' + user.last_name);
 		Cloud.Posts.query({
 			page : 1,
-			per_page : 12,
+			per_page : 100,
 			where : { bookStatus : 	"onSales" } ,
 			order : "-created_at" 
 			//where : {  // *** CHECK IF DELETED IS TRUE
