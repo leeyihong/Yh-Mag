@@ -156,8 +156,7 @@ function refresh() {
 					right : '5dp',
 					top : '5dp',
 					font : {
-						fontWeight : 'bold',
-						fontSize : '14dp'
+						fontSize : '12dp'
 					},
 					textAlign : 'right',
 					color : '#666666'
