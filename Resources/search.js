@@ -36,7 +36,7 @@ var searchBar = Titanium.UI.createSearchBar({
 		fontFamily : 'Helvetica',
 	},
     barColor:'#000', 
-    showCancel:true,
+    showCancel:false,
     height:'40dp',
     top:0,
 });
